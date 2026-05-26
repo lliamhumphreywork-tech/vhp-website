@@ -383,9 +383,22 @@
   @media(max-width:1200px){
     .nav-meta{display:none;}
   }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  html.js-anim [data-anim]{opacity:0;transform:translateY(22px);}
+  html.js-anim [data-anim].in{
+    opacity:1;transform:none;
+    transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1),
+               transform 0.85s cubic-bezier(0.16,1,0.3,1);
+    transition-delay:var(--ad,0ms);
+  }
+  @media(prefers-reduced-motion:reduce){
+    html.js-anim [data-anim],html.js-anim [data-anim].in{opacity:1;transform:none;transition:none;}
+  }
 </style>
 </head>
 <body>
+<script>document.documentElement.classList.add('js-anim')</script>
 
 <!-- ═══ NAV ═══ -->
 <header class="nav">
@@ -818,11 +831,70 @@
 </footer>
 
 <script>
+  /* ── Clock ── */
   function tick(){
     const t=new Intl.DateTimeFormat('en-ZA',{timeZone:'Africa/Johannesburg',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date());
     const el=document.getElementById('clk');if(el)el.textContent='Sandton '+t;
   }
   tick();setInterval(tick,60000);
+
+  /* ── Scroll animations ── */
+  (function(){
+    // Elements that animate as one unit
+    const singles='.hero-tags,.hero-h,.hero-sub,.exstrip,.sec-head,.preipo-lede,.preipo-feat,.track-top,.sectors,.tagline .t,.cta-stmt,.cta-right';
+    // Grid children that stagger: [selector, delay-per-item-ms]
+    const groups=[
+      ['.hero-meta > div',  90],
+      ['.about-grid > div', 110],
+      ['.about-stats > div',70],
+      ['.what-col',         90],
+      ['.step',             65],
+      ['.ex',               65],
+      ['.pre-co',           75],
+      ['.adv-cell',         90],
+      ['.deal',             70],
+      ['.why-cell',         70],
+    ];
+
+    // Mark singles
+    document.querySelectorAll(singles).forEach(el=>el.dataset.anim='');
+
+    // Mark staggered children with per-item delay
+    groups.forEach(([sel,gap])=>{
+      document.querySelectorAll(sel).forEach((el,i)=>{
+        el.dataset.anim='';
+        el.style.setProperty('--ad', i*gap+'ms');
+      });
+    });
+
+    // Hero sequence: stagger the above-fold items nicely
+    const heroOrder=['.hero-tags','.hero-h','.hero-sub','.exstrip'];
+    heroOrder.forEach((sel,i)=>{
+      const el=document.querySelector(sel+'[data-anim]');
+      if(el) el.style.setProperty('--ad', i*130+'ms');
+    });
+
+    // Show elements already in (or near) the viewport
+    function reveal(){
+      document.querySelectorAll('[data-anim]:not(.in)').forEach(el=>{
+        const r=el.getBoundingClientRect();
+        if(r.top<window.innerHeight+60&&r.bottom>-60) el.classList.add('in');
+      });
+    }
+
+    // IntersectionObserver for smooth scroll-triggered reveals
+    const io=new IntersectionObserver(entries=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+      });
+    },{threshold:0.08,rootMargin:'0px 0px -48px 0px'});
+
+    document.querySelectorAll('[data-anim]').forEach(el=>io.observe(el));
+
+    // Reveal in-viewport elements on load, then again on scroll
+    setTimeout(reveal,50);
+    window.addEventListener('scroll',reveal,{passive:true});
+  })();
 </script>
 </body>
 </html>
