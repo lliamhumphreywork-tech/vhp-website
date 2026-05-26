@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Von Hartmann &amp; Partners — Independent Investment Banking</title>
+<style>
+  :root{
+    --bg:#080808;
+    --fg:#ffffff;
+    --muted:#555555;
+    --label:#888888;
+    --rule:rgba(255,255,255,0.13);
+    --rule-soft:rgba(255,255,255,0.07);
+    --ghost:rgba(255,255,255,0.035);
+    --px:clamp(32px,6vw,96px);
+    --py:clamp(24px,4vh,52px);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{
+    scroll-snap-type:y mandatory;
+    overflow-y:scroll;
+    background:var(--bg);
+  }
+  body{
+    font-family:Helvetica,"Helvetica Neue",Arial,sans-serif;
+    background:var(--bg);
+    color:var(--fg);
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+
+  /* ─── SLIDE SHELL ─── */
+  .slide{
+    scroll-snap-align:start;
+    height:100vh;
+    min-height:560px;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    padding:var(--py) var(--px);
+    overflow:hidden;
+    border-bottom:1px solid var(--rule);
+  }
+
+  /* ─── GHOST NUMBER ─── */
+  .ghost{
+    position:absolute;
+    right:-0.04em;
+    top:-0.18em;
+    font-size:clamp(160px,22vw,360px);
+    font-weight:800;
+    line-height:1;
+    letter-spacing:-0.05em;
+    color:var(--ghost);
+    pointer-events:none;
+    user-select:none;
+    z-index:0;
+  }
+
+  /* ─── CORNER BRACKETS ─── */
+  .slide::before,.slide::after{
+    content:"";
+    position:absolute;
+    width:18px;height:18px;
+    pointer-events:none;
+    z-index:10;
+  }
+  .slide::before{top:10px;left:10px;border-top:1px solid rgba(255,255,255,0.18);border-left:1px solid rgba(255,255,255,0.18);}
+  .slide::after{top:10px;right:10px;border-top:1px solid rgba(255,255,255,0.18);border-right:1px solid rgba(255,255,255,0.18);}
+
+  /* ─── SLIDE CHROME ─── */
+  .sl-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    border-bottom:1px solid var(--rule);
+    padding-bottom:var(--py);
+    flex-shrink:0;
+    position:relative;z-index:1;
+  }
+  .sl-brand{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--label);font-weight:500;white-space:nowrap;}
+  .sl-num{font-size:11px;letter-spacing:0.16em;color:var(--label);font-variant-numeric:tabular-nums;}
+  .sl-section{
+    font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--label);
+    padding-top:clamp(16px,2.5vh,36px);
+    flex-shrink:0;position:relative;z-index:1;
+  }
+  .sl-foot{
+    border-top:1px solid var(--rule);
+    padding-top:clamp(12px,1.8vh,20px);
+    font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--label);
+    flex-shrink:0;position:relative;z-index:1;
+    display:flex;justify-content:space-between;align-items:baseline;
+  }
+
+  /* ─── CONTENT AREA ─── */
+  .sl-body{
+    flex:1;display:flex;flex-direction:column;justify-content:center;
+    padding-top:clamp(12px,1.5vh,24px);
+    padding-bottom:clamp(12px,1.5vh,24px);
+    position:relative;z-index:1;
+    overflow:hidden;
+  }
+
+  /* ─── TYPE SCALE ─── */
+  .title{
+    font-size:clamp(38px,7vw,112px);
+    font-weight:700;
+    line-height:1.0;
+    letter-spacing:-0.03em;
+    color:var(--fg);
+    max-width:18ch;
+  }
+  .title .dim{color:var(--muted);}
+  .title.sm{font-size:clamp(28px,4.8vw,76px);}
+  .title.xl{font-size:clamp(56px,10vw,160px);font-weight:800;letter-spacing:-0.04em;}
+  .subtitle{
+    margin-top:clamp(16px,2.5vh,40px);
+    font-size:clamp(22px,3.5vw,52px);
+    font-weight:700;line-height:1.1;letter-spacing:-0.02em;
+    color:var(--muted);max-width:26ch;
+  }
+  .subtitle.lit{font-weight:400;font-size:clamp(16px,1.8vw,24px);color:var(--label);letter-spacing:0.005em;line-height:1.65;}
+
+  /* ─── STATS STRIP ─── */
+  .stats{
+    display:flex;gap:0;
+    margin-top:clamp(20px,3vh,48px);
+    border-top:1px solid var(--rule);
+    flex-wrap:wrap;
+  }
+  .stat{
+    padding:clamp(14px,2vh,24px) clamp(20px,2vw,40px) clamp(14px,2vh,24px) 0;
+    border-right:1px solid var(--rule);
+    flex:1;min-width:100px;
+  }
+  .stat:not(:first-child){padding-left:clamp(20px,2vw,40px);}
+  .stat:last-child{border-right:none;}
+  .sv{font-size:clamp(20px,3vw,48px);font-weight:700;letter-spacing:-0.02em;color:var(--fg);line-height:1;}
+  .sk{font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--label);margin-top:8px;}
+
+  /* ─── MARKET TABLE (s02) ─── */
+  .mkt{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    border-top:1px solid var(--rule);
+    margin-top:clamp(20px,3vh,48px);
+  }
+  .mkt-col{
+    padding:clamp(20px,2.5vh,36px) clamp(20px,2vw,40px) clamp(20px,2.5vh,36px) 0;
+    border-right:1px solid var(--rule);
+  }
+  .mkt-col:not(:first-child){padding-left:clamp(20px,2vw,40px);}
+  .mkt-col:last-child{border-right:none;}
+  .mkt-lbl{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--label);margin-bottom:14px;}
+  .mkt-name{font-size:clamp(16px,2vw,28px);font-weight:700;color:var(--fg);letter-spacing:-0.01em;line-height:1.1;margin-bottom:12px;}
+  .mkt-name.dim{color:var(--muted);}
+  .mkt-body{font-size:13px;color:var(--label);line-height:1.6;}
+
+  /* ─── 5-STEP PROCESS (s06) ─── */
+  .steps{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+    border-top:1px solid var(--rule);
+    margin-top:clamp(20px,2.5vh,40px);
+  }
+  .step{
+    padding:clamp(16px,2vh,28px) clamp(14px,1.5vw,24px) clamp(16px,2vh,28px) 0;
+    border-right:1px solid var(--rule);
+    display:flex;flex-direction:column;gap:10px;
+  }
+  .step:not(:first-child){padding-left:clamp(14px,1.5vw,24px);}
+  .step:last-child{border-right:none;}
+  .step-n{font-size:10px;letter-spacing:0.18em;color:var(--label);}
+  .step-h{font-size:clamp(14px,1.6vw,22px);font-weight:700;color:var(--fg);letter-spacing:-0.01em;line-height:1.1;}
+  .step-b{font-size:12px;color:var(--label);line-height:1.55;}
+  .step-t{margin-top:auto;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.25);}
+
+  /* ─── ADVISORY 2×2 (s07) ─── */
+  .adv{
+    display:grid;grid-template-columns:1fr 1fr;
+    border-top:1px solid var(--rule);
+    margin-top:clamp(16px,2vh,32px);
+    flex:1;
+  }
+  .adv-cell{
+    padding:clamp(16px,2vh,28px) clamp(20px,2vw,40px) clamp(16px,2vh,28px) 0;
+    border-right:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+  }
+  .adv-cell:nth-child(2n){border-right:none;padding-right:0;padding-left:clamp(20px,2vw,40px);}
+  .adv-cell:nth-child(2n+1){padding-right:clamp(20px,2vw,40px);}
+  .adv-cell:nth-last-child(-n+2){border-bottom:none;}
+  .adv-n{font-size:10px;letter-spacing:0.18em;color:var(--label);}
+  .adv-h{font-size:clamp(16px,2vw,28px);font-weight:700;color:var(--fg);letter-spacing:-0.01em;margin-top:10px;line-height:1.1;}
+  .adv-list{list-style:none;margin-top:12px;}
+  .adv-list li{font-size:12px;color:var(--label);padding:7px 0;border-top:1px solid var(--rule-soft);}
+  .adv-list li:last-child{border-bottom:1px solid var(--rule-soft);}
+
+  /* ─── EXCHANGE GRID (s08) ─── */
+  .exgrid{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    border-top:1px solid var(--rule);border-left:1px solid var(--rule);
+    margin-top:clamp(20px,2.5vh,40px);
+  }
+  .ex{
+    padding:clamp(16px,2vh,28px) clamp(16px,2vw,32px);
+    border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .ex-code{font-size:clamp(24px,3.5vw,52px);font-weight:700;letter-spacing:0.02em;color:var(--fg);line-height:1;}
+  .ex-code.dim{color:var(--label);}
+  .ex-name{font-size:12px;color:var(--label);}
+  .ex-reg{font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.25);}
+  .ex-st{margin-top:auto;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--fg);padding-top:10px;border-top:1px solid var(--rule-soft);}
+  .ex-st.pend{color:var(--label);}
+
+  /* ─── DEAL ROWS (s09, s11) ─── */
+  .deals{margin-top:clamp(16px,2.5vh,40px);}
+  .deal{
+    display:grid;grid-template-columns:56px 2fr 3fr 1fr;gap:20px;
+    padding:clamp(12px,1.8vh,22px) 0;
+    border-top:1px solid var(--rule);
+    align-items:baseline;
+  }
+  .deal:last-child{border-bottom:1px solid var(--rule);}
+  .d-y{font-size:10px;letter-spacing:0.16em;color:var(--label);font-variant-numeric:tabular-nums;}
+  .d-typ{font-size:clamp(14px,1.6vw,20px);font-weight:700;color:var(--fg);letter-spacing:-0.005em;line-height:1.15;}
+  .d-typ small{display:block;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--label);font-weight:400;margin-top:5px;}
+  .d-desc{font-size:12px;color:var(--label);line-height:1.5;}
+  .d-role{font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--label);text-align:right;}
+
+  /* ─── PRE-IPO (s10) ─── */
+  .preipo{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px);align-items:start;}
+  .pfbox{border:1px solid var(--rule);padding:clamp(20px,2.5vw,40px);display:flex;flex-direction:column;gap:12px;}
+  .pf-tag{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--label);}
+  .pf-name{font-size:clamp(40px,6vw,80px);font-weight:800;line-height:1;letter-spacing:-0.04em;color:var(--fg);}
+  .pf-sec{font-size:12px;color:var(--label);}
+  .pf-body{font-size:13px;color:var(--label);line-height:1.6;}
+  .pf-stats{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--rule);padding-top:16px;gap:0;}
+  .pf-s{display:flex;flex-direction:column;gap:6px;border-right:1px solid var(--rule);padding-right:16px;}
+  .pf-s:not(:first-child){padding-left:16px;}
+  .pf-s:last-child{border-right:none;}
+  .pf-sv{font-size:clamp(18px,2.5vw,32px);font-weight:700;letter-spacing:-0.02em;color:var(--fg);line-height:1;}
+  .pf-sk{font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--label);}
+  .pf-disc{font-size:11px;color:rgba(255,255,255,0.28);line-height:1.5;border-top:1px solid var(--rule-soft);padding-top:12px;}
+
+  /* ─── WHY 3×2 (s12) ─── */
+  .why{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    border-top:1px solid var(--rule);
+    margin-top:clamp(20px,2.5vh,40px);
+  }
+  .why-c{
+    padding:clamp(16px,2vh,28px) clamp(20px,2vw,36px) clamp(16px,2vh,28px) 0;
+    border-right:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+  }
+  .why-c:nth-child(3n){border-right:none;padding-right:0;}
+  .why-c:not(:nth-child(3n+1)){padding-left:clamp(20px,2vw,36px);}
+  .why-c:nth-last-child(-n+3){border-bottom:none;}
+  .why-n{font-size:10px;letter-spacing:0.18em;color:var(--label);}
+  .why-h{font-size:clamp(16px,2vw,26px);font-weight:700;color:var(--fg);letter-spacing:-0.01em;margin-top:10px;line-height:1.1;}
+  .why-b{font-size:12px;color:var(--label);margin-top:10px;line-height:1.55;}
+
+  /* ─── CONTACT (s13) ─── */
+  .ctgrid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,96px);align-items:center;}
+  .ctright{display:flex;flex-direction:column;}
+  .ct-row{padding:clamp(14px,1.8vh,22px) 0;border-top:1px solid var(--rule);}
+  .ct-row:last-of-type{border-bottom:1px solid var(--rule);}
+  .ct-lbl{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--label);margin-bottom:6px;}
+  .ct-val{font-size:clamp(14px,1.6vw,22px);color:var(--fg);letter-spacing:-0.005em;}
+  .ct-btn{
+    display:inline-flex;align-items:center;gap:16px;
+    padding:18px 24px;border:1px solid var(--rule);
+    font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--fg);
+    margin-top:clamp(16px,2vh,28px);
+    transition:background .2s,border-color .2s;
+  }
+  .ct-btn:hover{background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.35);}
+  .arr{width:22px;height:1px;background:var(--fg);position:relative;flex-shrink:0;}
+  .arr::after{content:"";position:absolute;right:0;top:-3px;width:6px;height:6px;border-right:1px solid var(--fg);border-top:1px solid var(--fg);transform:rotate(45deg);}
+
+  /* ─── NAV DOTS ─── */
+  .dots{
+    position:fixed;right:clamp(14px,1.8vw,24px);top:50%;transform:translateY(-50%);
+    display:flex;flex-direction:column;gap:7px;z-index:100;
+  }
+  .dot{
+    width:4px;height:4px;background:rgba(255,255,255,0.2);border-radius:50%;
+    cursor:pointer;border:none;padding:0;
+    transition:background .25s,transform .25s;
+  }
+  .dot.on{background:var(--fg);transform:scale(1.6);}
+
+  /* ─── ENTER ANIMATIONS ─── */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:none;}}
+  .slide .sl-body>*{opacity:1;}
+  .slide.will-animate .sl-body>*{opacity:0;}
+  .slide.in .sl-body>*{animation:fadeUp .6s ease both;}
+  .slide.in .sl-body>*:nth-child(2){animation-delay:.1s;}
+  .slide.in .sl-body>*:nth-child(3){animation-delay:.2s;}
+  .slide.in .sl-body>*:nth-child(4){animation-delay:.3s;}
+
+  /* ─── RESPONSIVE ─── */
+  @media(max-width:900px){
+    .mkt,.preipo,.ctgrid{grid-template-columns:1fr;}
+    .steps{grid-template-columns:repeat(2,1fr);}
+    .step:nth-child(2n){border-right:none;}
+    .exgrid{grid-template-columns:1fr 1fr;}
+    .why{grid-template-columns:1fr 1fr;}
+    .why-c:nth-child(2n){border-right:none;padding-right:0;}
+    .why-c:nth-child(2n+1){padding-left:0!important;}
+    .why-c:nth-child(3n){border-right:1px solid var(--rule);padding-right:unset;}
+    .adv{grid-template-columns:1fr;}
+    .adv-cell:nth-child(2n){border-right:1px solid var(--rule)!important;padding-left:0!important;padding-right:clamp(20px,2vw,40px)!important;}
+    .adv-cell:nth-child(2n+1){padding-right:clamp(20px,2vw,40px)!important;}
+    .deal{grid-template-columns:50px 1fr;row-gap:6px;}
+    .d-desc,.d-role{grid-column:1/-1;text-align:left;}
+  }
+  @media(max-width:600px){
+    :root{--px:22px;--py:20px;}
+    .steps,.exgrid,.why,.adv{grid-template-columns:1fr;}
+    .step,.ex,.why-c,.adv-cell{border-right:none!important;padding-left:0!important;padding-right:0!important;}
+    .dots{display:none;}
+    .stats{flex-direction:column;}
+    .stat{border-right:none;border-bottom:1px solid var(--rule);}
+    .stat:last-child{border-bottom:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV DOTS -->
+<nav class="dots" id="dots"></nav>
+
+<!-- ═══════ S01 COVER ═══════ -->
+<section class="slide" id="s01">
+  <div class="ghost">01</div>
+  <div class="sl-head">
+    <span class="sl-brand">Von Hartmann &amp; Partners</span>
+    <span class="sl-num">01 / 13</span>
+  </div>
+  <div class="sl-body" style="justify-content:flex-start;padding-top:clamp(24px,4vh,56px);">
+    <p class="title xl">Von Hartmann<br>&amp; Partners</p>
+    <p class="title sm" style="margin-top:clamp(16px,2vh,32px);color:var(--fg);font-weight:700;">
+      The IPO Window Is Open.
+    </p>
+    <p style="margin-top:12px;font-size:clamp(18px,2.5vw,36px);font-weight:700;color:var(--muted);letter-spacing:-0.02em;font-style:italic;">
+      But not for everyone.
+    </p>
+    <div class="stats" style="margin-top:auto;">
+      <div class="stat"><div class="sv">$213M+</div><div class="sk">Aggregate exposure · 2025</div></div>
+      <div class="stat"><div class="sv">5</div><div class="sk">Global exchanges</div></div>
+      <div class="stat"><div class="sv">Sandton</div><div class="sk">Johannesburg · London · Hong Kong</div></div>
+      <div class="stat"><div class="sv" style="font-size:clamp(14px,1.4vw,22px);letter-spacing:0.01em;">vonhartmann.com</div><div class="sk">Web</div></div>
+    </div>
+  </div>
+  <div class="sl-foot">
+    <span>Institutional Intelligence.&nbsp; Precision Execution.</span>
+    <span id="clk"></span>
+  </div>
+</section>
+
+<!-- ═══════ S02 THE MARKET ═══════ -->
+<section class="slide" id="s02">
+  <div class="ghost">02</div>
+  <div class="sl-head"><span class="sl-brand">Von Hartmann &amp; Partners</span><span class="sl-num">02 / 13</span></div>
+  <div class="sl-section">The Market</div>
+  <div class="sl-body">
+    <p class="title sm">The market has two ends.<br><span class="dim">The middle is ignored.</span></p>
+    <div class="mkt">
+      <div class="mkt-col">
+        <div class="mkt-lbl">Bulge Bracket Banks</div>
+        <div class="mkt-name dim">$500M+ minimum</div>
+        <div class="mkt-body">Won't run mid-market deals. Most growing companies are invisible to them.</div>
+      </div>
+      <div class="mkt-col">
+        <div class="mkt-lbl">Local Boutiques</div>
+        <div class="mkt-name dim">Single exchange, limited reach</div>
+        <div class="mkt-body">Can't access global exchanges. The cross-border networks simply aren't there.</div>
+      </div>
+      <div class="mkt-col">
+        <div class="mkt-lbl">Von Hartmann &amp; Partners</div>
+        <div class="mkt-name">$50M – $500M sweet spot</div>
+        <div class="mkt-body">NYSE, Nasdaq, LSE, HKEX, JSE — full cross-border execution, from one firm.</div>
+      </div>
+    </div>
+  </div>
+  <div class="sl-foot"><span>Institutional Intelligence.&nbsp; Precision Execution.</span></div>
+</section>
+
+<!-- ═══════ S03 THE WINDOW ═══════ -->
+<section class="slide" id="s03">
+  <div class="ghost">03</div>
+  <div class="sl-head"><span class="sl-brand">Von Hartmann &amp; Partners</span><span class="sl-num">03 / 13</span></div>
+  <div class="sl-section">The Window</div>
+  <div class="sl-body">
+    <p class="title">
+      Global IPO markets opened 2026 with momentum —<br>
+      <span class="dim">then geopolitical headwinds forced deals to pause or reprice.</span>
+    </p>
+    <p class="subtitle">
+      The market is resilient.<br>
+      <span style="color:var(--label);">It is also unforgiving.</span>
+    </p>
+  </div>
+  <div class="sl-foot"><span>Institutional Intelligence.&nbsp; Precision Execution.</span></div>
+</section>
+
+<!-- ═══════ S04 THE GAP ═══════ -->
+<section class="slide" id="s04">
+  <div class="ghost">04</div>
+  <div class="sl-head"><span class="sl-brand">Von Hartmann &amp; Partners</span><span class="sl-num">04 / 13</span></div>
+  <div class="sl-section">The Gap</div>
+  <div class="sl-body">
+    <p class="title sm">
+      Most large banks won't touch mid-market issuers.<br>
+      <span class="dim">Most boutiques lack cross-border reach.</span>
+    </p>
+    <p class="subtitle">
+      VHP was built<br>to fill that gap.
+    </p>
+  </div>
+  <div class="sl-foot"><span>Institutional Intelligence.&nbsp; Precision Execution.</span></div>
+</section>
+
+<!-- ═══════ S05 WHAT VHP DOES ═══════ -->
+<section class="slide" id="s05">
+  <div class="ghost">05</div>
+  <div class="sl-head"><span class="sl-brand">Von Hartmann &amp; Partners</span><span class="sl-num">05 / 13</span></div>
+  <div class="sl-section">What We Do</div>
+  <div class="sl-body">
+    <p class="title">
+      We take companies public on NYSE, Nasdaq, LSE, HKEX, and JSE.
+    </p>
+    <p class="subtitle">
+      One firm.<br>
+      <span style="color:var(--label);">Every major market.</span>
+    </p>
+    <div class="stats">
+      <div class="stat"><div class="sv">5</div><div class="sk">Exchange partnerships</div></div>
+      <div class="stat"><div class="sv">0</div><div class="sk">Proprietary positions</div></div>
+      <div class="stat"><div class="sv">1</div><div class="sk">Mandate per client</div></div>
+    </div>
+  </div>
+  <div class="sl-foot"><span>Institutional Intelligence.&nbsp; Precision Execution.</span></div>
+</section>
+
+<!-- ═══════ S06 PROCESS ═══════ -->
+<section class="slide" id="s06">
+  <div class="ghost">06</div>
+  <div class="sl-head"><span class="sl-brand">Von Hartmann &amp; Partners</span><span class="sl-num">06 / 13</span></div>
+  <div class="sl-section">Process</div>
+  <div class="sl-body">
+    <p class="title sm">From identification to listing.<br><span class="dim">One firm. Every step.</span></p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-h">We find you first</div>
+        <div class="step-b">AI-augmented origination. We identify listing-ready companies before they engage an advisor.</div>
+        <div class="step-t">Origination</div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-h">We assess fast</div>
+        <div class="step-b">Months of manual work compressed into days. Listing readiness in the first meeting.</div>
+        <div class="step-t">Diligence</div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-h">We structure the deal</div>
+        <div class="step-b">Capital structure, exchange selection, investor positioning — built for your market.</div>
+        <div class="step-t">Structuring</div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div class="step-h">We reach investors</div>
+        <div class="step-b">AI-matched institutional outreach across the UK, US, and Asia.</div>
+        <div class="step-t">Distribution</div>
+      </div>
+      <div class="step">
+        <div class="step-n">05</div>
+        <div class="step-h">We close it</div>
+        <div class="step-b">Human-led execution from mandate to listing day. We don't hand off.</div>
+        <div class="step-t">Execution</div>
+      </div>
+    </div>
+  </div>
+  <div class="sl-foot"><span>Institutional Intelligence.&nbsp; Precision Execution.</span></div>
+</section>
+
+<!-- ═══════ S07 ADVISORY ═══════ -->
+<section class="slide" id="s07">
+  <div class="ghost">07</div>
+  <div class="sl-head"><span class="sl-brand">Von Hartmann &amp; Partners</span><span class="sl-num">07 / 13</span></div>
+  <div class="sl-section">Advisory Services</div>
+  <div class="sl-body" style="overflow:hidden;">
+    <p class="title sm">Four practice areas.<br><span class="dim">One outcome — your company, publicly listed.</span></p>
+    <div class="adv">
+      <div class="adv-cell">
+        <div class="adv-n">01</div>
+        <div class="adv-h">Capital Markets &amp; Pre-IPO</div>
+        <ul class="adv-list">
+          <li>Capital structure advisory</li>
+          <li>Pre-listing readiness</li>
+          <li>Cross-border listing coordination</li>
+          <li>Pre-IPO secondary market access</li>
+        </ul>
+      </div>
+      <div class="adv-cell">
+        <div class="adv-n">02</div>
+        <div class="adv-h">Investment Banking</div>
+        <ul class="adv-list">
+          <li>Mergers and acquisitions</li>
+          <li>Corporate restructurings</li>
+          <li>Valuation and transaction modelling</li>
+          <li>Capital raising for growth companies</li>
+        </ul>
+      </div>
+      <div class="adv-cell">
+        <div class="adv-n">03</div>
+        <div class="adv-h">Energy &amp; Infrastructure</div>
+        <ul class="adv-list">
+          <li>Power and energy transition</li>
+          <li>Mining and strategic resources</li>
+          <li>Infrastructure platform structuring</li>
+          <li>Real assets and structured infrastructure</li>
+        </ul>
+      </div>
+      <div class="adv-cell">
+        <div class="adv-n">04</div>
+        <div class="adv-h">Biotech &amp; Financial Services</div>
+        <ul class="adv-list">
+          <li>Biotech pre-IPO positioning</li>
+          <li>Life sciences capital structuring</li>
+          <li>Fintech listing coordination</li>
+          <li>AI-integrated company advisory</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="sl-foot"><span>Institutional Intelligence.&nbsp; Precision Execution.</span></div>
+</section>
+
+<!-- ═══════ S08 EXCHANGES ═══════ -->
+<section class="slide" id="s08">
+  <div class="ghost">08</div>
+  <div class="sl-head"><span class="sl-brand">Von Hartmann &amp; Partners</span><span class="sl-num">08 / 13</span></div>
+  <div class="sl-section">Exchange Access</div>
+  <div class="sl-body">
+    <p class="title sm">Where your company lists is a strategic decision.<br><span class="dim">Active access across six global exchanges.</span></p>
+    <div class="exgrid">
+      <div class="ex"><div class="ex-code">NYSE</div><div class="ex-name">New York Stock Exchange</div><div class="ex-reg">United States · NYC</div><div class="ex-st">Active Partnership</div></div>
+      <div class="ex"><div class="ex-code">NASDAQ</div><div class="ex-name">Nasdaq Stock Market</div><div class="ex-reg">United States · NYC</div><div class="ex-st">Active Partnership</div></div>
+      <div class="ex"><div class="ex-code">LSE</div><div class="ex-name">London Stock Exchange</div><div class="ex-reg">United Kingdom · London</div><div class="ex-st">Active Partnership</div></div>
+      <div class="ex"><div class="ex-code">HKEX</div><div class="ex-name">Hong Kong Exchanges &amp; Clearing</div><div class="ex-reg">Asia-Pacific · Hong Kong</div><div class="ex-st">Active Partnership</div></div>
+      <div class="ex"><div class="ex-code">JSE</div><div class="ex-name">Johannesburg Stock Exchange</div><div class="ex-reg">South Africa · Sandton</div><div class="ex-st">Home Exchange</div></div>
+      <div class="ex"><div class="ex-code dim">FRA</div><div class="ex-name">Deutsche Börse · Frankfurt</div><div class="ex-reg">European Union · Frankfurt</div><div class="ex-st pend">In Progress · Expected 2026</div></div>
+    </div>
+  </div>
+  <div class="sl-foot"><span>Institutional Intelligence.&nbsp; Precision Execution.</span></div>
+</section>
+
+<!-- ═══════ S09 ENGAGEMENTS ═══════ -->
+<section class="slide" id="s09">
+  <div class="ghost">09</div>
+  <div class="sl-head"><span class="sl-brand">Von Hartmann &amp; Partners</span><span class="sl-num">09 / 13</span></div>
+  <div class="sl-section">Active Mandates</div>
+  <div class="sl-body">
+    <p class="title sm">Current engagements —<br><span class="dim">2025 / 2026</span></p>
+    <div class="deals">
+      <div class="deal">
+        <span class="d-y">2025</span>
+        <span class="d-typ">Nasdaq listing<small>African Fintech</small></span>
+        <span class="d-desc">Capital markets origination and cross-border execution onto Nasdaq, structured for US institutional distribution.</span>
+        <span class="d-role">Lead advisor</span>
+      </div>
+      <div class="deal">
+        <span class="d-y">2025</span>
+        <span class="d-typ">NYSE / JSE dual-listing<small>Major Mining Company</small></span>
+        <span class="d-desc">Capital raising and listing structure advisory for a coordinated NYSE / JSE dual-listing.</span>
+        <span class="d-role">Capital advisor</span>
+      </div>
+      <div class="deal">
+        <span class="d-y">2025</span>
+        <span class="d-typ">Infrastructure recapitalisation<small>Southern Africa Platform</small></span>
+        <span class="d-desc">Strategic advisory on the capital restructuring of a Southern African infrastructure platform.</span>
+        <span class="d-role">Strategic advisor</span>
+      </div>
+      <div class="deal">
+        <span class="d-y">Active</span>
+        <span class="d-typ">OPay Pre-IPO Position<small>VHP Platform</small></span>
+        <span class="d-desc">Structured pre-IPO access to one of Africa's fastest-growing fintech platforms. Qualified participants only.</span>
+        <span class="d-role">Platform</span>
+      </div>
+    </div>
+  </div>
+  <div class="sl-foot"><span>Institutional Intelligence.&nbsp; Precision Execution.</span></div>
+</section>
+
+<!-- ═══════ S10 PRE-IPO ═══════ -->
+<section class="slide" id="s10">
+  <div class="ghost">10</div>
+  <div class="sl-head"><span class="sl-brand">Von Hartmann &amp; Partners</span><span class="sl-num">10 / 13</span></div>
+  <div class="sl-section">Pre-IPO Platform</div>
+  <div class="sl-body">
+    <div class="preipo">
+      <div>
+        <p class="title sm">Private shares.<br>Before the listing.</p>
+        <p class="subtitle lit" style="margin-top:clamp(16px,2.5vh,32px);">
+          VHP creates structured, compliant access to pre-IPO positions in companies within our active listing pipeline. Every opportunity is exchange-aware and properly documented.
+        </p>
+        <p class="subtitle lit" style="margin-top:16px;">
+          Available to qualified and institutional participants only.
+        </p>
+      </div>
+      <div class="pfbox">
+        <div class="pf-tag">Currently Available</div>
+        <div class="pf-name">OPay</div>
+        <div class="pf-sec">African Fintech · IPO Pipeline</div>
+        <p class="pf-body">One of Africa's fastest-growing fintech platforms. Operating across Nigeria, Egypt, and Pakistan with 40M+ active users.</p>
+        <div class="pf-stats">
+          <div class="pf-s"><div class="pf-sv">40M+</div><div class="pf-sk">Active users</div></div>
+          <div class="pf-s"><div class="pf-sv">3</div><div class="pf-sk">Countries</div></div>
+          <div class="pf-s"><div class="pf-sv">Fintech</div><div class="pf-sk">Sector</div></div>
+        </div>
+        <p class="pf-disc">For qualified and institutional participants under applicable regulatory frameworks. All transactions documented and exchange-aware.</p>
+      </div>
+    </div>
+  </div>
+  <div class="sl-foot"><span>Institutional Intelligence.&nbsp; Precision Execution.</span></div>
+</section>
+
+<!-- ═══════ S11 TRACK RECORD ═══════ -->
+<section class="slide" id="s11">
+  <div class="ghost">11</div>
+  <div class="sl-head"><span class="sl-brand">Von Hartmann &amp; Partners</span><span class="sl-num">11 / 13</span></div>
+  <div class="sl-section">Track Record</div>
+  <div class="sl-body">
+    <p class="title xl">$213M<span class="dim">+</span></p>
+    <p class="subtitle lit" style="margin-top:clamp(12px,1.5vh,20px);">Aggregate transaction exposure · 2025</p>
+    <div class="stats">
+      <div class="stat"><div class="sv">5</div><div class="sk">Global exchanges</div></div>
+      <div class="stat"><div class="sv">4</div><div class="sk">Practice areas</div></div>
+      <div class="stat"><div class="sv">3+</div><div class="sk">Active mandates · 2025/26</div></div>
+      <div class="stat"><div class="sv">1</div><div class="sk">Mandate per client</div></div>
+    </div>
+  </div>
+  <div class="sl-foot"><span>Institutional Intelligence.&nbsp; Precision Execution.</span></div>
+</section>
+
+<!-- ═══════ S12 WHY VHP ═══════ -->
+<section class="slide" id="s12">
+  <div class="ghost">12</div>
+  <div class="sl-head"><span class="sl-brand">Von Hartmann &amp; Partners</span><span class="sl-num">12 / 13</span></div>
+  <div class="sl-section">Why VHP</div>
+  <div class="sl-body" style="overflow:hidden;">
+    <p class="title sm">Why we are the right firm<br><span class="dim">for your listing.</span></p>
+    <div class="why">
+      <div class="why-c"><div class="why-n">01</div><div class="why-h">We get in first</div><div class="why-b">We identify companies before they engage an investment bank. That sequencing is our structural advantage.</div></div>
+      <div class="why-c"><div class="why-n">02</div><div class="why-h">AI-compressed timelines</div><div class="why-b">Months of manual assessment into days. Answers in the first meeting, not the fifth.</div></div>
+      <div class="why-c"><div class="why-n">03</div><div class="why-h">Fully independent</div><div class="why-b">No proprietary book. No competing mandates. Our only objective is your listing.</div></div>
+      <div class="why-c"><div class="why-n">04</div><div class="why-h">Institutional-grade output</div><div class="why-b">Exchange positioning, governance, investor narrative — built to the standard global institutions demand.</div></div>
+      <div class="why-c"><div class="why-n">05</div><div class="why-h">Five active exchange markets</div><div class="why-b">NYSE, Nasdaq, LSE, HKEX, JSE. Operational partnerships — not aspirational targets.</div></div>
+      <div class="why-c"><div class="why-n">06</div><div class="why-h">Pre-IPO to listing — one firm</div><div class="why-b">From pre-IPO access through to listing day. We don't hand off at any stage.</div></div>
+    </div>
+  </div>
+  <div class="sl-foot"><span>Institutional Intelligence.&nbsp; Precision Execution.</span></div>
+</section>
+
+<!-- ═══════ S13 CONTACT ═══════ -->
+<section class="slide" id="s13">
+  <div class="ghost">13</div>
+  <div class="sl-head"><span class="sl-brand">Von Hartmann &amp; Partners</span><span class="sl-num">13 / 13</span></div>
+  <div class="sl-body">
+    <div class="ctgrid">
+      <div>
+        <p class="title" style="font-size:clamp(36px,5.5vw,88px);">Let's talk about taking your company public.</p>
+        <p style="margin-top:28px;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;color:var(--label);">Institutional Intelligence. Precision Execution.</p>
+        <p style="margin-top:12px;font-size:clamp(20px,2.5vw,32px);font-weight:700;color:var(--label);letter-spacing:-0.01em;">Von Hartmann &amp; Partners</p>
+      </div>
+      <div class="ctright">
+        <div class="ct-row">
+          <div class="ct-lbl">General Enquiries</div>
+          <div class="ct-val"><a href="mailto:info.vonhartmannpartners@outlook.com">info.vonhartmannpartners@outlook.com</a></div>
+        </div>
+        <div class="ct-row">
+          <div class="ct-lbl">Telephone</div>
+          <div class="ct-val"><a href="tel:+27697613246">+27 69 761 3246</a></div>
+        </div>
+        <div class="ct-row">
+          <div class="ct-lbl">Location</div>
+          <div class="ct-val">95 Katherine Street, Sandton<br>Johannesburg, South Africa</div>
+        </div>
+        <div class="ct-row">
+          <div class="ct-lbl">LinkedIn</div>
+          <div class="ct-val"><a href="https://www.linkedin.com/company/von-hartmann-partners" target="_blank" rel="noopener">Von Hartmann &amp; Partners</a></div>
+        </div>
+        <a href="mailto:info.vonhartmannpartners@outlook.com" class="ct-btn">
+          Request a conversation <span class="arr"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="sl-foot">
+    <span>Institutional Intelligence.&nbsp; Precision Execution.</span>
+    <span>vonhartmann.com</span>
+  </div>
+</section>
+
+<script>
+(function(){
+  const N = 13;
+
+  /* build dots */
+  const dotsEl = document.getElementById('dots');
+  for(let i=1;i<=N;i++){
+    const b = document.createElement('button');
+    b.className='dot'; b.title='Slide '+i;
+    b.addEventListener('click',()=>{
+      document.getElementById('s'+String(i).padStart(2,'0')).scrollIntoView({behavior:'smooth'});
+    });
+    dotsEl.appendChild(b);
+  }
+  const dots = dotsEl.querySelectorAll('.dot');
+
+  /* mark slides for animation, then observe */
+  const slides = document.querySelectorAll('.slide');
+  slides.forEach(s=>s.classList.add('will-animate'));
+
+  const io = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      const idx = parseInt(e.target.id.slice(1))-1;
+      if(e.isIntersecting){
+        dots.forEach(d=>d.classList.remove('on'));
+        dots[idx].classList.add('on');
+        if(!e.target.classList.contains('in')){
+          e.target.classList.remove('will-animate');
+          e.target.classList.add('in');
+        }
+      }
+    });
+  },{threshold:0.45});
+  slides.forEach(s=>io.observe(s));
+
+  /* keyboard nav */
+  document.addEventListener('keydown',e=>{
+    const cur = Array.from(dots).findIndex(d=>d.classList.contains('on'));
+    if((e.key==='ArrowDown'||e.key==='PageDown')&&cur<N-1){e.preventDefault();dots[cur+1].click();}
+    if((e.key==='ArrowUp'||e.key==='PageUp')&&cur>0){e.preventDefault();dots[cur-1].click();}
+  });
+
+  /* clock */
+  function tick(){
+    const t=new Intl.DateTimeFormat('en-ZA',{timeZone:'Africa/Johannesburg',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date());
+    const el=document.getElementById('clk'); if(el) el.textContent='Sandton '+t;
+  }
+  tick(); setInterval(tick,60000);
+})();
+</script>
+</body>
+</html>
