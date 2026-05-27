@@ -195,6 +195,42 @@
   .spinner{width:20px;height:20px;border:1px solid var(--rule);border-top-color:var(--fg);border-radius:50%;animation:spin .7s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
   #loading.hidden{display:none;}
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+  .auth-box{animation:fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) both;}
+
+  /* App entry — staggered */
+  .topbar{animation:fadeIn 0.5s cubic-bezier(0.16,1,0.3,1) both;}
+  .sidebar{animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.05s both;}
+  .page-head{animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.1s both;}
+  .stats-row{animation:fadeUp 0.65s cubic-bezier(0.16,1,0.3,1) 0.18s both;}
+  .toolbar{animation:fadeUp 0.65s cubic-bezier(0.16,1,0.3,1) 0.26s both;}
+  .table-wrap{animation:fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) 0.32s both;}
+
+  /* Stat cards stagger */
+  .stat-card:nth-child(1){animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.18s both;}
+  .stat-card:nth-child(2){animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.24s both;}
+  .stat-card:nth-child(3){animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.30s both;}
+  .stat-card:nth-child(4){animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.36s both;}
+
+  /* Sidebar stats stagger */
+  .sb-stat:nth-child(1){animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.12s both;}
+  .sb-stat:nth-child(2){animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.20s both;}
+  .sb-stat:nth-child(3){animation:fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) 0.28s both;}
+
+  /* Modal + panel slide */
+  .modal{transition:transform 0.3s cubic-bezier(0.16,1,0.3,1),opacity 0.3s ease;}
+  .panel{transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);}
+
+  /* Table row fade-in when rendered */
+  tbody tr{animation:fadeUp 0.45s cubic-bezier(0.16,1,0.3,1) both;}
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important;}
+  }
 </style>
 </head>
 <body>
@@ -548,8 +584,8 @@ window.renderTable = function(){
     tbody.innerHTML = '<tr class="empty-row"><td colspan="7">No mandates found</td></tr>';
     return;
   }
-  tbody.innerHTML = filtered.map(m => `
-    <tr onclick="openPanel('${m.id}')">
+  tbody.innerHTML = filtered.map((m,i) => `
+    <tr onclick="openPanel('${m.id}')" style="animation-delay:${i*40}ms">
       <td><div class="client-name">${m.name||'Unnamed'}</div></td>
       <td><span class="badge ${typeClass[m.type]||'b-potential'}">${m.type||'—'}</span></td>
       <td><span class="badge ${stageClass[m.stage]||'p-intro'}">${m.stage||'—'}</span></td>
