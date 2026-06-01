@@ -6,323 +6,211 @@
 <title>VHP · Marketing</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-
 :root{
-  --bg:#080808;
-  --surface:#0f0f0f;
-  --s2:rgba(255,255,255,0.04);
-  --border:rgba(255,255,255,0.1);
-  --rule:rgba(255,255,255,0.1);
-  --text:#ffffff;
-  --body:#cccccc;
-  --muted:#888888;
-  --dim:#444444;
+  --bg:#080808;--surface:#0f0f0f;--s2:rgba(255,255,255,0.04);
+  --border:rgba(255,255,255,0.1);--rule:rgba(255,255,255,0.1);
+  --text:#ffffff;--body:#cccccc;--muted:#888888;--dim:#444444;
   --ease:cubic-bezier(0.16,1,0.3,1);
   --font:'Helvetica Neue',Helvetica,Arial,sans-serif;
 }
-
-html,body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--font);
-  font-size:13px;
-  line-height:1.5;
-  height:100%;
-  -webkit-font-smoothing:antialiased;
-}
-
-a{ color:inherit; text-decoration:none; }
-button{ font:inherit; background:none; border:none; color:inherit; cursor:pointer; padding:0; }
-input,select,textarea{ font:inherit; }
-
+html,body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;line-height:1.5;height:100%;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+button{font:inherit;background:none;border:none;color:inherit;cursor:pointer;padding:0;}
+input,select,textarea{font:inherit;}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 @keyframes cardIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-/* ── LOADING ── */
-#loading{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  height:100vh;
-  font-size:10px;
-  letter-spacing:0.2em;
-  text-transform:uppercase;
-  color:var(--dim);
-}
-
-/* ── AUTH SCREEN ── */
-#auth-screen{
-  display:none;
-  align-items:center;
-  justify-content:center;
-  min-height:100vh;
-  flex-direction:column;
-  animation:fadeIn 0.4s var(--ease) both;
-}
-
-.auth-box{
-  width:100%;max-width:400px;
-  border:1px solid var(--rule);padding:48px;
-  display:flex;flex-direction:column;gap:24px;
-}
-.auth-brand{font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--text);}
-.auth-title{font-size:22px;font-weight:700;color:var(--text);letter-spacing:-0.01em;margin-top:-8px;}
+/* ── LOADING / AUTH ── */
+#loading{display:flex;align-items:center;justify-content:center;height:100vh;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim);}
+#auth-screen{display:none;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;animation:fadeIn 0.4s var(--ease) both;}
+.auth-box{width:100%;max-width:400px;border:1px solid var(--rule);padding:48px;display:flex;flex-direction:column;gap:24px;}
+.auth-brand{font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;}
+.auth-title{font-size:22px;font-weight:700;letter-spacing:-0.01em;margin-top:-8px;}
 .auth-sub{font-size:12px;color:var(--muted);margin-top:-12px;}
 .auth-field{display:flex;flex-direction:column;gap:8px;}
 .auth-field label{font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);}
-.auth-field input{
-  border:1px solid var(--rule);padding:11px 14px;
-  background:var(--s2);color:var(--text);font-size:13px;width:100%;
-  transition:border-color .15s;outline:none;
-}
+.auth-field input{border:1px solid var(--rule);padding:11px 14px;background:var(--s2);color:var(--text);font-size:13px;width:100%;transition:border-color .15s;outline:none;}
 .auth-field input:focus{border-color:rgba(255,255,255,0.35);}
-.auth-btn{
-  background:var(--text);color:#000;
-  font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
-  padding:13px;cursor:pointer;border:none;font-family:inherit;transition:opacity .15s;
-}
-.auth-btn:hover{opacity:0.85;}
-.auth-btn:disabled{opacity:0.4;cursor:not-allowed;}
+.auth-btn{background:var(--text);color:#000;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:13px;cursor:pointer;border:none;font-family:inherit;transition:opacity .15s;}
+.auth-btn:hover{opacity:0.85;} .auth-btn:disabled{opacity:0.4;cursor:not-allowed;}
 .auth-err{font-size:11px;color:#ff7a7a;min-height:16px;margin-top:-12px;}
 .auth-footer{font-size:11px;color:var(--muted);text-align:center;padding-top:16px;border-top:1px solid var(--rule);}
 
 /* ── APP ── */
-#app{ display:none; }
-#app.visible{ display:flex; flex-direction:column; height:100vh; }
+#app{display:none;}
+#app.visible{display:flex;flex-direction:column;height:100vh;}
 
 /* ── HEADER ── */
-.header{
-  height:50px;
-  border-bottom:0.5px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 28px;flex-shrink:0;
-  animation:fadeIn 0.5s var(--ease) both;
-}
-.header-left{ display:flex;align-items:center;gap:10px; }
-.header-ws{ font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);transition:color 0.15s; }
-.header-ws:hover{ color:var(--text); }
-.header-sep{ font-size:10px;color:var(--dim); }
-.header-module{ font-size:10px;letter-spacing:0.18em;text-transform:uppercase;font-weight:600;color:var(--text); }
-.header-right{ display:flex;align-items:center;gap:22px; }
-.header-nav{ font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);transition:color 0.15s; }
-.header-nav:hover{ color:var(--text); }
-.header-user{ font-size:11px;color:var(--muted); }
-.sign-out-btn{
-  font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);
-  padding:5px 10px;border:1px solid var(--rule);transition:all .15s;
-}
-.sign-out-btn:hover{ color:var(--text);border-color:rgba(255,255,255,0.3); }
-.settings-btn{
-  font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);
-  cursor:pointer;transition:color 0.15s;
-}
-.settings-btn:hover{ color:var(--muted); }
-#clock{ font-size:11px;letter-spacing:0.06em;color:var(--muted);font-variant-numeric:tabular-nums; }
+.header{height:50px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 28px;flex-shrink:0;animation:fadeIn 0.5s var(--ease) both;}
+.header-left{display:flex;align-items:center;gap:10px;}
+.header-ws{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);transition:color 0.15s;}
+.header-ws:hover{color:var(--text);}
+.header-sep{font-size:10px;color:var(--dim);}
+.header-module{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;font-weight:600;}
+.header-right{display:flex;align-items:center;gap:22px;}
+.header-nav{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);transition:color 0.15s;}
+.header-nav:hover{color:var(--text);}
+.header-user{font-size:11px;color:var(--muted);}
+.sign-out-btn{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);padding:5px 10px;border:1px solid var(--rule);transition:all .15s;}
+.sign-out-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.3);}
+.settings-btn{font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--dim);transition:color 0.15s;}
+.settings-btn:hover{color:var(--muted);}
+#clock{font-size:11px;letter-spacing:0.06em;color:var(--muted);font-variant-numeric:tabular-nums;}
 
 /* ── LAYOUT ── */
-.layout{
-  display:grid;grid-template-columns:304px 1fr;
-  flex:1;overflow:hidden;
-  animation:fadeUp 0.55s var(--ease) 0.08s both;
-}
+.layout{display:grid;grid-template-columns:304px 1fr;flex:1;overflow:hidden;animation:fadeUp 0.55s var(--ease) 0.08s both;}
 
 /* ── FORM PANEL ── */
-.form-panel{
-  border-right:0.5px solid var(--border);
-  padding:26px 22px;overflow-y:auto;
+.form-panel{border-right:0.5px solid var(--border);padding:26px 22px;overflow-y:auto;}
+.panel-eyebrow{font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--dim);margin-bottom:22px;}
+.field{margin-bottom:14px;}
+.field-label{display:block;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.field select,.field input[type="datetime-local"],.field textarea{
+  width:100%;background:transparent;border:0.5px solid var(--border);color:var(--text);
+  font-family:var(--font);font-size:12px;padding:9px 11px;outline:none;
+  appearance:none;-webkit-appearance:none;border-radius:0;transition:border-color 0.15s;
 }
-.panel-eyebrow{ font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--dim);margin-bottom:22px; }
-.field{ margin-bottom:14px; }
-.field-label{ display:block;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px; }
-.field select,
-.field input[type="datetime-local"],
-.field textarea{
-  width:100%;background:transparent;border:0.5px solid var(--border);
-  color:var(--text);font-family:var(--font);font-size:12px;padding:9px 11px;
-  outline:none;appearance:none;-webkit-appearance:none;border-radius:0;transition:border-color 0.15s;
+.field select:focus,.field input:focus,.field textarea:focus{border-color:rgba(255,255,255,0.3);}
+.field textarea{resize:vertical;min-height:148px;line-height:1.7;}
+.field textarea::placeholder{color:var(--dim);font-size:12px;}
+.field select option{background:#111;color:#fff;}
+.select-wrap{position:relative;}
+.select-wrap::after{content:'▾';position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:10px;pointer-events:none;}
+.field input[type="datetime-local"]{color-scheme:dark;}
+.field input[type="datetime-local"]::-webkit-calendar-picker-indicator{filter:invert(0.4);cursor:pointer;}
+
+/* ── IMAGE UPLOAD ── */
+.field-img-wrap{
+  border:0.5px solid var(--border);padding:10px 11px;cursor:pointer;
+  transition:border-color 0.15s;position:relative;
 }
-.field select:focus,.field input:focus,.field textarea:focus{ border-color:rgba(255,255,255,0.3); }
-.field textarea{ resize:vertical;min-height:168px;line-height:1.7; }
-.field textarea::placeholder{ color:var(--dim);font-size:12px; }
-.field select option{ background:#111;color:#fff; }
-.select-wrap{ position:relative; }
-.select-wrap::after{
-  content:'▾';position:absolute;right:10px;top:50%;transform:translateY(-50%);
-  color:var(--dim);font-size:10px;pointer-events:none;
+.field-img-wrap:hover{border-color:rgba(255,255,255,0.3);}
+.field-img-input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.field-img-placeholder{font-size:11px;color:var(--dim);letter-spacing:0.04em;}
+.field-img-preview{
+  display:none;width:100%;max-height:110px;object-fit:contain;
+  margin-top:8px;border:0.5px solid var(--border);
 }
-.field input[type="datetime-local"]{ color-scheme:dark; }
-.field input[type="datetime-local"]::-webkit-calendar-picker-indicator{ filter:invert(0.4);cursor:pointer; }
-.rule{ height:0.5px;background:var(--border);margin:10px 0 20px; }
+.field-img-name{font-size:10px;color:var(--muted);margin-top:6px;letter-spacing:0.03em;display:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.field-img-clear{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);text-decoration:underline;text-underline-offset:3px;cursor:pointer;display:none;margin-top:4px;}
+.img-uploading{font-size:9px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;display:none;margin-top:6px;}
+
+.rule{height:0.5px;background:var(--border);margin:10px 0 20px;}
 
 /* ── WA STATUS ── */
-.wa-strip{
-  margin-top:12px;padding:10px 12px;
-  border:0.5px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-}
-.wa-label{ font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted); }
-.wa-val{ font-size:10px;color:var(--text);font-variant-numeric:tabular-nums; }
-.wa-link{ font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);cursor:pointer;text-decoration:underline;text-underline-offset:3px;transition:color 0.15s; }
-.wa-link:hover{ color:var(--muted); }
+.wa-strip{margin-top:12px;padding:10px 12px;border:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.wa-label{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
+.wa-val{font-size:10px;color:var(--text);font-variant-numeric:tabular-nums;}
+.wa-link{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);cursor:pointer;text-decoration:underline;text-underline-offset:3px;transition:color 0.15s;}
+.wa-link:hover{color:var(--muted);}
 
 /* ── BUTTONS ── */
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  padding:10px 18px;font-family:var(--font);font-size:10px;
-  letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;
-  border:0.5px solid rgba(255,255,255,0.35);background:transparent;color:var(--text);
-  transition:background 0.12s,color 0.12s,border-color 0.12s;
-  border-radius:0;white-space:nowrap;user-select:none;
-}
-.btn:hover{ background:#fff;color:#080808;border-color:#fff; }
-.btn-primary{ background:#fff;color:#080808;border-color:#fff; }
-.btn-primary:hover{ background:#e0e0e0;border-color:#e0e0e0; }
-.btn-full{ width:100%; }
-.btn-sm{ padding:7px 13px;font-size:9px;letter-spacing:0.1em; }
-.btn-ghost{ border-color:rgba(255,255,255,0.1);color:var(--muted); }
-.btn-ghost:hover{ background:rgba(255,255,255,0.05);color:var(--text);border-color:rgba(255,255,255,0.2); }
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;font-family:var(--font);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;border:0.5px solid rgba(255,255,255,0.35);background:transparent;color:var(--text);transition:background 0.12s,color 0.12s,border-color 0.12s;border-radius:0;white-space:nowrap;user-select:none;}
+.btn:hover{background:#fff;color:#080808;border-color:#fff;}
+.btn-primary{background:#fff;color:#080808;border-color:#fff;}
+.btn-primary:hover{background:#e0e0e0;border-color:#e0e0e0;}
+.btn-full{width:100%;}
+.btn-sm{padding:7px 13px;font-size:9px;letter-spacing:0.1em;}
+.btn-ghost{border-color:rgba(255,255,255,0.1);color:var(--muted);}
+.btn-ghost:hover{background:rgba(255,255,255,0.05);color:var(--text);border-color:rgba(255,255,255,0.2);}
+.btn:disabled{opacity:0.4;cursor:not-allowed;}
+.btn:disabled:hover{background:transparent;color:var(--text);border-color:rgba(255,255,255,0.35);}
+.btn-primary:disabled:hover{background:#fff;color:#080808;}
 
-/* ── MAIN AREA ── */
-.main-area{ display:flex;flex-direction:column;overflow:hidden; }
-
-/* ── TABS ── */
-.tabs{
-  border-bottom:0.5px solid var(--border);padding:0 28px;display:flex;flex-shrink:0;
-}
-.tab-btn{
-  padding:14px 18px;font-size:10px;letter-spacing:0.13em;text-transform:uppercase;
-  color:var(--muted);cursor:pointer;border:none;background:transparent;font-family:var(--font);
-  border-bottom:1px solid transparent;margin-bottom:-0.5px;transition:color 0.15s;
-  display:flex;align-items:center;gap:8px;border-radius:0;
-}
-.tab-btn:hover{ color:rgba(255,255,255,0.6); }
-.tab-btn.active{ color:var(--text);border-bottom-color:var(--text); }
-.badge{
-  display:inline-block;font-size:9px;font-family:var(--font);padding:2px 7px;
-  background:rgba(255,255,255,0.07);color:var(--dim);letter-spacing:0;border-radius:1px;
-  transition:background 0.15s,color 0.15s;
-}
-.tab-btn.active .badge{ background:#fff;color:#080808; }
-
-/* ── TAB PANELS ── */
-.tab-panel{ display:none;overflow-y:auto;flex:1;padding:24px 28px; }
-.tab-panel.active{ display:block; }
+/* ── MAIN / TABS ── */
+.main-area{display:flex;flex-direction:column;overflow:hidden;}
+.tabs{border-bottom:0.5px solid var(--border);padding:0 28px;display:flex;flex-shrink:0;}
+.tab-btn{padding:14px 18px;font-size:10px;letter-spacing:0.13em;text-transform:uppercase;color:var(--muted);cursor:pointer;border:none;background:transparent;font-family:var(--font);border-bottom:1px solid transparent;margin-bottom:-0.5px;transition:color 0.15s;display:flex;align-items:center;gap:8px;border-radius:0;}
+.tab-btn:hover{color:rgba(255,255,255,0.6);}
+.tab-btn.active{color:var(--text);border-bottom-color:var(--text);}
+.badge{display:inline-block;font-size:9px;font-family:var(--font);padding:2px 7px;background:rgba(255,255,255,0.07);color:var(--dim);letter-spacing:0;border-radius:1px;transition:background 0.15s,color 0.15s;}
+.tab-btn.active .badge{background:#fff;color:#080808;}
+.tab-panel{display:none;overflow-y:auto;flex:1;padding:24px 28px;}
+.tab-panel.active{display:block;}
 
 /* ── CARDS ── */
-.cards{ display:flex;flex-direction:column;gap:10px; }
-.card{ border:0.5px solid var(--border);animation:cardIn 0.5s var(--ease) both; }
-.card-header{
-  padding:12px 16px;border-bottom:0.5px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
+.cards{display:flex;flex-direction:column;gap:10px;}
+.card{border:0.5px solid var(--border);animation:cardIn 0.5s var(--ease) both;}
+.card-header{padding:12px 16px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.card-platform{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;font-weight:600;}
+.card-schedule-row{display:flex;align-items:center;gap:7px;}
+.sched-label{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);}
+.card-date-input{background:transparent;border:none;border-bottom:0.5px solid transparent;color:var(--muted);font-family:var(--font);font-size:10px;outline:none;padding:2px 4px;cursor:pointer;transition:border-color 0.15s;color-scheme:dark;}
+.card-date-input:hover,.card-date-input:focus{border-bottom-color:var(--border);}
+.card-date-input::-webkit-calendar-picker-indicator{filter:invert(0.35);cursor:pointer;width:11px;height:11px;}
+.card-body{padding:16px;}
+.card-textarea{width:100%;background:transparent;border:none;color:var(--text);font-family:var(--font);font-size:13px;line-height:1.75;resize:vertical;min-height:100px;outline:none;padding:0;}
+
+/* ── CARD IMAGE ── */
+.card-image{padding:0 16px 14px;}
+.card-img{max-width:100%;max-height:220px;object-fit:contain;border:0.5px solid var(--border);display:block;}
+.card-img-label{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);margin-bottom:6px;}
+
+.card-footer{padding:11px 16px;border-top:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.card-ts{font-size:9px;color:var(--dim);letter-spacing:0.04em;}
+.card-actions{display:flex;gap:8px;}
+.card.in-review .card-header{background:rgba(255,255,255,0.012);}
+
+/* ── WEBHOOK BADGE ── */
+.card-webhook{
+  font-size:9px;letter-spacing:0.1em;text-transform:uppercase;
+  color:rgba(62,207,142,0.8);padding:2px 6px;border:0.5px solid rgba(62,207,142,0.3);
+  display:inline-block;margin-left:8px;
 }
-.card-platform{ font-size:9px;letter-spacing:0.2em;text-transform:uppercase;font-weight:600; }
-.card-schedule-row{ display:flex;align-items:center;gap:7px; }
-.sched-label{ font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim); }
-.card-date-input{
-  background:transparent;border:none;border-bottom:0.5px solid transparent;
-  color:var(--muted);font-family:var(--font);font-size:10px;outline:none;
-  padding:2px 4px;cursor:pointer;transition:border-color 0.15s;color-scheme:dark;
-}
-.card-date-input:hover,.card-date-input:focus{ border-bottom-color:var(--border); }
-.card-date-input::-webkit-calendar-picker-indicator{ filter:invert(0.35);cursor:pointer;width:11px;height:11px; }
-.card-body{ padding:16px; }
-.card-textarea{
-  width:100%;background:transparent;border:none;color:var(--text);font-family:var(--font);
-  font-size:13px;line-height:1.75;resize:vertical;min-height:100px;outline:none;padding:0;
-}
-.card-footer{
-  padding:11px 16px;border-top:0.5px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-}
-.card-ts{ font-size:9px;color:var(--dim);letter-spacing:0.04em; }
-.card-actions{ display:flex;gap:8px; }
-.card.in-review .card-header{ background:rgba(255,255,255,0.012); }
 
 /* ── POSTED LIST ── */
-.posted-col-heads{
-  display:grid;grid-template-columns:160px 150px 1fr 70px;
-  gap:16px;padding:0 0 11px;border-bottom:0.5px solid var(--border);
-}
-.posted-col-heads span{ font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim); }
-.posted-item{
-  display:grid;grid-template-columns:160px 150px 1fr 70px;
-  gap:16px;padding:13px 0;border-bottom:0.5px solid var(--border);
-  align-items:center;animation:cardIn 0.4s var(--ease) both;
-}
-.posted-platform{ font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted); }
-.posted-date{ font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums; }
-.posted-excerpt{ font-size:12px;color:rgba(255,255,255,0.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
-.posted-badge{ font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);text-align:right; }
+.posted-col-heads{display:grid;grid-template-columns:160px 150px 1fr 70px;gap:16px;padding:0 0 11px;border-bottom:0.5px solid var(--border);}
+.posted-col-heads span{font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim);}
+.posted-item{display:grid;grid-template-columns:160px 150px 1fr 70px;gap:16px;padding:13px 0;border-bottom:0.5px solid var(--border);align-items:center;animation:cardIn 0.4s var(--ease) both;}
+.posted-platform{font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);}
+.posted-date{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;}
+.posted-excerpt{font-size:12px;color:rgba(255,255,255,0.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.posted-badge{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);text-align:right;}
 
-/* ── EMPTY ── */
-.empty{
-  display:flex;align-items:center;justify-content:center;padding:80px 0;
-  font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--dim);
-}
+.empty{display:flex;align-items:center;justify-content:center;padding:80px 0;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--dim);}
 
 /* ── OVERLAY ── */
-.overlay{
-  position:fixed;inset:0;background:rgba(8,8,8,0.88);
-  display:none;align-items:center;justify-content:center;z-index:100;
-}
-.overlay.open{ display:flex; }
-.modal-box{
-  border:0.5px solid rgba(255,255,255,0.16);background:#0e0e0e;
-  padding:32px 36px;width:420px;animation:cardIn 0.3s var(--ease) both;
-}
-.modal-title{ font-size:10px;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:8px; }
-.modal-sub{ font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:24px; }
-.modal-field{ margin-bottom:20px; }
-.modal-field-label{ display:block;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:7px; }
-.modal-input{
-  width:100%;background:transparent;border:0.5px solid var(--border);color:var(--text);
-  font-family:var(--font);font-size:13px;padding:10px 12px;outline:none;border-radius:0;transition:border-color 0.15s;
-}
-.modal-input:focus{ border-color:rgba(255,255,255,0.35); }
-.modal-hint{ font-size:10px;color:var(--dim);margin-top:6px;letter-spacing:0.02em; }
-.modal-actions{ display:flex;gap:10px;margin-top:8px; }
+.overlay{position:fixed;inset:0;background:rgba(8,8,8,0.88);display:none;align-items:center;justify-content:center;z-index:100;}
+.overlay.open{display:flex;}
+.modal-box{border:0.5px solid rgba(255,255,255,0.16);background:#0e0e0e;padding:32px 36px;width:460px;animation:cardIn 0.3s var(--ease) both;}
+.modal-title{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:8px;}
+.modal-sub{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:24px;}
+.modal-section{font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:var(--dim);margin:20px 0 12px;padding-top:16px;border-top:0.5px solid var(--border);}
+.modal-section:first-of-type{margin-top:0;border-top:none;padding-top:0;}
+.modal-field{margin-bottom:16px;}
+.modal-field-label{display:block;font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;}
+.modal-input{width:100%;background:transparent;border:0.5px solid var(--border);color:var(--text);font-family:var(--font);font-size:13px;padding:10px 12px;outline:none;border-radius:0;transition:border-color 0.15s;}
+.modal-input:focus{border-color:rgba(255,255,255,0.35);}
+.modal-hint{font-size:10px;color:var(--dim);margin-top:6px;letter-spacing:0.02em;}
+.modal-actions{display:flex;gap:10px;margin-top:20px;}
 
 /* ── TOAST ── */
-.toast{
-  position:fixed;bottom:24px;right:24px;background:#fff;color:#080808;
-  font-family:var(--font);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
-  padding:11px 20px;z-index:200;opacity:0;transform:translateY(6px);
-  transition:opacity 0.2s var(--ease),transform 0.2s var(--ease);pointer-events:none;
-}
-.toast.show{ opacity:1;transform:none; }
+.toast{position:fixed;bottom:24px;right:24px;background:#fff;color:#080808;font-family:var(--font);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;padding:11px 20px;z-index:200;opacity:0;transform:translateY(6px);transition:opacity 0.2s var(--ease),transform 0.2s var(--ease);pointer-events:none;}
+.toast.show{opacity:1;transform:none;}
 
-::-webkit-scrollbar{ width:3px; }
-::-webkit-scrollbar-track{ background:transparent; }
-::-webkit-scrollbar-thumb{ background:rgba(255,255,255,0.08); }
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.08);}
 </style>
 </head>
 <body>
 
-<!-- LOADING -->
 <div id="loading">VHP</div>
 
-<!-- AUTH SCREEN -->
 <div id="auth-screen">
   <div class="auth-box">
     <div class="auth-brand">VHP Workspace</div>
     <div class="auth-title">Sign in</div>
     <div class="auth-sub">Internal access only.</div>
-    <div class="auth-field">
-      <label>Email</label>
-      <input type="email" id="auth-email" placeholder="you@vonhartmannpartners.co.za" autocomplete="email"/>
-    </div>
-    <div class="auth-field">
-      <label>Password</label>
-      <input type="password" id="auth-pass" placeholder="••••••••" autocomplete="current-password"/>
-    </div>
+    <div class="auth-field"><label>Email</label><input type="email" id="auth-email" placeholder="you@vonhartmannpartners.co.za" autocomplete="email"/></div>
+    <div class="auth-field"><label>Password</label><input type="password" id="auth-pass" placeholder="••••••••" autocomplete="current-password"/></div>
     <div class="auth-err" id="auth-err"></div>
     <button class="auth-btn" id="auth-btn" onclick="signIn()">Sign In</button>
     <div class="auth-footer">Von Hartmann &amp; Partners · Restricted access</div>
   </div>
 </div>
 
-<!-- APP -->
 <div id="app">
   <header class="header">
     <div class="header-left">
@@ -340,8 +228,6 @@ input,select,textarea{ font:inherit; }
   </header>
 
   <div class="layout">
-
-    <!-- FORM PANEL -->
     <aside class="form-panel">
       <div class="panel-eyebrow">New Submission</div>
 
@@ -363,12 +249,24 @@ input,select,textarea{ font:inherit; }
       </div>
 
       <div class="field">
+        <label class="field-label">Attachment · Optional</label>
+        <div class="field-img-wrap" id="img-wrap">
+          <input type="file" class="field-img-input" id="f-image" accept="image/png,image/jpeg,image/gif,image/webp" onchange="handleFileSelect(this)">
+          <div class="field-img-placeholder" id="img-placeholder">PNG / JPG — click to attach</div>
+          <img class="field-img-preview" id="img-preview" alt="">
+          <div class="field-img-name" id="img-name"></div>
+          <div class="img-uploading" id="img-uploading">Uploading…</div>
+          <span class="field-img-clear" id="img-clear" onclick="clearImage(event)">Remove</span>
+        </div>
+      </div>
+
+      <div class="field">
         <label class="field-label">Scheduled Send · SAST</label>
         <input type="datetime-local" id="f-datetime">
       </div>
 
       <div class="rule"></div>
-      <button class="btn btn-primary btn-full" onclick="submitContent()">Submit to Review</button>
+      <button class="btn btn-primary btn-full" id="submit-btn" onclick="submitContent()">Submit to Review</button>
 
       <div class="wa-strip" id="wa-configured" style="display:none">
         <span class="wa-label">CEO WhatsApp</span>
@@ -381,20 +279,12 @@ input,select,textarea{ font:inherit; }
       </div>
     </aside>
 
-    <!-- MAIN AREA -->
     <main class="main-area">
       <nav class="tabs">
-        <button class="tab-btn active" data-tab="pending" onclick="switchTab('pending')">
-          Pending <span class="badge" id="badge-pending">0</span>
-        </button>
-        <button class="tab-btn" data-tab="ceo" onclick="switchTab('ceo')">
-          CEO Review <span class="badge" id="badge-ceo">0</span>
-        </button>
-        <button class="tab-btn" data-tab="posted" onclick="switchTab('posted')">
-          Posted <span class="badge" id="badge-posted">0</span>
-        </button>
+        <button class="tab-btn active" data-tab="pending" onclick="switchTab('pending')">Pending <span class="badge" id="badge-pending">0</span></button>
+        <button class="tab-btn" data-tab="ceo" onclick="switchTab('ceo')">CEO Review <span class="badge" id="badge-ceo">0</span></button>
+        <button class="tab-btn" data-tab="posted" onclick="switchTab('posted')">Posted <span class="badge" id="badge-posted">0</span></button>
       </nav>
-
       <div id="tab-pending"  class="tab-panel active"><div class="cards" id="cards-pending"></div></div>
       <div id="tab-ceo"      class="tab-panel"><div class="cards" id="cards-ceo"></div></div>
       <div id="tab-posted"   class="tab-panel"><div id="posted-list"></div></div>
@@ -402,12 +292,9 @@ input,select,textarea{ font:inherit; }
   </div>
 </div>
 
-<!-- OVERLAY -->
 <div class="overlay" id="overlay">
   <div class="modal-box" id="modal-box"></div>
 </div>
-
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script type="module">
@@ -415,9 +302,10 @@ import { initializeApp }
   from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged }
   from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
-import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc,
-         onSnapshot, serverTimestamp }
+import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+import { getStorage, ref as sRef, uploadBytes, getDownloadURL }
+  from "https://www.gstatic.com/firebasejs/11.0.0/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAqPXQGvtuk3WoPN3AkaobPlrBkmszGDfY",
@@ -428,96 +316,185 @@ const firebaseConfig = {
   appId: "1:409780688224:web:0658bf068dc529810e3a05"
 };
 
-const app  = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db   = getFirestore(app);
-const COL  = 'marketing_posts';
+const app     = initializeApp(firebaseConfig);
+const auth    = getAuth(app);
+const db      = getFirestore(app);
+const storage = getStorage(app);
+const COL     = 'marketing_posts';
 
 // ── STATE ──────────────────────────────────────────────────────
 let pending = [], ceo = [], posted = [];
 let unsubPosts = null;
 let confirmCb  = null;
+let pendingFile = null;    // file selected but not uploaded
+let pendingImageUrl = null; // uploaded URL ready to attach
 
 // ── CLOCK ──────────────────────────────────────────────────────
 (function tick(){
-  const d = new Date();
-  const sast = new Date(d.getTime() + 2*3600000);
+  const d = new Date(), sast = new Date(d.getTime()+2*3600000);
   const p = n => String(n).padStart(2,'0');
   document.getElementById('clock').textContent =
     `${p(sast.getUTCHours())}:${p(sast.getUTCMinutes())}:${p(sast.getUTCSeconds())} SAST`;
   setTimeout(tick,1000);
 })();
 
-// ── TIME UTILS ─────────────────────────────────────────────────
-function tsToDate(v){ if(!v) return null; return v.toDate ? v.toDate() : new Date(v); }
+// ── TIME ───────────────────────────────────────────────────────
+function tsToDate(v){ return !v ? null : (v.toDate ? v.toDate() : new Date(v)); }
+function fmt(v){ const d=tsToDate(v); if(!d) return '—'; return d.toLocaleString('en-ZA',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}); }
+function fmtShort(v){ const d=tsToDate(v); if(!d) return '—'; return d.toLocaleDateString('en-ZA',{day:'2-digit',month:'short',year:'numeric'}); }
+function toLocalInput(v){ const d=tsToDate(v); if(!d) return ''; const p=n=>String(n).padStart(2,'0'); return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`; }
 
-function fmt(v){
-  const d = tsToDate(v); if(!d) return '—';
-  return d.toLocaleString('en-ZA',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit',hour12:false});
-}
-
-function fmtShort(v){
-  const d = tsToDate(v); if(!d) return '—';
-  return d.toLocaleDateString('en-ZA',{day:'2-digit',month:'short',year:'numeric'});
-}
-
-function toLocalInput(v){
-  const d = tsToDate(v); if(!d) return '';
-  const p = n => String(n).padStart(2,'0');
-  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
-}
-
-// ── HTML ESCAPE ────────────────────────────────────────────────
-function esc(s){ if(!s) return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function esc(s){ return !s?'':(s+'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 // ── TOAST ──────────────────────────────────────────────────────
 let toastTimer;
-function toast(msg){
-  const el = document.getElementById('toast');
-  el.textContent = msg;
-  el.classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=>el.classList.remove('show'), 2800);
-}
+function toast(msg){ const el=document.getElementById('toast'); el.textContent=msg; el.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(()=>el.classList.remove('show'),2800); }
 
-// ── CEO WHATSAPP (localStorage) ────────────────────────────────
+// ── CEO PHONE & WEBHOOK (localStorage) ────────────────────────
 function getCeoPhone(){ return localStorage.getItem('vhp:ceoPhone')||''; }
-function setCeoPhone(p){ localStorage.setItem('vhp:ceoPhone', p); }
+function getWebhook(){  return localStorage.getItem('vhp:webhookUrl')||''; }
 
 function updateWaStrip(){
   const ph = getCeoPhone();
   document.getElementById('wa-configured').style.display = ph ? '' : 'none';
   document.getElementById('wa-missing').style.display    = ph ? 'none' : '';
-  if(ph){
-    document.getElementById('wa-display').textContent = '+' + ph.slice(0,2) + ' ••• ' + ph.slice(-3);
-  }
+  if(ph) document.getElementById('wa-display').textContent = '+'+ph.slice(0,2)+' ••• '+ph.slice(-3);
 }
 
 function sendWhatsApp(item){
   const ph = getCeoPhone();
   if(!ph){ toast('No CEO number. Open Settings.'); return; }
-  const preview = (item.content||'').length > 600
-    ? item.content.slice(0,600) + '…' : item.content;
+  const preview = (item.content||'').length>600 ? item.content.slice(0,600)+'…' : item.content;
+  const hasImg  = item.imageUrl ? '\nImage attached.' : '';
   const msg =
-    `*VHP — Content Review*\n\n` +
-    `Platform: ${item.platform}\n` +
-    `Scheduled: ${item.scheduledAt ? fmt(item.scheduledAt) : 'TBC'} SAST\n\n` +
-    `───────────────────────\n${preview}\n───────────────────────\n\n` +
-    `Review: vonhartmannpartners.co.za/marketing`;
+    `*VHP — Content Review*\n\nPlatform: ${item.platform}\nScheduled: ${item.scheduledAt?fmt(item.scheduledAt):'TBC'} SAST${hasImg}\n\n───────────────────────\n${preview}\n───────────────────────\n\nReview: vonhartmannpartners.co.za/marketing`;
   window.open(`https://wa.me/${ph}?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
-// ── OVERLAY ────────────────────────────────────────────────────
-function closeOverlay(){
-  document.getElementById('overlay').classList.remove('open');
-  confirmCb = null;
+// ── WEBHOOK FIRE ───────────────────────────────────────────────
+async function fireWebhook(item){
+  const url = getWebhook();
+  if(!url) return;
+  try{
+    await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        postId:      item.id,
+        platform:    item.platform,
+        content:     item.content,
+        imageUrl:    item.imageUrl || null,
+        scheduledAt: item.scheduledAt || null,
+        approvedAt:  new Date().toISOString(),
+        source:      'VHP Workspace'
+      })
+    });
+  } catch(e){
+    console.warn('Webhook failed:', e.message);
+    // Don't block the approve flow — webhook is fire-and-forget
+  }
 }
 
-document.getElementById('overlay').addEventListener('click', e=>{
-  if(e.target===e.currentTarget) closeOverlay();
-});
+// ── IMAGE HANDLING ─────────────────────────────────────────────
+window.handleFileSelect = function(input){
+  const file = input.files[0];
+  if(!file){ clearImageState(); return; }
+  pendingFile = file;
+  pendingImageUrl = null;
 
-// ── CONFIRM ────────────────────────────────────────────────────
+  // Local preview
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = document.getElementById('img-preview');
+    img.src = e.target.result;
+    img.style.display = 'block';
+    document.getElementById('img-placeholder').style.display = 'none';
+    document.getElementById('img-name').textContent = file.name;
+    document.getElementById('img-name').style.display = 'block';
+    document.getElementById('img-clear').style.display = 'block';
+  };
+  reader.readAsDataURL(file);
+};
+
+window.clearImage = function(e){
+  e && e.stopPropagation();
+  clearImageState();
+  document.getElementById('f-image').value = '';
+};
+
+function clearImageState(){
+  pendingFile = null;
+  pendingImageUrl = null;
+  document.getElementById('img-preview').style.display = 'none';
+  document.getElementById('img-preview').src = '';
+  document.getElementById('img-placeholder').style.display = 'block';
+  document.getElementById('img-name').style.display = 'none';
+  document.getElementById('img-clear').style.display = 'none';
+  document.getElementById('img-uploading').style.display = 'none';
+}
+
+async function uploadImageIfNeeded(){
+  if(!pendingFile) return null;
+  if(pendingImageUrl) return pendingImageUrl; // already uploaded
+  document.getElementById('img-uploading').style.display = 'block';
+  const path  = `marketing/${Date.now()}_${pendingFile.name}`;
+  const ref   = sRef(storage, path);
+  await uploadBytes(ref, pendingFile);
+  const url = await getDownloadURL(ref);
+  pendingImageUrl = url;
+  document.getElementById('img-uploading').style.display = 'none';
+  return url;
+}
+
+// ── SETTINGS ──────────────────────────────────────────────────
+window.openSettings = function(){
+  const curPhone   = getCeoPhone();
+  const curWebhook = getWebhook();
+  document.getElementById('modal-box').innerHTML = `
+    <div class="modal-title">Settings</div>
+
+    <div class="modal-section">CEO WhatsApp</div>
+    <div class="modal-field">
+      <label class="modal-field-label">WhatsApp Number</label>
+      <input class="modal-input" id="s-phone" type="tel" placeholder="e.g. 27821234567" value="${esc(curPhone)}">
+      <div class="modal-hint">International format, no + or spaces. SA: 27XXXXXXXXX</div>
+    </div>
+
+    <div class="modal-section">Auto-post · Make.com Webhook</div>
+    <div class="modal-field">
+      <label class="modal-field-label">Webhook URL</label>
+      <input class="modal-input" id="s-webhook" type="url" placeholder="https://hook.eu2.make.com/..." value="${esc(curWebhook)}">
+      <div class="modal-hint">Fires on CEO approval with platform, content, imageUrl, scheduledAt. Set up in Make.com → Webhooks.</div>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn btn-sm btn-primary" onclick="saveSettings()">Save</button>
+      <button class="btn btn-sm btn-ghost" onclick="closeOverlay()">Cancel</button>
+    </div>`;
+  document.getElementById('overlay').classList.add('open');
+  setTimeout(()=>{ const el=document.getElementById('s-phone'); if(el) el.focus(); },50);
+};
+
+window.saveSettings = function(){
+  const rawPhone   = (document.getElementById('s-phone').value||'').replace(/[^0-9]/g,'');
+  const webhookUrl = (document.getElementById('s-webhook').value||'').trim();
+  if(rawPhone && rawPhone.length<7){ toast('Enter a valid phone number'); return; }
+  if(rawPhone) localStorage.setItem('vhp:ceoPhone', rawPhone);
+  else         localStorage.removeItem('vhp:ceoPhone');
+  if(webhookUrl) localStorage.setItem('vhp:webhookUrl', webhookUrl);
+  else           localStorage.removeItem('vhp:webhookUrl');
+  updateWaStrip();
+  closeOverlay();
+  toast('Settings saved');
+};
+
+// ── OVERLAY ────────────────────────────────────────────────────
+window.closeOverlay = function(){
+  document.getElementById('overlay').classList.remove('open');
+  confirmCb = null;
+};
+document.getElementById('overlay').addEventListener('click', e=>{ if(e.target===e.currentTarget) window.closeOverlay(); });
+
 function openConfirm(title, body, onYes){
   confirmCb = onYes;
   document.getElementById('modal-box').innerHTML = `
@@ -527,63 +504,19 @@ function openConfirm(title, body, onYes){
       <button class="btn btn-sm btn-primary" id="confirm-ok">Confirm</button>
       <button class="btn btn-sm btn-ghost" onclick="closeOverlay()">Cancel</button>
     </div>`;
-  document.getElementById('confirm-ok').onclick = ()=>{ if(confirmCb) confirmCb(); closeOverlay(); };
+  document.getElementById('confirm-ok').onclick = ()=>{ if(confirmCb) confirmCb(); window.closeOverlay(); };
   document.getElementById('overlay').classList.add('open');
 }
 
-// ── SETTINGS ──────────────────────────────────────────────────
-window.openSettings = function(){
-  const cur = getCeoPhone();
-  document.getElementById('modal-box').innerHTML = `
-    <div class="modal-title">Settings</div>
-    <div class="modal-sub">CEO WhatsApp number — used to send content for review. Stored on this device only.</div>
-    <div class="modal-field">
-      <label class="modal-field-label">CEO WhatsApp Number</label>
-      <input class="modal-input" id="s-phone" type="tel" placeholder="e.g. 27821234567" value="${esc(cur)}">
-      <div class="modal-hint">International format, no + or spaces. South Africa: 27XXXXXXXXX</div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-sm btn-primary" onclick="saveSettings()">Save</button>
-      <button class="btn btn-sm btn-ghost" onclick="closeOverlay()">Cancel</button>
-      ${cur?`<button class="btn btn-sm btn-ghost" style="margin-left:auto" onclick="clearPhone()">Clear</button>`:''}
-    </div>`;
-  document.getElementById('overlay').classList.add('open');
-  setTimeout(()=>{ const el=document.getElementById('s-phone'); if(el) el.focus(); },50);
-};
-
-window.saveSettings = function(){
-  const raw = (document.getElementById('s-phone').value||'').replace(/[^0-9]/g,'');
-  if(raw.length<7){ toast('Enter a valid number'); return; }
-  setCeoPhone(raw);
-  updateWaStrip();
-  closeOverlay();
-  toast('CEO WhatsApp saved');
-};
-
-window.clearPhone = function(){
-  localStorage.removeItem('vhp:ceoPhone');
-  updateWaStrip();
-  closeOverlay();
-  toast('Number cleared');
-};
-
-// Expose closeOverlay globally for onclick attributes
-window.closeOverlay = closeOverlay;
-
 // ── AUTH ───────────────────────────────────────────────────────
 window.signIn = async function(){
-  const email = document.getElementById('auth-email').value.trim();
-  const pass  = document.getElementById('auth-pass').value;
-  const err   = document.getElementById('auth-err');
-  const btn   = document.getElementById('auth-btn');
-  err.textContent = '';
-  btn.disabled = true; btn.textContent = 'Signing in…';
-  try{
-    await signInWithEmailAndPassword(auth, email, pass);
-  } catch(e){
-    err.textContent = e.code==='auth/invalid-credential' ? 'Invalid email or password.' : e.message;
-    btn.disabled = false; btn.textContent = 'Sign In';
-  }
+  const email=document.getElementById('auth-email').value.trim();
+  const pass =document.getElementById('auth-pass').value;
+  const err  =document.getElementById('auth-err');
+  const btn  =document.getElementById('auth-btn');
+  err.textContent=''; btn.disabled=true; btn.textContent='Signing in…';
+  try{ await signInWithEmailAndPassword(auth,email,pass); }
+  catch(e){ err.textContent=e.code==='auth/invalid-credential'?'Invalid email or password.':e.message; btn.disabled=false; btn.textContent='Sign In'; }
 };
 
 window.signOut = async function(){
@@ -593,38 +526,30 @@ window.signOut = async function(){
 
 document.getElementById('auth-pass').addEventListener('keydown', e=>{ if(e.key==='Enter') window.signIn(); });
 
-// ── AUTH STATE ─────────────────────────────────────────────────
 onAuthStateChanged(auth, user => {
-  document.getElementById('loading').style.display = 'none';
+  document.getElementById('loading').style.display='none';
   if(user){
-    document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('auth-screen').style.display='none';
     document.getElementById('app').classList.add('visible');
-    document.getElementById('user-email').textContent = user.email;
+    document.getElementById('user-email').textContent=user.email;
     updateWaStrip();
     subscribePosts();
   } else {
-    document.getElementById('auth-screen').style.display = 'flex';
+    document.getElementById('auth-screen').style.display='flex';
     document.getElementById('app').classList.remove('visible');
     if(unsubPosts){ unsubPosts(); unsubPosts=null; }
   }
 });
 
-// ── REALTIME POSTS ────────────────────────────────────────────
+// ── REALTIME ──────────────────────────────────────────────────
 function subscribePosts(){
-  unsubPosts = onSnapshot(collection(db, COL), snap => {
-    const all = snap.docs.map(d => ({ id:d.id, ...d.data() }));
-    const sort = (arr, field) => arr.slice().sort((a,b)=>{
-      const da = tsToDate(a[field]), db2 = tsToDate(b[field]);
-      if(!da&&!db2) return 0; if(!da) return 1; if(!db2) return -1;
-      return db2-da;
-    });
-    pending = sort(all.filter(p=>p.status==='pending'),      'createdAt');
-    ceo     = sort(all.filter(p=>p.status==='ceo_review'),   'sentAt');
-    posted  = sort(all.filter(p=>p.status==='posted'),       'approvedAt');
-    renderPending();
-    renderCeo();
-    renderPosted();
-    updateBadges();
+  unsubPosts = onSnapshot(collection(db,COL), snap => {
+    const all = snap.docs.map(d=>({id:d.id,...d.data()}));
+    const byDate = (f,k) => [...f].sort((a,b)=>{ const da=tsToDate(a[k]),db2=tsToDate(b[k]); if(!da&&!db2)return 0; if(!da)return 1; if(!db2)return -1; return db2-da; });
+    pending = byDate(all.filter(p=>p.status==='pending'),      'createdAt');
+    ceo     = byDate(all.filter(p=>p.status==='ceo_review'),   'sentAt');
+    posted  = byDate(all.filter(p=>p.status==='posted'),       'approvedAt');
+    renderPending(); renderCeo(); renderPosted(); updateBadges();
   });
 }
 
@@ -635,110 +560,115 @@ window.switchTab = function(tab){
 };
 
 function updateBadges(){
-  document.getElementById('badge-pending').textContent = pending.length;
-  document.getElementById('badge-ceo').textContent     = ceo.length;
-  document.getElementById('badge-posted').textContent  = posted.length;
+  document.getElementById('badge-pending').textContent=pending.length;
+  document.getElementById('badge-ceo').textContent=ceo.length;
+  document.getElementById('badge-posted').textContent=posted.length;
 }
 
 // ── SUBMIT ────────────────────────────────────────────────────
 window.submitContent = async function(){
-  const platform = document.getElementById('f-platform').value;
-  const content  = document.getElementById('f-content').value.trim();
-  const dt       = document.getElementById('f-datetime').value;
+  const platform=document.getElementById('f-platform').value;
+  const content =document.getElementById('f-content').value.trim();
+  const dt      =document.getElementById('f-datetime').value;
   if(!content){ toast('Content required'); return; }
+  const btn = document.getElementById('submit-btn');
+  btn.disabled=true; btn.textContent='Submitting…';
   try{
-    await addDoc(collection(db, COL), {
-      platform,
-      content,
+    const imageUrl = await uploadImageIfNeeded();
+    await addDoc(collection(db,COL),{
+      platform, content,
       scheduledAt: dt ? new Date(dt).toISOString() : null,
+      imageUrl:    imageUrl || null,
       status:      'pending',
       createdAt:   serverTimestamp()
     });
-    document.getElementById('f-content').value  = '';
-    document.getElementById('f-datetime').value = '';
+    document.getElementById('f-content').value='';
+    document.getElementById('f-datetime').value='';
+    clearImageState();
     window.switchTab('pending');
     toast('Submitted to review');
-  } catch(e){ toast('Error: ' + e.message); }
+  } catch(e){ toast('Error: '+e.message); }
+  finally{ btn.disabled=false; btn.textContent='Submit to Review'; }
 };
 
-// ── INLINE SAVE ───────────────────────────────────────────────
-window.saveField = async function(id, field, value){
-  try{ await updateDoc(doc(db, COL, id), { [field]: value }); }
+// ── FIELD SAVE ────────────────────────────────────────────────
+window.saveField = async function(id,field,value){
+  try{ await updateDoc(doc(db,COL,id),{[field]:value}); }
   catch(e){ toast('Save failed'); }
 };
 
 // ── SEND TO CEO ───────────────────────────────────────────────
 window.sendToCeo = async function(id){
-  const item = pending.find(i=>i.id===id);
-  if(!item) return;
+  const item=pending.find(i=>i.id===id); if(!item) return;
   try{
-    await updateDoc(doc(db, COL, id), { status:'ceo_review', sentAt: serverTimestamp() });
-    const ph = getCeoPhone();
-    if(ph){
-      toast('Sent to CEO Review — opening WhatsApp…');
-      setTimeout(()=>sendWhatsApp({...item, status:'ceo_review'}), 400);
-    } else {
-      toast('Sent to CEO Review. Add WhatsApp number in Settings to notify automatically.');
-    }
-  } catch(e){ toast('Error: ' + e.message); }
+    await updateDoc(doc(db,COL,id),{status:'ceo_review',sentAt:serverTimestamp()});
+    const ph=getCeoPhone();
+    if(ph){ toast('Sent to CEO Review — opening WhatsApp…'); setTimeout(()=>sendWhatsApp({...item,status:'ceo_review'}),400); }
+    else   toast('Sent to CEO Review. Add CEO WhatsApp in Settings.');
+  } catch(e){ toast('Error: '+e.message); }
 };
 
-// ── RESEND WHATSAPP ───────────────────────────────────────────
-window.resendWhatsApp = function(id){
-  const item = ceo.find(i=>i.id===id);
-  if(item) sendWhatsApp(item);
-};
+window.resendWhatsApp = function(id){ const item=ceo.find(i=>i.id===id); if(item) sendWhatsApp(item); };
 
-// ── RETURN TO PENDING ──────────────────────────────────────────
 window.returnPending = async function(id){
-  try{
-    await updateDoc(doc(db, COL, id), { status:'pending', sentAt:null });
-    toast('Returned to pending');
-  } catch(e){ toast('Error: ' + e.message); }
+  try{ await updateDoc(doc(db,COL,id),{status:'pending',sentAt:null}); toast('Returned to pending'); }
+  catch(e){ toast('Error: '+e.message); }
 };
 
-// ── APPROVE ───────────────────────────────────────────────────
+// ── APPROVE + WEBHOOK ─────────────────────────────────────────
 window.approvePost = async function(id){
+  const item = ceo.find(i=>i.id===id); if(!item) return;
   try{
-    await updateDoc(doc(db, COL, id), { status:'posted', approvedAt: serverTimestamp() });
-    toast('Approved — marked as posted');
-  } catch(e){ toast('Error: ' + e.message); }
+    await updateDoc(doc(db,COL,id),{status:'posted',approvedAt:serverTimestamp()});
+    toast('Approved — firing webhook…');
+    await fireWebhook(item);
+    const wh=getWebhook();
+    toast(wh ? 'Approved — webhook sent to Make.com' : 'Approved — marked as posted');
+  } catch(e){ toast('Error: '+e.message); }
 };
 
-// ── DISCARD ───────────────────────────────────────────────────
 window.discardPost = function(id){
-  openConfirm(
-    'Discard Content',
-    'This will permanently remove the item from the pipeline. This cannot be undone.',
-    async ()=>{
-      try{
-        await deleteDoc(doc(db, COL, id));
-        toast('Discarded');
-      } catch(e){ toast('Error: ' + e.message); }
-    }
-  );
+  openConfirm('Discard Content','This will permanently remove the item from the pipeline. This cannot be undone.', async ()=>{
+    try{ await deleteDoc(doc(db,COL,id)); toast('Discarded'); }
+    catch(e){ toast('Error: '+e.message); }
+  });
 };
+
+// ── RENDER HELPERS ────────────────────────────────────────────
+function imageHtml(item){
+  if(!item.imageUrl) return '';
+  return `<div class="card-image">
+    <div class="card-img-label">Attachment</div>
+    <img class="card-img" src="${esc(item.imageUrl)}" alt="" loading="lazy">
+  </div>`;
+}
+
+function webhookBadge(){
+  return getWebhook() ? `<span class="card-webhook">AUTO-POST ON</span>` : '';
+}
 
 // ── RENDER PENDING ────────────────────────────────────────────
 function renderPending(){
-  const el = document.getElementById('cards-pending');
+  const el=document.getElementById('cards-pending');
   if(!pending.length){ el.innerHTML='<div class="empty">No pending items</div>'; return; }
-  el.innerHTML = pending.map((item,i)=>`
+  el.innerHTML=pending.map((item,i)=>`
     <div class="card" style="animation-delay:${i*45}ms">
       <div class="card-header">
-        <span class="card-platform">${esc(item.platform)}</span>
+        <div style="display:flex;align-items:center">
+          <span class="card-platform">${esc(item.platform)}</span>
+          ${item.source==='cowork-engine'?'<span class="card-webhook" style="border-color:rgba(100,180,255,0.3);color:rgba(100,180,255,0.8)">COWORK</span>':''}
+        </div>
         <div class="card-schedule-row">
           <span class="sched-label">Scheduled</span>
-          <input type="datetime-local" class="card-date-input"
-            value="${item.scheduledAt?toLocalInput(item.scheduledAt):''}"
+          <input type="datetime-local" class="card-date-input" value="${item.scheduledAt?toLocalInput(item.scheduledAt):''}"
             onchange="saveField('${item.id}','scheduledAt',this.value?new Date(this.value).toISOString():null)">
         </div>
       </div>
       <div class="card-body">
         <textarea class="card-textarea" rows="5"
-          onchange="saveField('${item.id}','content',this.value)"
-          >${esc(item.content)}</textarea>
+          onchange="saveField('${item.id}','content',this.value)">${esc(item.content)}</textarea>
       </div>
+      ${imageHtml(item)}
       <div class="card-footer">
         <span class="card-ts">Created ${fmt(item.createdAt)}</span>
         <div class="card-actions">
@@ -751,24 +681,26 @@ function renderPending(){
 
 // ── RENDER CEO REVIEW ─────────────────────────────────────────
 function renderCeo(){
-  const el = document.getElementById('cards-ceo');
+  const el=document.getElementById('cards-ceo');
   if(!ceo.length){ el.innerHTML='<div class="empty">Nothing awaiting CEO review</div>'; return; }
-  el.innerHTML = ceo.map((item,i)=>`
+  el.innerHTML=ceo.map((item,i)=>`
     <div class="card in-review" style="animation-delay:${i*45}ms">
       <div class="card-header">
-        <span class="card-platform">${esc(item.platform)}</span>
+        <div style="display:flex;align-items:center">
+          <span class="card-platform">${esc(item.platform)}</span>
+          ${webhookBadge()}
+        </div>
         <div class="card-schedule-row">
           <span class="sched-label">Scheduled</span>
-          <input type="datetime-local" class="card-date-input"
-            value="${item.scheduledAt?toLocalInput(item.scheduledAt):''}"
+          <input type="datetime-local" class="card-date-input" value="${item.scheduledAt?toLocalInput(item.scheduledAt):''}"
             onchange="saveField('${item.id}','scheduledAt',this.value?new Date(this.value).toISOString():null)">
         </div>
       </div>
       <div class="card-body">
         <textarea class="card-textarea" rows="5"
-          onchange="saveField('${item.id}','content',this.value)"
-          >${esc(item.content)}</textarea>
+          onchange="saveField('${item.id}','content',this.value)">${esc(item.content)}</textarea>
       </div>
+      ${imageHtml(item)}
       <div class="card-footer">
         <span class="card-ts">Sent ${fmt(item.sentAt)}</span>
         <div class="card-actions">
@@ -783,19 +715,16 @@ function renderCeo(){
 
 // ── RENDER POSTED ─────────────────────────────────────────────
 function renderPosted(){
-  const el = document.getElementById('posted-list');
+  const el=document.getElementById('posted-list');
   if(!posted.length){ el.innerHTML='<div class="empty">No posted content</div>'; return; }
-  const rows = posted.map((item,i)=>`
+  const rows=posted.map((item,i)=>`
     <div class="posted-item" style="animation-delay:${i*28}ms">
       <span class="posted-platform">${esc(item.platform)}</span>
       <span class="posted-date">${fmtShort(item.approvedAt)}</span>
       <span class="posted-excerpt">${esc((item.content||'').slice(0,120))}</span>
       <span class="posted-badge">Posted</span>
     </div>`).join('');
-  el.innerHTML = `
-    <div class="posted-col-heads">
-      <span>Platform</span><span>Date Posted</span><span>Content</span><span></span>
-    </div>${rows}`;
+  el.innerHTML=`<div class="posted-col-heads"><span>Platform</span><span>Date Posted</span><span>Content</span><span></span></div>${rows}`;
 }
 </script>
 </body>
