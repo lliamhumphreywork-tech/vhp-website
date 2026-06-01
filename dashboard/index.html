@@ -499,16 +499,19 @@ window._mandates = () => mandates;
 window._editingId = () => editingId;
 window._setEditingId = (v) => { editingId = v; };
 
-// ── Marketing badge (from localStorage) ──
-(function(){
-  try{
-    const p = JSON.parse(localStorage.getItem('vhp:pending')||'[]');
-    const c = JSON.parse(localStorage.getItem('vhp:ceo')||'[]');
-    const count = p.length + c.length;
-    const el = document.getElementById('sb-mkt');
-    if(el && count > 0){ el.textContent = count; el.style.background='rgba(255,255,255,0.15)'; el.style.color='#fff'; }
-  }catch(e){}
-})();
+// ── Marketing badge (live from Firestore) ──
+onSnapshot(collection(db,'marketing_posts'), snap => {
+  const active = snap.docs.filter(d => {
+    const s = d.data().status;
+    return s === 'pending' || s === 'ceo_review';
+  }).length;
+  const el = document.getElementById('sb-mkt');
+  if(el){
+    el.textContent = active;
+    if(active > 0){ el.style.background='rgba(255,255,255,0.18)'; el.style.color='#fff'; }
+    else { el.style.background=''; el.style.color=''; }
+  }
+});
 
 // ── Auth state ──
 onAuthStateChanged(auth, user => {

@@ -9,10 +9,14 @@
 
 :root{
   --bg:#080808;
+  --surface:#0f0f0f;
+  --s2:rgba(255,255,255,0.04);
   --border:rgba(255,255,255,0.1);
   --text:#ffffff;
+  --body:#cccccc;
   --muted:#888888;
   --dim:#444444;
+  --rule:rgba(255,255,255,0.1);
   --ease:cubic-bezier(0.16,1,0.3,1);
   --font:'Helvetica Neue',Helvetica,Arial,sans-serif;
 }
@@ -27,8 +31,132 @@ html,body{
   -webkit-font-smoothing:antialiased;
 }
 
+a{ color:inherit; text-decoration:none; }
+button{ font:inherit; background:none; border:none; color:inherit; cursor:pointer; padding:0; }
+input{ font:inherit; background:none; border:none; color:var(--text); outline:none; }
+
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ── LOADING ── */
+#loading{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:100vh;
+  font-size:10px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--dim);
+}
+
+/* ── AUTH SCREEN ── */
+#auth-screen{
+  display:none;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  flex-direction:column;
+  animation:fadeIn 0.4s var(--ease) both;
+}
+
+.auth-box{
+  width:100%;
+  max-width:400px;
+  border:1px solid var(--rule);
+  padding:48px;
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+}
+
+.auth-brand{
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--text);
+}
+
+.auth-title{
+  font-size:22px;
+  font-weight:700;
+  color:var(--text);
+  letter-spacing:-0.01em;
+  margin-top:-8px;
+}
+
+.auth-sub{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:-12px;
+}
+
+.auth-field{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.auth-field label{
+  font-size:10px;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+.auth-field input{
+  border:1px solid var(--rule);
+  padding:11px 14px;
+  background:var(--s2);
+  color:var(--text);
+  font-size:13px;
+  width:100%;
+  transition:border-color 0.15s;
+}
+
+.auth-field input:focus{ border-color:rgba(255,255,255,0.35); }
+
+.auth-btn{
+  background:var(--text);
+  color:#000;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  padding:13px;
+  cursor:pointer;
+  border:none;
+  font-family:inherit;
+  transition:opacity 0.15s;
+}
+
+.auth-btn:hover{ opacity:0.85; }
+.auth-btn:disabled{ opacity:0.4; cursor:not-allowed; }
+
+.auth-err{
+  font-size:11px;
+  color:#ff7a7a;
+  min-height:16px;
+  margin-top:-12px;
+}
+
+.auth-footer{
+  font-size:11px;
+  color:var(--muted);
+  text-align:center;
+  padding-top:16px;
+  border-top:1px solid var(--rule);
+}
+
+/* ── APP ── */
+#app{ display:none; }
+#app.visible{
+  display:flex;
+  flex-direction:column;
+  height:100vh;
+  animation:fadeIn 0.4s var(--ease) both;
+}
 
 /* ── HEADER ── */
 .header{
@@ -38,7 +166,7 @@ html,body{
   align-items:center;
   justify-content:space-between;
   padding:0 40px;
-  animation:fadeIn 0.5s var(--ease) both;
+  flex-shrink:0;
 }
 
 .header-wordmark{
@@ -46,20 +174,31 @@ html,body{
   letter-spacing:0.22em;
   text-transform:uppercase;
   font-weight:600;
-  color:var(--text);
 }
 
 .header-right{
   display:flex;
   align-items:center;
-  gap:32px;
+  gap:24px;
 }
 
-.header-meta{
-  font-size:10px;
-  letter-spacing:0.08em;
+.header-user{
+  font-size:11px;
   color:var(--muted);
+  letter-spacing:0.03em;
 }
+
+.sign-out-btn{
+  font-size:10px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+  padding:6px 10px;
+  border:1px solid var(--rule);
+  transition:all 0.15s;
+}
+
+.sign-out-btn:hover{ color:var(--text); border-color:rgba(255,255,255,0.3); }
 
 #clock{
   font-size:11px;
@@ -68,16 +207,15 @@ html,body{
   font-variant-numeric:tabular-nums;
 }
 
-/* ── MAIN GRID ── */
+/* ── WORKSPACE ── */
 .workspace{
-  height:calc(100vh - 50px);
+  flex:1;
   display:grid;
   grid-template-columns:1fr 0.5px 1fr;
+  min-height:0;
 }
 
-.divider{
-  background:var(--border);
-}
+.divider{ background:var(--border); }
 
 /* ── MODULE PANEL ── */
 .module{
@@ -85,16 +223,10 @@ html,body{
   display:flex;
   flex-direction:column;
   cursor:pointer;
-  text-decoration:none;
   color:inherit;
   transition:background 0.2s;
-  animation:fadeUp 0.7s var(--ease) both;
   position:relative;
   overflow:hidden;
-}
-
-.module:nth-child(3){
-  animation-delay:0.08s;
 }
 
 .module::after{
@@ -106,9 +238,7 @@ html,body{
   pointer-events:none;
 }
 
-.module:hover::after{
-  background:rgba(255,255,255,0.018);
-}
+.module:hover::after{ background:rgba(255,255,255,0.018); }
 
 .module-number{
   font-size:9px;
@@ -116,7 +246,10 @@ html,body{
   text-transform:uppercase;
   color:var(--dim);
   margin-bottom:32px;
+  animation:fadeUp 0.6s var(--ease) 0.15s both;
 }
+
+.module:nth-child(3) .module-number{ animation-delay:0.22s; }
 
 .module-name{
   font-size:28px;
@@ -125,7 +258,10 @@ html,body{
   color:var(--text);
   margin-bottom:14px;
   line-height:1;
+  animation:fadeUp 0.6s var(--ease) 0.18s both;
 }
+
+.module:nth-child(3) .module-name{ animation-delay:0.25s; }
 
 .module-desc{
   font-size:13px;
@@ -133,16 +269,21 @@ html,body{
   line-height:1.65;
   max-width:380px;
   margin-bottom:48px;
+  animation:fadeUp 0.6s var(--ease) 0.21s both;
 }
+
+.module:nth-child(3) .module-desc{ animation-delay:0.28s; }
 
 /* ── STATS ── */
 .stats{
   display:flex;
   flex-direction:column;
-  gap:0;
   border-top:0.5px solid var(--border);
   flex:1;
+  animation:fadeUp 0.65s var(--ease) 0.26s both;
 }
+
+.module:nth-child(3) .stats{ animation-delay:0.32s; }
 
 .stat-row{
   display:flex;
@@ -164,15 +305,13 @@ html,body{
   font-weight:600;
   color:var(--text);
   font-variant-numeric:tabular-nums;
-}
-
-.stat-value.dim{
-  color:var(--dim);
+  min-width:20px;
+  text-align:right;
 }
 
 /* ── CTA ── */
 .module-cta{
-  margin-top:40px;
+  margin-top:36px;
   font-size:10px;
   letter-spacing:0.18em;
   text-transform:uppercase;
@@ -181,43 +320,29 @@ html,body{
   align-items:center;
   gap:8px;
   transition:color 0.15s;
+  animation:fadeUp 0.65s var(--ease) 0.3s both;
 }
 
-.module:hover .module-cta{
-  color:var(--text);
-}
+.module:nth-child(3) .module-cta{ animation-delay:0.36s; }
+.module:hover .module-cta{ color:var(--text); }
 
 .cta-arrow{
   display:inline-block;
   transition:transform 0.2s var(--ease);
 }
 
-.module:hover .cta-arrow{
-  transform:translateX(4px);
-}
-
-/* ── RESTRICTED STATE ── */
-.restricted-note{
-  font-size:11px;
-  color:var(--dim);
-  margin-top:8px;
-  letter-spacing:0.04em;
-}
+.module:hover .cta-arrow{ transform:translateX(4px); }
 
 /* ── BOTTOM BAR ── */
 .bottom-bar{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
   height:36px;
   border-top:0.5px solid var(--border);
-  background:var(--bg);
   display:flex;
   align-items:center;
   justify-content:space-between;
   padding:0 40px;
-  animation:fadeIn 0.6s var(--ease) 0.3s both;
+  flex-shrink:0;
+  animation:fadeIn 0.5s var(--ease) 0.35s both;
 }
 
 .bottom-text{
@@ -230,90 +355,199 @@ html,body{
 </head>
 <body>
 
-<header class="header">
-  <div class="header-wordmark">VHP Workspace</div>
-  <div class="header-right">
-    <span class="header-meta">Von Hartmann &amp; Partners · Internal</span>
-    <span id="clock">—</span>
+<!-- LOADING -->
+<div id="loading">VHP</div>
+
+<!-- AUTH SCREEN -->
+<div id="auth-screen">
+  <div class="auth-box">
+    <div class="auth-brand">VHP Workspace</div>
+    <div class="auth-title">Sign in</div>
+    <div class="auth-sub">Internal access only.</div>
+    <div class="auth-field">
+      <label>Email</label>
+      <input type="email" id="auth-email" placeholder="you@vonhartmannpartners.co.za" autocomplete="email"/>
+    </div>
+    <div class="auth-field">
+      <label>Password</label>
+      <input type="password" id="auth-pass" placeholder="••••••••" autocomplete="current-password"/>
+    </div>
+    <div class="auth-err" id="auth-err"></div>
+    <button class="auth-btn" id="auth-btn" onclick="signIn()">Sign In</button>
+    <div class="auth-footer">Von Hartmann &amp; Partners · Restricted access</div>
   </div>
-</header>
-
-<div class="workspace">
-
-  <!-- MANDATES MODULE -->
-  <a class="module" href="/dashboard">
-    <div class="module-number">01 · Mandates</div>
-    <div class="module-name">Mandates</div>
-    <div class="module-desc">Deal pipeline, client tracking, and mandate management across all active engagements.</div>
-    <div class="stats" id="mandate-stats">
-      <div class="stat-row">
-        <span class="stat-label">Active mandates</span>
-        <span class="stat-value dim">Sign in to view</span>
-      </div>
-      <div class="stat-row">
-        <span class="stat-label">Pipeline stage</span>
-        <span class="stat-value dim">Execution / Fee confirmation</span>
-      </div>
-      <div class="stat-row">
-        <span class="stat-label">Access</span>
-        <span class="stat-value">Firebase Auth</span>
-      </div>
-    </div>
-    <div class="module-cta">Open Mandates <span class="cta-arrow">→</span></div>
-  </a>
-
-  <div class="divider"></div>
-
-  <!-- MARKETING MODULE -->
-  <a class="module" href="/marketing" style="animation-delay:0.08s">
-    <div class="module-number">02 · Marketing</div>
-    <div class="module-name">Marketing</div>
-    <div class="module-desc">Content pipeline for LinkedIn and X. Review, approve, and send to CEO before scheduling.</div>
-    <div class="stats" id="marketing-stats">
-      <div class="stat-row">
-        <span class="stat-label">Pending review</span>
-        <span class="stat-value" id="stat-pending">0</span>
-      </div>
-      <div class="stat-row">
-        <span class="stat-label">CEO review</span>
-        <span class="stat-value" id="stat-ceo">0</span>
-      </div>
-      <div class="stat-row">
-        <span class="stat-label">Posted</span>
-        <span class="stat-value" id="stat-posted">0</span>
-      </div>
-    </div>
-    <div class="module-cta">Open Marketing <span class="cta-arrow">→</span></div>
-  </a>
-
 </div>
 
-<div class="bottom-bar">
-  <span class="bottom-text">Von Hartmann &amp; Partners · Internal Workspace · Restricted</span>
-  <span class="bottom-text" id="date-str">—</span>
+<!-- APP -->
+<div id="app">
+  <header class="header">
+    <div class="header-wordmark">VHP Workspace</div>
+    <div class="header-right">
+      <span class="header-user" id="user-email">—</span>
+      <button class="sign-out-btn" onclick="signOut()">Sign out</button>
+      <span id="clock">—</span>
+    </div>
+  </header>
+
+  <div class="workspace">
+
+    <!-- MANDATES -->
+    <a class="module" href="/dashboard">
+      <div class="module-number">01 · Mandates</div>
+      <div class="module-name">Mandates</div>
+      <div class="module-desc">Deal pipeline, client tracking, and mandate management across all active engagements.</div>
+      <div class="stats">
+        <div class="stat-row">
+          <span class="stat-label">Active mandates</span>
+          <span class="stat-value" id="s-m-active">—</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">High priority</span>
+          <span class="stat-value" id="s-m-high">—</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Execution stage</span>
+          <span class="stat-value" id="s-m-exec">—</span>
+        </div>
+      </div>
+      <div class="module-cta">Open Mandates <span class="cta-arrow">→</span></div>
+    </a>
+
+    <div class="divider"></div>
+
+    <!-- MARKETING -->
+    <a class="module" href="/marketing">
+      <div class="module-number">02 · Marketing</div>
+      <div class="module-name">Marketing</div>
+      <div class="module-desc">Content pipeline for LinkedIn and X. Review, approve, and send to CEO before scheduling.</div>
+      <div class="stats">
+        <div class="stat-row">
+          <span class="stat-label">Pending review</span>
+          <span class="stat-value" id="s-p-pending">—</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">CEO review</span>
+          <span class="stat-value" id="s-p-ceo">—</span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Posted</span>
+          <span class="stat-value" id="s-p-posted">—</span>
+        </div>
+      </div>
+      <div class="module-cta">Open Marketing <span class="cta-arrow">→</span></div>
+    </a>
+
+  </div>
+
+  <div class="bottom-bar">
+    <span class="bottom-text">Von Hartmann &amp; Partners · Internal Workspace · Restricted</span>
+    <span class="bottom-text" id="date-str">—</span>
+  </div>
 </div>
 
-<script>
-// ── CLOCK ──────────────────────────────────────────────────────
+<script type="module">
+import { initializeApp }
+  from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+import { getFirestore, collection, onSnapshot }
+  from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAqPXQGvtuk3WoPN3AkaobPlrBkmszGDfY",
+  authDomain: "vhp-workspace.firebaseapp.com",
+  projectId: "vhp-workspace",
+  storageBucket: "vhp-workspace.firebasestorage.app",
+  messagingSenderId: "409780688224",
+  appId: "1:409780688224:web:0658bf068dc529810e3a05"
+};
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+let unsubs = [];
+
+// ── CLOCK ──────────────────────────────────────────────────
 (function tick(){
   const d = new Date();
   const sast = new Date(d.getTime() + 2*3600000);
   const p = n => String(n).padStart(2,'0');
-  const h = p(sast.getUTCHours()), m = p(sast.getUTCMinutes()), s = p(sast.getUTCSeconds());
-  document.getElementById('clock').textContent = `${h}:${m}:${s} SAST`;
-  setTimeout(tick, 1000);
+  document.getElementById('clock').textContent =
+    `${p(sast.getUTCHours())}:${p(sast.getUTCMinutes())}:${p(sast.getUTCSeconds())} SAST`;
+  setTimeout(tick,1000);
 })();
 
-// ── DATE ───────────────────────────────────────────────────────
-const now = new Date();
+// ── DATE ───────────────────────────────────────────────────
 document.getElementById('date-str').textContent =
-  now.toLocaleDateString('en-ZA',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}).toUpperCase();
+  new Date().toLocaleDateString('en-ZA',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}).toUpperCase();
 
-// ── MARKETING STATS FROM LOCALSTORAGE ──────────────────────────
-function loadArr(key){ try{ return JSON.parse(localStorage.getItem(key))||[]; }catch{ return []; } }
-document.getElementById('stat-pending').textContent = loadArr('vhp:pending').length;
-document.getElementById('stat-ceo').textContent     = loadArr('vhp:ceo').length;
-document.getElementById('stat-posted').textContent  = loadArr('vhp:posted').length;
+// ── AUTH ───────────────────────────────────────────────────
+window.signIn = async function(){
+  const email = document.getElementById('auth-email').value.trim();
+  const pass  = document.getElementById('auth-pass').value;
+  const err   = document.getElementById('auth-err');
+  const btn   = document.getElementById('auth-btn');
+  err.textContent = '';
+  btn.disabled = true;
+  btn.textContent = 'Signing in…';
+  try{
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch(e){
+    err.textContent = e.code === 'auth/invalid-credential' ? 'Invalid email or password.' : e.message;
+    btn.disabled = false;
+    btn.textContent = 'Sign In';
+  }
+};
+
+window.signOut = async function(){
+  unsubs.forEach(u=>u());
+  unsubs = [];
+  await fbSignOut(auth);
+};
+
+document.getElementById('auth-pass').addEventListener('keydown', e => { if(e.key==='Enter') window.signIn(); });
+
+// ── AUTH STATE ─────────────────────────────────────────────
+onAuthStateChanged(auth, user => {
+  document.getElementById('loading').style.display = 'none';
+  if(user){
+    document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('app').classList.add('visible');
+    document.getElementById('user-email').textContent = user.email;
+    subscribeStats();
+  } else {
+    document.getElementById('auth-screen').style.display = 'flex';
+    document.getElementById('app').classList.remove('visible');
+    unsubs.forEach(u=>u());
+    unsubs = [];
+  }
+});
+
+// ── LIVE STATS ─────────────────────────────────────────────
+function subscribeStats(){
+  // Mandates
+  unsubs.push(onSnapshot(collection(db,'mandates'), snap => {
+    const all = snap.docs.map(d => d.data());
+    document.getElementById('s-m-active').textContent =
+      all.filter(m => m.stage !== 'Closed').length;
+    document.getElementById('s-m-high').textContent =
+      all.filter(m => m.priority === 'High' && m.stage !== 'Closed').length;
+    document.getElementById('s-m-exec').textContent =
+      all.filter(m => m.stage === 'Execution Stage').length;
+  }));
+
+  // Marketing posts
+  unsubs.push(onSnapshot(collection(db,'marketing_posts'), snap => {
+    const all = snap.docs.map(d => d.data());
+    document.getElementById('s-p-pending').textContent =
+      all.filter(p => p.status === 'pending').length;
+    document.getElementById('s-p-ceo').textContent =
+      all.filter(p => p.status === 'ceo_review').length;
+    document.getElementById('s-p-posted').textContent =
+      all.filter(p => p.status === 'posted').length;
+  }));
+}
 </script>
 </body>
 </html>
