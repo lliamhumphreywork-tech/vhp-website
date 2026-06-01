@@ -279,11 +279,27 @@
 
   <aside class="sidebar">
     <div class="sb-section">
-      <div class="sb-label">Workspace</div>
-      <div class="sb-item active" onclick="setView('table')">
+      <div class="sb-label">VHP Workspace</div>
+      <a href="/workspace" class="sb-item" style="text-decoration:none;">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg>
-        Mandate Dashboard
+        Overview
+      </a>
+      <div class="sb-item active">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M2 8h8M2 12h10"/></svg>
+        Mandates
         <span class="sb-count" id="sb-total">0</span>
+      </div>
+      <a href="/marketing" class="sb-item" style="text-decoration:none;">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M8 4v4l3 2"/></svg>
+        Marketing
+        <span class="sb-count" id="sb-mkt">0</span>
+      </a>
+    </div>
+    <div class="sb-section">
+      <div class="sb-label">Actions</div>
+      <div class="sb-item" onclick="setView('table')">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="1" width="14" height="14" rx="1"/><line x1="1" y1="6" x2="15" y2="6"/><line x1="6" y1="6" x2="6" y2="15"/></svg>
+        Mandate Board
       </div>
       <div class="sb-item" onclick="openAddModal()">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="8" y1="2" x2="8" y2="14"/><line x1="2" y1="8" x2="14" y2="8"/></svg>
@@ -482,6 +498,17 @@ window._db = db;
 window._mandates = () => mandates;
 window._editingId = () => editingId;
 window._setEditingId = (v) => { editingId = v; };
+
+// ── Marketing badge (from localStorage) ──
+(function(){
+  try{
+    const p = JSON.parse(localStorage.getItem('vhp:pending')||'[]');
+    const c = JSON.parse(localStorage.getItem('vhp:ceo')||'[]');
+    const count = p.length + c.length;
+    const el = document.getElementById('sb-mkt');
+    if(el && count > 0){ el.textContent = count; el.style.background='rgba(255,255,255,0.15)'; el.style.color='#fff'; }
+  }catch(e){}
+})();
 
 // ── Auth state ──
 onAuthStateChanged(auth, user => {

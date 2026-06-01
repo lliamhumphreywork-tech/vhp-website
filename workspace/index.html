@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VHP Workspace</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root{
+  --bg:#080808;
+  --border:rgba(255,255,255,0.1);
+  --text:#ffffff;
+  --muted:#888888;
+  --dim:#444444;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+  --font:'Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+
+html,body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:13px;
+  line-height:1.5;
+  height:100%;
+  -webkit-font-smoothing:antialiased;
+}
+
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ── HEADER ── */
+.header{
+  height:50px;
+  border-bottom:0.5px solid var(--border);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 40px;
+  animation:fadeIn 0.5s var(--ease) both;
+}
+
+.header-wordmark{
+  font-size:11px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  font-weight:600;
+  color:var(--text);
+}
+
+.header-right{
+  display:flex;
+  align-items:center;
+  gap:32px;
+}
+
+.header-meta{
+  font-size:10px;
+  letter-spacing:0.08em;
+  color:var(--muted);
+}
+
+#clock{
+  font-size:11px;
+  letter-spacing:0.06em;
+  color:var(--muted);
+  font-variant-numeric:tabular-nums;
+}
+
+/* ── MAIN GRID ── */
+.workspace{
+  height:calc(100vh - 50px);
+  display:grid;
+  grid-template-columns:1fr 0.5px 1fr;
+}
+
+.divider{
+  background:var(--border);
+}
+
+/* ── MODULE PANEL ── */
+.module{
+  padding:52px 48px;
+  display:flex;
+  flex-direction:column;
+  cursor:pointer;
+  text-decoration:none;
+  color:inherit;
+  transition:background 0.2s;
+  animation:fadeUp 0.7s var(--ease) both;
+  position:relative;
+  overflow:hidden;
+}
+
+.module:nth-child(3){
+  animation-delay:0.08s;
+}
+
+.module::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:rgba(255,255,255,0);
+  transition:background 0.2s var(--ease);
+  pointer-events:none;
+}
+
+.module:hover::after{
+  background:rgba(255,255,255,0.018);
+}
+
+.module-number{
+  font-size:9px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--dim);
+  margin-bottom:32px;
+}
+
+.module-name{
+  font-size:28px;
+  font-weight:700;
+  letter-spacing:-0.01em;
+  color:var(--text);
+  margin-bottom:14px;
+  line-height:1;
+}
+
+.module-desc{
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.65;
+  max-width:380px;
+  margin-bottom:48px;
+}
+
+/* ── STATS ── */
+.stats{
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  border-top:0.5px solid var(--border);
+  flex:1;
+}
+
+.stat-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 0;
+  border-bottom:0.5px solid var(--border);
+}
+
+.stat-label{
+  font-size:10px;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+.stat-value{
+  font-size:13px;
+  font-weight:600;
+  color:var(--text);
+  font-variant-numeric:tabular-nums;
+}
+
+.stat-value.dim{
+  color:var(--dim);
+}
+
+/* ── CTA ── */
+.module-cta{
+  margin-top:40px;
+  font-size:10px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+  display:flex;
+  align-items:center;
+  gap:8px;
+  transition:color 0.15s;
+}
+
+.module:hover .module-cta{
+  color:var(--text);
+}
+
+.cta-arrow{
+  display:inline-block;
+  transition:transform 0.2s var(--ease);
+}
+
+.module:hover .cta-arrow{
+  transform:translateX(4px);
+}
+
+/* ── RESTRICTED STATE ── */
+.restricted-note{
+  font-size:11px;
+  color:var(--dim);
+  margin-top:8px;
+  letter-spacing:0.04em;
+}
+
+/* ── BOTTOM BAR ── */
+.bottom-bar{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:36px;
+  border-top:0.5px solid var(--border);
+  background:var(--bg);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 40px;
+  animation:fadeIn 0.6s var(--ease) 0.3s both;
+}
+
+.bottom-text{
+  font-size:9px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--dim);
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-wordmark">VHP Workspace</div>
+  <div class="header-right">
+    <span class="header-meta">Von Hartmann &amp; Partners · Internal</span>
+    <span id="clock">—</span>
+  </div>
+</header>
+
+<div class="workspace">
+
+  <!-- MANDATES MODULE -->
+  <a class="module" href="/dashboard">
+    <div class="module-number">01 · Mandates</div>
+    <div class="module-name">Mandates</div>
+    <div class="module-desc">Deal pipeline, client tracking, and mandate management across all active engagements.</div>
+    <div class="stats" id="mandate-stats">
+      <div class="stat-row">
+        <span class="stat-label">Active mandates</span>
+        <span class="stat-value dim">Sign in to view</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Pipeline stage</span>
+        <span class="stat-value dim">Execution / Fee confirmation</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Access</span>
+        <span class="stat-value">Firebase Auth</span>
+      </div>
+    </div>
+    <div class="module-cta">Open Mandates <span class="cta-arrow">→</span></div>
+  </a>
+
+  <div class="divider"></div>
+
+  <!-- MARKETING MODULE -->
+  <a class="module" href="/marketing" style="animation-delay:0.08s">
+    <div class="module-number">02 · Marketing</div>
+    <div class="module-name">Marketing</div>
+    <div class="module-desc">Content pipeline for LinkedIn and X. Review, approve, and send to CEO before scheduling.</div>
+    <div class="stats" id="marketing-stats">
+      <div class="stat-row">
+        <span class="stat-label">Pending review</span>
+        <span class="stat-value" id="stat-pending">0</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">CEO review</span>
+        <span class="stat-value" id="stat-ceo">0</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-label">Posted</span>
+        <span class="stat-value" id="stat-posted">0</span>
+      </div>
+    </div>
+    <div class="module-cta">Open Marketing <span class="cta-arrow">→</span></div>
+  </a>
+
+</div>
+
+<div class="bottom-bar">
+  <span class="bottom-text">Von Hartmann &amp; Partners · Internal Workspace · Restricted</span>
+  <span class="bottom-text" id="date-str">—</span>
+</div>
+
+<script>
+// ── CLOCK ──────────────────────────────────────────────────────
+(function tick(){
+  const d = new Date();
+  const sast = new Date(d.getTime() + 2*3600000);
+  const p = n => String(n).padStart(2,'0');
+  const h = p(sast.getUTCHours()), m = p(sast.getUTCMinutes()), s = p(sast.getUTCSeconds());
+  document.getElementById('clock').textContent = `${h}:${m}:${s} SAST`;
+  setTimeout(tick, 1000);
+})();
+
+// ── DATE ───────────────────────────────────────────────────────
+const now = new Date();
+document.getElementById('date-str').textContent =
+  now.toLocaleDateString('en-ZA',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}).toUpperCase();
+
+// ── MARKETING STATS FROM LOCALSTORAGE ──────────────────────────
+function loadArr(key){ try{ return JSON.parse(localStorage.getItem(key))||[]; }catch{ return []; } }
+document.getElementById('stat-pending').textContent = loadArr('vhp:pending').length;
+document.getElementById('stat-ceo').textContent     = loadArr('vhp:ceo').length;
+document.getElementById('stat-posted').textContent  = loadArr('vhp:posted').length;
+</script>
+</body>
+</html>
