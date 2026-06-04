@@ -182,6 +182,42 @@ input,select,textarea{font:inherit;}
 
 .empty{display:flex;align-items:center;justify-content:center;padding:80px 0;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--dim);}
 
+/* ── ANALYTICS ── */
+.an-stats{display:grid;grid-template-columns:repeat(4,1fr);border:0.5px solid var(--border);margin-bottom:20px;}
+.an-stat{padding:20px 22px;border-right:0.5px solid var(--border);}
+.an-stat:last-child{border-right:none;}
+.an-stat-lbl{font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;}
+.an-stat-val{font-size:30px;font-weight:700;letter-spacing:-0.02em;line-height:1;font-variant-numeric:tabular-nums;}
+.an-stat-unit{font-size:14px;font-weight:400;color:var(--muted);margin-left:2px;}
+.an-row{display:grid;grid-template-columns:1fr 260px;gap:16px;margin-bottom:20px;}
+.an-panel{border:0.5px solid var(--border);padding:18px 20px;margin-bottom:20px;}
+.an-panel:last-child{margin-bottom:0;}
+.an-panel-title{font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--dim);margin-bottom:16px;}
+.an-bars{display:flex;align-items:flex-end;gap:4px;height:90px;}
+.an-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;}
+.an-bar-cnt{font-size:8px;color:var(--muted);margin-bottom:3px;min-height:12px;line-height:12px;}
+.an-bar-fill{width:100%;background:rgba(255,255,255,0.2);transition:height 0.5s var(--ease),opacity 0.3s;}
+.an-bar-fill:hover{background:rgba(255,255,255,0.5);}
+.an-bar-lbl{font-size:7px;color:var(--dim);margin-top:5px;letter-spacing:0.03em;text-align:center;line-height:1.3;}
+.an-plats{display:flex;flex-direction:column;gap:14px;}
+.an-plat-meta{display:flex;justify-content:space-between;margin-bottom:5px;}
+.an-plat-name{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);}
+.an-plat-pct{font-size:9px;color:var(--text);font-variant-numeric:tabular-nums;}
+.an-plat-track{height:1px;background:var(--border);}
+.an-plat-bar{height:1px;background:rgba(255,255,255,0.45);transition:width 0.6s var(--ease);}
+.an-funnel{display:flex;align-items:center;padding:6px 0;}
+.an-funnel-step{flex:1;text-align:center;}
+.an-funnel-num{font-size:32px;font-weight:700;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;}
+.an-funnel-lbl{font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim);margin-top:5px;}
+.an-funnel-pct{font-size:9px;color:var(--muted);margin-top:3px;}
+.an-funnel-arrow{color:var(--dim);font-size:16px;flex:0 0 32px;text-align:center;}
+.an-log-heads{display:grid;grid-template-columns:130px 110px 1fr;gap:16px;padding-bottom:10px;border-bottom:0.5px solid var(--border);}
+.an-log-heads span{font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim);}
+.an-log-row{display:grid;grid-template-columns:130px 110px 1fr;gap:16px;padding:10px 0;border-bottom:0.5px solid var(--border);align-items:center;animation:cardIn 0.4s var(--ease) both;}
+.an-log-plat{font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);}
+.an-log-date{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;}
+.an-log-excerpt{font-size:12px;color:rgba(255,255,255,0.65);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
 /* ── OVERLAY ── */
 .overlay{position:fixed;inset:0;background:rgba(8,8,8,0.88);display:none;align-items:center;justify-content:center;z-index:100;}
 .overlay.open{display:flex;}
@@ -296,10 +332,12 @@ input,select,textarea{font:inherit;}
         <button class="tab-btn active" data-tab="pending" onclick="switchTab('pending')">Pending <span class="badge" id="badge-pending">0</span></button>
         <button class="tab-btn" data-tab="ceo" onclick="switchTab('ceo')">CEO Review <span class="badge" id="badge-ceo">0</span></button>
         <button class="tab-btn" data-tab="posted" onclick="switchTab('posted')">Posted <span class="badge" id="badge-posted">0</span></button>
+        <button class="tab-btn" data-tab="analytics" onclick="switchTab('analytics')">Analytics</button>
       </nav>
-      <div id="tab-pending"  class="tab-panel active"><div class="cards" id="cards-pending"></div></div>
-      <div id="tab-ceo"      class="tab-panel"><div class="cards" id="cards-ceo"></div></div>
-      <div id="tab-posted"   class="tab-panel"><div id="posted-list"></div></div>
+      <div id="tab-pending"    class="tab-panel active"><div class="cards" id="cards-pending"></div></div>
+      <div id="tab-ceo"        class="tab-panel"><div class="cards" id="cards-ceo"></div></div>
+      <div id="tab-posted"     class="tab-panel"><div id="posted-list"></div></div>
+      <div id="tab-analytics"  class="tab-panel"></div>
     </main>
   </div>
 </div>
@@ -314,7 +352,7 @@ import { initializeApp }
   from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut as fbSignOut, onAuthStateChanged }
   from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
-import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, onSnapshot, serverTimestamp }
+import { getFirestore, collection, doc, addDoc, updateDoc, deleteDoc, getDocs, writeBatch, onSnapshot, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 import { getStorage, ref as sRef, uploadBytes, getDownloadURL }
   from "https://www.gstatic.com/firebasejs/11.0.0/firebase-storage.js";
@@ -335,7 +373,7 @@ const storage = getStorage(app);
 const COL     = 'marketing_posts';
 
 // ── STATE ──────────────────────────────────────────────────────
-let pending = [], ceo = [], posted = [];
+let pending = [], ceo = [], posted = [], allPosts = [];
 let unsubPosts = null;
 let confirmCb  = null;
 let pendingFile = null;    // file selected but not uploaded
@@ -482,7 +520,11 @@ window.openSettings = function(){
     <div class="modal-actions">
       <button class="btn btn-sm btn-primary" onclick="saveSettings()">Save</button>
       <button class="btn btn-sm btn-ghost" onclick="closeOverlay()">Cancel</button>
-    </div>`;
+    </div>
+
+    <div class="modal-section">Danger Zone</div>
+    <button class="btn btn-sm btn-ghost" style="border-color:rgba(255,80,80,0.3);color:rgba(255,100,100,0.75);" onclick="clearAllPosts()">Clear All Posts</button>
+    <div class="modal-hint" style="margin-top:8px">Permanently deletes every post from the pipeline. Cannot be undone.</div>`;
   document.getElementById('overlay').classList.add('open');
   setTimeout(()=>{ const el=document.getElementById('s-phone'); if(el) el.focus(); },50);
 };
@@ -558,10 +600,12 @@ function subscribePosts(){
   unsubPosts = onSnapshot(collection(db,COL), snap => {
     const all = snap.docs.map(d=>({id:d.id,...d.data()}));
     const byDate = (f,k) => [...f].sort((a,b)=>{ const da=tsToDate(a[k]),db2=tsToDate(b[k]); if(!da&&!db2)return 0; if(!da)return 1; if(!db2)return -1; return db2-da; });
-    pending = byDate(all.filter(p=>p.status==='pending'),      'createdAt');
-    ceo     = byDate(all.filter(p=>p.status==='ceo_review'),   'sentAt');
-    posted  = byDate(all.filter(p=>p.status==='posted'),       'approvedAt');
+    allPosts = all;
+    pending  = byDate(all.filter(p=>p.status==='pending'),    'createdAt');
+    ceo      = byDate(all.filter(p=>p.status==='ceo_review'), 'sentAt');
+    posted   = byDate(all.filter(p=>p.status==='posted'),     'approvedAt');
     renderPending(); renderCeo(); renderPosted(); updateBadges();
+    if(document.querySelector('.tab-btn[data-tab="analytics"]')?.classList.contains('active')) renderAnalytics();
   });
 }
 
@@ -569,6 +613,7 @@ function subscribePosts(){
 window.switchTab = function(tab){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.toggle('active',p.id===`tab-${tab}`));
+  if(tab==='analytics') renderAnalytics();
 };
 
 function updateBadges(){
@@ -727,6 +772,124 @@ function renderCeo(){
 
 const LINKEDIN_URL = 'https://www.linkedin.com/company/107294928/admin/page-posts/published/';
 const X_URL        = 'https://x.com/vonhartmannpart';
+
+// ── CLEAR ALL POSTS ───────────────────────────────────────────
+window.clearAllPosts = async function(){
+  openConfirm(
+    'Clear All Posts',
+    'Permanently deletes every post — pending, in review, and posted. This cannot be undone.',
+    async () => {
+      try{
+        const snap = await getDocs(collection(db,COL));
+        if(snap.empty){ toast('Nothing to clear'); return; }
+        const batch = writeBatch(db);
+        snap.docs.forEach(d => batch.delete(d.ref));
+        await batch.commit();
+        toast('All posts cleared');
+      } catch(e){ toast('Error: '+e.message); }
+    }
+  );
+};
+
+// ── ANALYTICS ─────────────────────────────────────────────────
+function renderAnalytics(){
+  const el = document.getElementById('tab-analytics');
+  if(!el) return;
+  const now = new Date();
+
+  // Stats
+  const totalPosted = posted.length;
+  const thisMonth = posted.filter(p=>{ const d=tsToDate(p.approvedAt); return d&&d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear(); }).length;
+  const times = posted.filter(p=>p.createdAt&&p.approvedAt).map(p=>(tsToDate(p.approvedAt)-tsToDate(p.createdAt))/864e5);
+  const avgDays = times.length ? (times.reduce((a,b)=>a+b,0)/times.length).toFixed(1) : '—';
+  const coworkCount = allPosts.filter(p=>p.source==='cowork-engine').length;
+  const coworkPct = allPosts.length ? Math.round(coworkCount/allPosts.length*100) : 0;
+
+  // Weekly volume — last 12 weeks
+  const weeks = [];
+  for(let i=11;i>=0;i--){
+    const ws = new Date(now);
+    ws.setDate(ws.getDate()-ws.getDay()-i*7);
+    ws.setHours(0,0,0,0);
+    const we = new Date(ws); we.setDate(we.getDate()+7);
+    const count = posted.filter(p=>{ const d=tsToDate(p.approvedAt); return d&&d>=ws&&d<we; }).length;
+    const lbl = ws.toLocaleDateString('en-ZA',{day:'2-digit',month:'short'});
+    weeks.push({lbl,count});
+  }
+  const maxW = Math.max(...weeks.map(w=>w.count),1);
+
+  // Platform split
+  const platMap = {};
+  posted.forEach(p=>{ const k=(p.platform||'OTHER').toUpperCase(); platMap[k]=(platMap[k]||0)+1; });
+  const platEntries = Object.entries(platMap).sort((a,b)=>b[1]-a[1]);
+
+  // Funnel
+  const fAll  = allPosts.length;
+  const fCeo  = allPosts.filter(p=>p.status==='ceo_review'||p.status==='posted').length;
+  const fPost = posted.length;
+  const p1 = fAll  ? Math.round(fCeo /fAll *100) : 0;
+  const p2 = fCeo  ? Math.round(fPost/fCeo *100) : 0;
+
+  el.innerHTML = `
+  <div class="an-stats">
+    <div class="an-stat"><div class="an-stat-lbl">Total Posted</div><div class="an-stat-val">${totalPosted}</div></div>
+    <div class="an-stat"><div class="an-stat-lbl">This Month</div><div class="an-stat-val">${thisMonth}</div></div>
+    <div class="an-stat"><div class="an-stat-lbl">Avg Days to Post</div><div class="an-stat-val">${avgDays}${avgDays!=='—'?'<span class="an-stat-unit">d</span>':''}</div></div>
+    <div class="an-stat"><div class="an-stat-lbl">Cowork Engine</div><div class="an-stat-val">${coworkPct}<span class="an-stat-unit">%</span></div></div>
+  </div>
+
+  <div class="an-row">
+    <div class="an-panel" style="margin-bottom:0">
+      <div class="an-panel-title">Weekly Volume · Last 12 Weeks</div>
+      <div class="an-bars">
+        ${weeks.map(w=>`
+          <div class="an-bar-col">
+            <div class="an-bar-cnt">${w.count||''}</div>
+            <div class="an-bar-fill" style="height:${w.count?Math.max(3,Math.round(w.count/maxW*64))+'px':'2px'};opacity:${w.count?1:0.25}"></div>
+            <div class="an-bar-lbl">${w.lbl}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div class="an-panel" style="margin-bottom:0">
+      <div class="an-panel-title">Platform Split</div>
+      <div class="an-plats">
+        ${platEntries.length?platEntries.map(([name,cnt])=>`
+          <div class="an-plat">
+            <div class="an-plat-meta">
+              <span class="an-plat-name">${esc(name)}</span>
+              <span class="an-plat-pct">${cnt} · ${totalPosted?Math.round(cnt/totalPosted*100):0}%</span>
+            </div>
+            <div class="an-plat-track"><div class="an-plat-bar" style="width:${totalPosted?Math.round(cnt/totalPosted*100):0}%"></div></div>
+          </div>`).join(''):'<div style="font-size:11px;color:var(--dim)">No data yet</div>'}
+      </div>
+    </div>
+  </div>
+  <div style="height:16px"></div>
+
+  <div class="an-panel">
+    <div class="an-panel-title">Pipeline Funnel</div>
+    <div class="an-funnel">
+      <div class="an-funnel-step"><div class="an-funnel-num">${fAll}</div><div class="an-funnel-lbl">Submitted</div></div>
+      <div class="an-funnel-arrow">→</div>
+      <div class="an-funnel-step"><div class="an-funnel-num">${fCeo}</div><div class="an-funnel-lbl">CEO Review</div><div class="an-funnel-pct">${p1}% conv.</div></div>
+      <div class="an-funnel-arrow">→</div>
+      <div class="an-funnel-step"><div class="an-funnel-num">${fPost}</div><div class="an-funnel-lbl">Posted</div><div class="an-funnel-pct">${p2}% conv.</div></div>
+    </div>
+  </div>
+
+  <div class="an-panel">
+    <div class="an-panel-title">Content Log · All Posted</div>
+    ${posted.length?`
+      <div class="an-log-heads"><span>Platform</span><span>Date</span><span>Content</span></div>
+      ${posted.map((p,i)=>`
+        <div class="an-log-row" style="animation-delay:${i*18}ms">
+          <span class="an-log-plat">${esc(p.platform)}</span>
+          <span class="an-log-date">${fmtShort(p.approvedAt)}</span>
+          <span class="an-log-excerpt">${esc((p.content||'').slice(0,160))}</span>
+        </div>`).join('')}
+    `:'<div style="font-size:11px;color:var(--dim);padding-top:8px">No posted content yet</div>'}
+  </div>`;
+}
 
 // ── RENDER POSTED ─────────────────────────────────────────────
 function renderPosted(){
