@@ -725,30 +725,22 @@ function renderCeo(){
     </div>`).join('');
 }
 
-// ── PLATFORM CHECK TOGGLE ─────────────────────────────────────
-window.toggleCheck = async function(id, field){
-  const item = posted.find(i=>i.id===id); if(!item) return;
-  const newVal = !item[field];
-  try{
-    await updateDoc(doc(db,COL,id),{[field]:newVal});
-  } catch(e){ toast('Error: '+e.message); }
-};
+const LINKEDIN_URL = 'https://www.linkedin.com/company/107294928/admin/page-posts/published/';
+const X_URL        = 'https://x.com/vonhartmannpart';
 
 // ── RENDER POSTED ─────────────────────────────────────────────
 function renderPosted(){
   const el=document.getElementById('posted-list');
   if(!posted.length){ el.innerHTML='<div class="empty">No posted content</div>'; return; }
   const rows=posted.map((item,i)=>{
-    const liChecked  = !!item.linkedinChecked;
-    const xChecked   = !!item.xChecked;
     const isLinkedin = (item.platform||'').toUpperCase().includes('LINKEDIN');
     const isX        = (item.platform||'').toUpperCase().startsWith('X');
     const liBtn = isLinkedin
-      ? `<span class="platform-check${liChecked?' checked':''}" onclick="toggleCheck('${item.id}','linkedinChecked')">${liChecked?'✓ LinkedIn':'LinkedIn'}</span>`
-      : `<span class="platform-check" style="opacity:0.2;cursor:default">LinkedIn</span>`;
+      ? `<a class="platform-check" href="${LINKEDIN_URL}" target="_blank" rel="noopener">↗ LinkedIn</a>`
+      : `<span class="platform-check" style="opacity:0.15;cursor:default">LinkedIn</span>`;
     const xBtn = isX
-      ? `<span class="platform-check${xChecked?' checked':''}" onclick="toggleCheck('${item.id}','xChecked')">${xChecked?'✓ X':'X'}</span>`
-      : `<span class="platform-check" style="opacity:0.2;cursor:default">X</span>`;
+      ? `<a class="platform-check" href="${X_URL}" target="_blank" rel="noopener">↗ X</a>`
+      : `<span class="platform-check" style="opacity:0.15;cursor:default">X</span>`;
     return `
     <div class="posted-item" style="animation-delay:${i*28}ms">
       <span class="posted-platform">${esc(item.platform)}</span>
