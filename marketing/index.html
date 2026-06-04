@@ -160,13 +160,25 @@ input,select,textarea{font:inherit;}
 }
 
 /* ── POSTED LIST ── */
-.posted-col-heads{display:grid;grid-template-columns:160px 150px 1fr 70px;gap:16px;padding:0 0 11px;border-bottom:0.5px solid var(--border);}
+.posted-col-heads{display:grid;grid-template-columns:140px 120px 1fr 90px 90px;gap:16px;padding:0 0 11px;border-bottom:0.5px solid var(--border);}
 .posted-col-heads span{font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim);}
-.posted-item{display:grid;grid-template-columns:160px 150px 1fr 70px;gap:16px;padding:13px 0;border-bottom:0.5px solid var(--border);align-items:center;animation:cardIn 0.4s var(--ease) both;}
+.posted-item{display:grid;grid-template-columns:140px 120px 1fr 90px 90px;gap:16px;padding:13px 0;border-bottom:0.5px solid var(--border);align-items:center;animation:cardIn 0.4s var(--ease) both;}
 .posted-platform{font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);}
 .posted-date{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;}
 .posted-excerpt{font-size:12px;color:rgba(255,255,255,0.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.posted-badge{font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--dim);text-align:right;}
+.platform-check{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:9px;letter-spacing:0.1em;text-transform:uppercase;
+  padding:4px 10px;border:0.5px solid var(--border);
+  cursor:pointer;transition:all 0.15s;color:var(--dim);
+  user-select:none;
+}
+.platform-check.checked{
+  border-color:rgba(62,207,142,0.5);
+  color:rgba(62,207,142,0.9);
+  background:rgba(62,207,142,0.06);
+}
+.platform-check:hover:not(.checked){ color:var(--muted);border-color:rgba(255,255,255,0.2); }
 
 .empty{display:flex;align-items:center;justify-content:center;padding:80px 0;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--dim);}
 
@@ -713,18 +725,40 @@ function renderCeo(){
     </div>`).join('');
 }
 
+// ── PLATFORM CHECK TOGGLE ─────────────────────────────────────
+window.toggleCheck = async function(id, field){
+  const item = posted.find(i=>i.id===id); if(!item) return;
+  const newVal = !item[field];
+  try{
+    await updateDoc(doc(db,COL,id),{[field]:newVal});
+  } catch(e){ toast('Error: '+e.message); }
+};
+
 // ── RENDER POSTED ─────────────────────────────────────────────
 function renderPosted(){
   const el=document.getElementById('posted-list');
   if(!posted.length){ el.innerHTML='<div class="empty">No posted content</div>'; return; }
-  const rows=posted.map((item,i)=>`
+  const rows=posted.map((item,i)=>{
+    const liChecked  = !!item.linkedinChecked;
+    const xChecked   = !!item.xChecked;
+    const isLinkedin = (item.platform||'').toUpperCase().includes('LINKEDIN');
+    const isX        = (item.platform||'').toUpperCase().startsWith('X');
+    const liBtn = isLinkedin
+      ? `<span class="platform-check${liChecked?' checked':''}" onclick="toggleCheck('${item.id}','linkedinChecked')">${liChecked?'✓ LinkedIn':'LinkedIn'}</span>`
+      : `<span class="platform-check" style="opacity:0.2;cursor:default">LinkedIn</span>`;
+    const xBtn = isX
+      ? `<span class="platform-check${xChecked?' checked':''}" onclick="toggleCheck('${item.id}','xChecked')">${xChecked?'✓ X':'X'}</span>`
+      : `<span class="platform-check" style="opacity:0.2;cursor:default">X</span>`;
+    return `
     <div class="posted-item" style="animation-delay:${i*28}ms">
       <span class="posted-platform">${esc(item.platform)}</span>
       <span class="posted-date">${fmtShort(item.approvedAt)}</span>
       <span class="posted-excerpt">${esc((item.content||'').slice(0,120))}</span>
-      <span class="posted-badge">Posted</span>
-    </div>`).join('');
-  el.innerHTML=`<div class="posted-col-heads"><span>Platform</span><span>Date Posted</span><span>Content</span><span></span></div>${rows}`;
+      ${liBtn}
+      ${xBtn}
+    </div>`;
+  }).join('');
+  el.innerHTML=`<div class="posted-col-heads"><span>Platform</span><span>Date Posted</span><span>Content</span><span>LinkedIn</span><span>X</span></div>${rows}`;
 }
 </script>
 </body>
