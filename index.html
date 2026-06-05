@@ -206,8 +206,16 @@
   .ex-code.dim{color:var(--label);}
   .ex-name{font-size:13px;color:var(--body);}
   .ex-reg{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--label);}
+  .ex-detail{font-size:11px;color:var(--label);letter-spacing:0.03em;line-height:1.55;}
   .ex-st{margin-top:auto;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--fg);}
   .ex-st.pend{color:var(--label);}
+  .ex-st.legal{color:rgba(255,255,255,0.55);}
+  .ex-full{
+    grid-column:1/-1;min-height:auto;flex-direction:row;align-items:center;
+    padding:28px 0;gap:56px;border-top:1px solid var(--rule);opacity:0.45;
+  }
+  .ex-full .ex-code{font-size:clamp(16px,2vw,22px);letter-spacing:0.06em;}
+  .ex-full .ex-st{margin-top:0;}
 
   /* ─── PRE-IPO ─── */
   .preipo-lede{
@@ -604,15 +612,16 @@
   <div class="wrap">
     <div class="sec-head">
       <div class="sec-label" data-n="04"><span>04 · Exchanges</span></div>
-      <h2 class="statement">Active partnerships across five global exchanges. One more in progress.</h2>
+      <h2 class="statement">US-anchored. Active across five global exchanges. One more in progress.</h2>
     </div>
     <div class="exgrid">
-      <div class="ex"><div class="ex-code">NYSE</div><div class="ex-name">New York Stock Exchange</div><div class="ex-reg">United States · NYC</div><div class="ex-st">Active</div></div>
-      <div class="ex"><div class="ex-code">NASDAQ</div><div class="ex-name">Nasdaq Stock Market</div><div class="ex-reg">United States · NYC</div><div class="ex-st">Active</div></div>
+      <div class="ex"><div class="ex-code">NYSE</div><div class="ex-name">New York Stock Exchange</div><div class="ex-reg">United States · New York</div><div class="ex-st">Active · Primary Market</div></div>
+      <div class="ex"><div class="ex-code">NASDAQ</div><div class="ex-name">Nasdaq Stock Market</div><div class="ex-reg">United States · New York</div><div class="ex-st">Active · Primary Market</div></div>
+      <div class="ex"><div class="ex-code">LEGAL</div><div class="ex-name">Legal Counsel</div><div class="ex-reg">United States · New York</div><div class="ex-detail">35+ investment banks<br>20+ funds represented</div><div class="ex-st legal">Legal Partnership</div></div>
       <div class="ex"><div class="ex-code">LSE</div><div class="ex-name">London Stock Exchange</div><div class="ex-reg">United Kingdom · London</div><div class="ex-st">Active</div></div>
       <div class="ex"><div class="ex-code">HKEX</div><div class="ex-name">Hong Kong Exchanges &amp; Clearing</div><div class="ex-reg">Asia-Pacific · Hong Kong</div><div class="ex-st">Active</div></div>
       <div class="ex"><div class="ex-code">JSE</div><div class="ex-name">Johannesburg Stock Exchange</div><div class="ex-reg">South Africa · Sandton</div><div class="ex-st">Home Exchange</div></div>
-      <div class="ex"><div class="ex-code dim">FRA</div><div class="ex-name">Deutsche Börse · Frankfurt</div><div class="ex-reg">European Union · Frankfurt</div><div class="ex-st pend">In Progress · Expected 2026</div></div>
+      <div class="ex ex-full"><div class="ex-code dim">FRA</div><div class="ex-name">Deutsche Börse · Frankfurt</div><div class="ex-reg">European Union · Frankfurt</div><div class="ex-st pend">In Progress · Expected 2026</div></div>
     </div>
   </div>
 </section>
