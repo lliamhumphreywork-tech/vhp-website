@@ -218,6 +218,26 @@ input,select,textarea{font:inherit;}
 .an-log-date{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums;}
 .an-log-excerpt{font-size:12px;color:rgba(255,255,255,0.65);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
+/* ── WEEKLY PERFORMANCE LOG ── */
+.an-perf-form{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:18px;}
+.an-perf-form input,.an-perf-form textarea{
+  width:100%;background:transparent;border:0.5px solid var(--border);color:var(--text);
+  font-family:var(--font);font-size:12px;padding:9px 11px;outline:none;transition:border-color 0.15s;
+}
+.an-perf-form input:focus,.an-perf-form textarea:focus{border-color:rgba(255,255,255,0.3);}
+.an-perf-form input[type="date"]{color-scheme:dark;}
+.an-perf-form input[type="date"]::-webkit-calendar-picker-indicator{filter:invert(0.4);cursor:pointer;}
+.an-perf-form textarea{grid-column:1/-1;min-height:64px;resize:vertical;line-height:1.6;}
+.an-perf-form textarea::placeholder,.an-perf-form input::placeholder{color:var(--dim);}
+.an-perf-heads{display:grid;grid-template-columns:90px 80px 80px 80px 1fr 20px;gap:14px;padding-bottom:10px;border-bottom:0.5px solid var(--border);}
+.an-perf-heads span{font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--dim);}
+.an-perf-row{display:grid;grid-template-columns:90px 80px 80px 80px 1fr 20px;gap:14px;padding:11px 0;border-bottom:0.5px solid var(--border);align-items:start;animation:cardIn 0.4s var(--ease) both;}
+.an-perf-week{font-size:11px;color:var(--text);font-variant-numeric:tabular-nums;padding-top:1px;}
+.an-perf-metric{font-size:12px;color:var(--text);font-variant-numeric:tabular-nums;}
+.an-perf-notes{font-size:12px;color:rgba(255,255,255,0.65);line-height:1.5;}
+.an-perf-del{font-size:13px;color:var(--dim);cursor:pointer;text-align:right;transition:color 0.15s;}
+.an-perf-del:hover{color:#ff7a7a;}
+
 /* ── OVERLAY ── */
 .overlay{position:fixed;inset:0;background:rgba(8,8,8,0.88);display:none;align-items:center;justify-content:center;z-index:100;}
 .overlay.open{display:flex;}
@@ -373,8 +393,10 @@ const storage = getStorage(app);
 const COL     = 'marketing_posts';
 
 // ── STATE ──────────────────────────────────────────────────────
-let pending = [], ceo = [], posted = [], allPosts = [];
+let pending = [], ceo = [], posted = [], allPosts = [], weeklyPerf = [];
 let unsubPosts = null;
+let unsubWeekly = null;
+const PERF_COL = 'weekly_performance';
 let confirmCb  = null;
 let pendingFile = null;    // file selected but not uploaded
 let pendingImageUrl = null; // uploaded URL ready to attach
@@ -575,6 +597,7 @@ window.signIn = async function(){
 
 window.signOut = async function(){
   if(unsubPosts){ unsubPosts(); unsubPosts=null; }
+  if(unsubWeekly){ unsubWeekly(); unsubWeekly=null; }
   await fbSignOut(auth);
 };
 
@@ -588,10 +611,12 @@ onAuthStateChanged(auth, user => {
     document.getElementById('user-email').textContent=user.email;
     updateWaStrip();
     subscribePosts();
+    subscribeWeeklyPerf();
   } else {
     document.getElementById('auth-screen').style.display='flex';
     document.getElementById('app').classList.remove('visible');
     if(unsubPosts){ unsubPosts(); unsubPosts=null; }
+    if(unsubWeekly){ unsubWeekly(); unsubWeekly=null; }
   }
 });
 
@@ -608,6 +633,42 @@ function subscribePosts(){
     if(document.querySelector('.tab-btn[data-tab="analytics"]')?.classList.contains('active')) renderAnalytics();
   });
 }
+
+function subscribeWeeklyPerf(){
+  unsubWeekly = onSnapshot(collection(db,PERF_COL), snap => {
+    weeklyPerf = snap.docs.map(d=>({id:d.id,...d.data()}))
+      .sort((a,b)=>(b.weekOf||'').localeCompare(a.weekOf||''));
+    if(document.querySelector('.tab-btn[data-tab="analytics"]')?.classList.contains('active')) renderAnalytics();
+  });
+}
+
+// ── WEEKLY PERFORMANCE LOG ────────────────────────────────────
+window.logWeeklyPerf = async function(){
+  const week       = document.getElementById('wp-week').value;
+  const impressions= parseInt(document.getElementById('wp-impressions').value)||0;
+  const likes      = parseInt(document.getElementById('wp-likes').value)||0;
+  const comments   = parseInt(document.getElementById('wp-comments').value)||0;
+  const notes      = document.getElementById('wp-notes').value.trim();
+  if(!week){ toast('Pick a week date'); return; }
+  try{
+    await addDoc(collection(db,PERF_COL),{
+      weekOf: week, impressions, likes, comments, notes, createdAt: serverTimestamp()
+    });
+    document.getElementById('wp-week').value='';
+    document.getElementById('wp-impressions').value='';
+    document.getElementById('wp-likes').value='';
+    document.getElementById('wp-comments').value='';
+    document.getElementById('wp-notes').value='';
+    toast('Week logged');
+  } catch(e){ toast('Error: '+e.message); }
+};
+
+window.deleteWeeklyPerf = function(id){
+  openConfirm('Delete Entry','Remove this week\'s performance log. This cannot be undone.', async ()=>{
+    try{ await deleteDoc(doc(db,PERF_COL,id)); toast('Deleted'); }
+    catch(e){ toast('Error: '+e.message); }
+  });
+};
 
 // ── TABS ───────────────────────────────────────────────────────
 window.switchTab = function(tab){
@@ -837,6 +898,31 @@ function renderAnalytics(){
     <div class="an-stat"><div class="an-stat-lbl">Avg Days to Post</div><div class="an-stat-val">${avgDays}${avgDays!=='—'?'<span class="an-stat-unit">d</span>':''}</div></div>
     <div class="an-stat"><div class="an-stat-lbl">Cowork Engine</div><div class="an-stat-val">${coworkPct}<span class="an-stat-unit">%</span></div></div>
   </div>
+
+  <div class="an-panel">
+    <div class="an-panel-title">Weekly Performance Log · Impressions, Likes, Comments &amp; Notes</div>
+    <div class="an-perf-form">
+      <input type="date" id="wp-week" title="Week of">
+      <input type="number" id="wp-impressions" placeholder="Impressions" min="0">
+      <input type="number" id="wp-likes" placeholder="Likes" min="0">
+      <input type="number" id="wp-comments" placeholder="Comments" min="0">
+      <textarea id="wp-notes" placeholder="What landed, what didn't, what to try next week…"></textarea>
+      <button class="btn btn-sm btn-primary" onclick="logWeeklyPerf()" style="grid-column:1/-1">Log Week</button>
+    </div>
+    ${weeklyPerf.length?`
+      <div class="an-perf-heads"><span>Week Of</span><span>Impr.</span><span>Likes</span><span>Comments</span><span>Notes</span><span></span></div>
+      ${weeklyPerf.map((w,i)=>`
+        <div class="an-perf-row" style="animation-delay:${i*20}ms">
+          <span class="an-perf-week">${esc(w.weekOf)}</span>
+          <span class="an-perf-metric">${(w.impressions||0).toLocaleString()}</span>
+          <span class="an-perf-metric">${(w.likes||0).toLocaleString()}</span>
+          <span class="an-perf-metric">${(w.comments||0).toLocaleString()}</span>
+          <span class="an-perf-notes">${esc(w.notes||'—')}</span>
+          <span class="an-perf-del" onclick="deleteWeeklyPerf('${w.id}')" title="Delete">×</span>
+        </div>`).join('')}
+    `:'<div style="font-size:11px;color:var(--dim)">No weeks logged yet</div>'}
+  </div>
+  <div style="height:16px"></div>
 
   <div class="an-row">
     <div class="an-panel" style="margin-bottom:0">
