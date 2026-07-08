@@ -93,7 +93,6 @@
     color:var(--label);font-weight:500;padding-top:6px;
     position:relative;
   }
-  /* Ghost number behind label */
   .sec-label::before{
     content:attr(data-n);
     position:absolute;
@@ -106,7 +105,6 @@
   }
   .sec-label span{position:relative;z-index:1;}
 
-  /* ─── STATEMENT TYPE (pitch-deck weight for section openers) ─── */
   .statement{
     font-size:clamp(32px,4.5vw,68px);
     font-weight:700;line-height:1.02;
@@ -131,13 +129,6 @@
     color:var(--fg);max-width:16ch;
   }
   .hero-h .dim{color:var(--muted);}
-  .hero-sub{
-    margin-top:56px;display:grid;grid-template-columns:1fr 1fr;
-    gap:48px;align-items:end;
-  }
-  .hero-sub .right{
-    font-size:18px;line-height:1.55;font-weight:300;color:var(--body);max-width:38ch;
-  }
   .hero-meta{
     display:grid;grid-template-columns:repeat(3,1fr);
     border-top:1px solid var(--rule);margin-top:112px;
@@ -157,43 +148,45 @@
   .exstrip b{color:var(--fg);font-size:13px;font-weight:600;letter-spacing:0.18em;}
 
   /* ─── ABOUT ─── */
-  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:start;}
-  .about-grid .lede{
-    font-size:clamp(22px,2.4vw,34px);font-weight:700;line-height:1.2;
-    letter-spacing:-0.01em;color:var(--fg);max-width:22ch;
-  }
-  .about-grid p{font-size:15px;line-height:1.7;color:var(--body);}
-  .about-grid p+p{margin-top:22px;}
+  .about-intro{font-size:clamp(16px,1.5vw,20px);line-height:1.65;color:var(--body);max-width:56ch;margin-bottom:72px;}
   .about-stats{
-    display:grid;grid-template-columns:1fr 1fr;gap:40px 28px;
-    border-top:1px solid var(--rule);padding-top:40px;margin-top:72px;
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--rule);padding-top:40px;
   }
+  .about-stats>div{padding-right:28px;border-right:1px solid var(--rule);}
+  .about-stats>div:not(:first-child){padding-left:28px;}
+  .about-stats>div:last-child{border-right:none;padding-right:0;}
   .stat-v{font-size:clamp(40px,5vw,72px);font-weight:700;letter-spacing:-0.03em;color:var(--fg);line-height:1;}
   .stat-k{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--label);margin-top:10px;}
 
   /* ─── WHAT WE DO ─── */
-  .what{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule);}
+  .what{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--rule);}
   .what-col{
     padding:56px 36px 56px 0;border-right:1px solid var(--rule);
-    display:flex;flex-direction:column;gap:24px;min-height:420px;
+    display:flex;flex-direction:column;gap:24px;
   }
   .what-col:not(:first-child){padding-left:36px;}
   .what-col:last-child{border-right:none;padding-right:0;}
   .what-n{font-size:10px;letter-spacing:0.18em;color:var(--label);}
-  .what-h{font-size:clamp(20px,2vw,28px);font-weight:700;color:var(--fg);letter-spacing:-0.01em;line-height:1.1;margin-top:16px;}
-  .what-b{font-size:14px;line-height:1.65;color:var(--body);}
-  .what-avail{margin-top:auto;padding-top:20px;border-top:1px solid var(--rule-soft);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--label);}
+  .what-h{font-size:clamp(18px,1.8vw,26px);font-weight:700;color:var(--fg);letter-spacing:-0.01em;line-height:1.1;}
+  .what-avail{padding-top:20px;border-top:1px solid var(--rule-soft);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--label);}
 
-  /* ─── PROCESS ─── */
-  .steps{border-top:1px solid var(--rule);}
-  .step{
-    display:grid;grid-template-columns:88px 1fr 2fr 1fr;gap:40px;
-    align-items:baseline;padding:48px 0;border-bottom:1px solid var(--rule);
-  }
-  .step-n{font-size:32px;font-weight:700;letter-spacing:-0.01em;color:var(--fg);font-variant-numeric:tabular-nums;}
-  .step-h{font-size:clamp(18px,2vw,26px);font-weight:700;color:var(--fg);letter-spacing:-0.01em;line-height:1.1;}
-  .step-b{font-size:14px;line-height:1.6;color:var(--body);max-width:52ch;}
-  .step-t{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--label);text-align:right;}
+  /* ─── INSIGHTS (main page preview) ─── */
+  section.ins-section{background:#ffffff;border-bottom:1px solid rgba(0,0,0,0.13);}
+  section.ins-section .sec-label{color:rgba(0,0,0,0.45);}
+  section.ins-section .sec-label::before{color:rgba(0,0,0,0.05);}
+  section.ins-section .statement{color:#000000;}
+  .ins-preview{border-top:1px solid rgba(0,0,0,0.13);}
+  .ins-card{display:grid;grid-template-columns:120px 1fr auto;gap:40px;align-items:center;padding:48px 0;border-bottom:1px solid rgba(0,0,0,0.13);transition:opacity .2s;}
+  .ins-card:hover{opacity:0.6;}
+  .ins-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(0,0,0,0.45);}
+  .ins-title{font-size:clamp(18px,2vw,26px);font-weight:700;color:#000000;letter-spacing:-0.01em;line-height:1.15;}
+  .ins-sub{font-size:13px;color:rgba(0,0,0,0.65);margin-top:8px;max-width:60ch;}
+  .ins-arr{width:22px;height:1px;background:#000000;position:relative;flex-shrink:0;}
+  .ins-arr::after{content:"";position:absolute;right:0;top:-3px;width:6px;height:6px;border-right:1px solid #000000;border-top:1px solid #000000;transform:rotate(45deg);}
+  .ins-more{padding-top:28px;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(0,0,0,0.45);}
+  .ins-more a{color:rgba(0,0,0,0.65);transition:color .2s;}
+  .ins-more a:hover{color:#000000;}
 
   /* ─── EXCHANGES ─── */
   .exgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--rule);}
@@ -219,29 +212,13 @@
 
   /* ─── PRE-IPO ─── */
   .preipo-lede{
-    display:grid;grid-template-columns:1fr 1fr;gap:48px;
-    align-items:end;padding-bottom:72px;border-bottom:1px solid var(--rule);
+    padding-bottom:72px;border-bottom:1px solid var(--rule);
   }
   .preipo-lede .big{
     font-size:clamp(32px,4.5vw,68px);font-weight:700;line-height:1.0;
-    letter-spacing:-0.025em;color:var(--fg);max-width:16ch;
+    letter-spacing:-0.025em;color:var(--fg);max-width:20ch;margin-bottom:20px;
   }
-  .preipo-lede p{font-size:16px;line-height:1.65;color:var(--body);max-width:44ch;}
-  .preipo-lede p+p{margin-top:18px;}
-  .preipo-cos{
-    margin-top:72px;display:grid;grid-template-columns:repeat(4,1fr);
-    border-top:1px solid var(--rule);
-  }
-  .pre-co{
-    padding:36px 28px 36px 0;border-right:1px solid var(--rule);
-    display:flex;flex-direction:column;gap:12px;min-height:180px;
-  }
-  .pre-co:not(:first-child){padding-left:28px;}
-  .pre-co:last-child{border-right:none;padding-right:0;}
-  .pre-co .co-name{font-size:clamp(18px,2vw,24px);font-weight:700;color:var(--fg);letter-spacing:-0.005em;}
-  .pre-co .co-desc{font-size:13px;color:var(--body);}
-  .pre-co .co-st{margin-top:auto;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--label);}
-  .pre-co.active .co-st b{color:var(--fg);font-weight:600;}
+  .preipo-lede p{font-size:16px;line-height:1.65;color:var(--body);max-width:48ch;}
   .preipo-feat{
     margin-top:80px;border:1px solid var(--rule);padding:56px;
     display:grid;grid-template-columns:1fr 2fr;gap:72px;align-items:start;
@@ -260,25 +237,6 @@
   .feat-sv{font-size:clamp(24px,3vw,40px);font-weight:700;letter-spacing:-0.02em;color:var(--fg);line-height:1;}
   .feat-sk{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--label);}
   .feat-disc{margin-top:28px;padding-top:20px;border-top:1px solid var(--rule-soft);font-size:12px;color:var(--label);line-height:1.55;}
-
-  /* ─── ADVISORY ─── */
-  .adv{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--rule);}
-  .adv-cell{
-    padding:56px 44px 56px 0;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);
-    min-height:360px;
-  }
-  .adv-cell:nth-child(2n){border-right:none;padding-left:44px;padding-right:0;}
-  .adv-cell:nth-child(2n+1){padding-right:44px;}
-  .adv-cell:nth-last-child(-n+2){border-bottom:none;}
-  .adv-n{font-size:10px;letter-spacing:0.18em;color:var(--label);}
-  .adv-h{font-size:clamp(22px,2.5vw,32px);font-weight:700;color:var(--fg);letter-spacing:-0.01em;margin-top:24px;line-height:1.1;}
-  .adv-list{list-style:none;margin-top:24px;}
-  .adv-list li{
-    font-size:14px;color:var(--body);padding:12px 0;
-    border-top:1px solid var(--rule-soft);display:flex;gap:14px;
-  }
-  .adv-list li::before{content:attr(data-n);color:var(--label);font-size:10px;flex-shrink:0;width:20px;padding-top:2px;}
-  .adv-list li:last-child{border-bottom:1px solid var(--rule-soft);}
 
   /* ─── TRACK RECORD ─── */
   .track-top{
@@ -309,18 +267,6 @@
   }
   .sectors b{color:var(--body);font-size:13px;font-weight:500;}
   .sectors .sep{color:var(--label);}
-
-  /* ─── WHY VHP ─── */
-  .why{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--rule);}
-  .why-cell{
-    padding:44px 22px 44px 0;border-right:1px solid var(--rule);
-    display:flex;flex-direction:column;gap:20px;min-height:300px;
-  }
-  .why-cell:not(:first-child){padding-left:22px;}
-  .why-cell:last-child{border-right:none;padding-right:0;}
-  .why-n{font-size:10px;letter-spacing:0.18em;color:var(--label);}
-  .why-h{font-size:clamp(16px,1.8vw,22px);font-weight:700;color:var(--fg);letter-spacing:-0.005em;line-height:1.1;}
-  .why-b{font-size:13px;line-height:1.6;color:var(--body);}
 
   /* ─── CONTACT ─── */
   .cta-section{border-bottom:1px solid var(--rule);padding:180px 0;}
@@ -371,14 +317,14 @@
 
   /* ─── RESPONSIVE ─── */
   @media(max-width:1080px){
-    .hero-sub,.about-grid,.cta-grid,.preipo-lede,.track-top{grid-template-columns:1fr;gap:40px;}
-    .what,.why{grid-template-columns:1fr 1fr;}
-    .why-cell:nth-child(2n),.what-col:nth-child(2n){border-right:none;padding-right:0;}
-    .exgrid,.preipo-cos{grid-template-columns:1fr 1fr;}
-    .adv{grid-template-columns:1fr;}
-    .adv-cell:nth-child(2n){border-right:1px solid var(--rule)!important;padding-left:0!important;padding-right:44px!important;}
-    .step{grid-template-columns:72px 1fr;}
-    .step .step-b,.step .step-t{grid-column:1/-1;}
+    .hero-meta,.cta-grid,.track-top{grid-template-columns:1fr;gap:40px;}
+    .what{grid-template-columns:1fr 1fr;}
+    .what-col:nth-child(2n){border-right:none;padding-right:0;}
+    .what-col:nth-child(2n+1){padding-left:0;}
+    .ins-card{grid-template-columns:1fr;gap:16px;}
+    .exgrid{grid-template-columns:1fr 1fr;}
+    .about-stats{grid-template-columns:1fr 1fr;gap:40px 0;}
+    .about-stats>div{padding-bottom:40px;}
     .preipo-feat{grid-template-columns:1fr;padding:40px;gap:40px;}
     .deal{grid-template-columns:56px 1fr;row-gap:10px;}
     .d-desc,.d-role{grid-column:1/-1;text-align:left;}
@@ -389,13 +335,14 @@
     section{padding:88px 0;}
     section.tight{padding:72px 0;}
     .hero{padding:64px 0 88px;}
-    .what,.why,.exgrid,.preipo-cos,.foot-grid{grid-template-columns:1fr;}
-    .what-col,.why-cell,.ex,.pre-co{border-right:none!important;padding-left:0!important;padding-right:0!important;}
+    .what,.exgrid,.foot-grid{grid-template-columns:1fr;}
+    .what-col,.ex{border-right:none!important;padding-left:0!important;padding-right:0!important;}
+    .ins-card{grid-template-columns:1fr;}
     .hero-meta{grid-template-columns:1fr;}
     .hero-meta>div{border-right:none;border-bottom:1px solid var(--rule);padding:20px 0!important;}
-    .sec-head{grid-template-columns:1fr;gap:24px;}
     .feat-stats{grid-template-columns:1fr;}
     .feat-stat{border-right:none;padding-left:0!important;}
+    .about-stats{grid-template-columns:1fr 1fr;}
     .nav-meta{display:none;}
     .nav-links a:nth-child(n+4){display:none;}
   }
@@ -424,13 +371,12 @@
   <div class="wrap nav-inner">
     <a href="#top" class="brand">VON HARTMANN <span>&amp; PARTNERS</span></a>
     <nav class="nav-links">
+      <a href="/insights/">Insights</a>
       <a href="#about">About</a>
       <a href="#what">What We Do</a>
-      <a href="#process">Process</a>
       <a href="#exchanges">Active Partnerships</a>
       <a href="#preipo">Pre-IPO</a>
       <a href="#track">Track Record</a>
-      <a href="/insights/">Insights</a>
       <a href="#contact">Contact</a>
     </nav>
     <div class="nav-meta">
@@ -469,8 +415,6 @@
   <div class="wrap">
     <div class="hero-tags">
       <div><b>Independent</b><span>Investment Banking</span></div>
-      <div><b>Strategic</b><span>Advisory</span></div>
-      <div><b>Capital</b><span>Structuring</span></div>
       <div><b>Sandton</b><span>Johannesburg · South Africa</span></div>
     </div>
 
@@ -478,25 +422,18 @@
       We take small and mid-sized companies <span class="dim">public.</span>
     </h1>
 
-    <div class="hero-sub">
-      <div></div>
-      <p class="right">
-        Onto the world's major exchanges, from anywhere in the world. One firm, every step, from origination to listing day.
-      </p>
-    </div>
-
     <div class="hero-meta">
       <div>
         <div class="meta-lbl">Mandate</div>
-        <div class="meta-v">Identify listing-ready companies, structure the deal, and execute the IPO end-to-end.</div>
+        <div class="meta-v">Full-process IPO execution, origination to listing day.</div>
       </div>
       <div>
         <div class="meta-lbl">Coverage</div>
-        <div class="meta-v">NYSE, NASDAQ, LSE, HKEX and JSE. Operational across five global exchanges.</div>
+        <div class="meta-v">NYSE · NASDAQ · LSE · HKEX · JSE</div>
       </div>
       <div>
         <div class="meta-lbl">Position</div>
-        <div class="meta-v">Built for the deals the bulge brackets won't run, and local brokers can't.</div>
+        <div class="meta-v">Independent. No proprietary book. No competing mandates.</div>
       </div>
     </div>
 
@@ -508,30 +445,40 @@
   </div>
 </section>
 
+<!-- ═══ INSIGHTS PREVIEW ═══ -->
+<section id="insights" class="tight ins-section">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-label" data-n="01"><span>01 · Insights</span></div>
+      <h2 class="statement">Capital markets intelligence.</h2>
+    </div>
+    <div class="ins-preview">
+      <a class="ins-card" href="/insights/q2-2026/">
+        <div class="ins-tag">Q2 2026</div>
+        <div>
+          <div class="ins-title">Africa &amp; Emerging Market Origination Update</div>
+          <div class="ins-sub">Rate normalisation, VHP's active pipeline execution, and institutional demand for first-mover emerging market listings at its highest since 2021.</div>
+        </div>
+        <div class="ins-arr"></div>
+      </a>
+    </div>
+    <div class="ins-more">Quarterly intelligence — <a href="/insights/">View all reports</a></div>
+  </div>
+</section>
+
 <!-- ═══ ABOUT ═══ -->
 <section id="about">
   <div class="wrap">
     <div class="sec-head">
-      <div class="sec-label" data-n="01"><span>01 · About</span></div>
-      <h2 class="statement">An independent investment bank, built around a gap nobody else was serving.</h2>
+      <div class="sec-label" data-n="02"><span>02 · About</span></div>
+      <h2 class="statement">Independent investment banking, headquartered in Sandton.</h2>
     </div>
-
-    <div class="about-grid">
-      <div>
-        <p class="lede">Most companies that are ready to list never do. The world's biggest banks won't touch them. The deals are too small. Local brokers can't reach the exchanges they need.</p>
-        <p style="margin-top:36px;">We built Von Hartmann &amp; Partners specifically for that gap. We exist for one reason: to take growing companies public, onto the world's major exchanges, from anywhere in the world.</p>
-        <p>We get in early. We move fast. We see it through to listing day.</p>
-      </div>
-      <div>
-        <p>Headquartered in Sandton, Johannesburg, with active mandates and partnerships spanning the United States, the United Kingdom, Asia-Pacific and Africa. We are independent: no proprietary book, no syndicate desk, no competing positions.</p>
-        <p>Our edge is sequence: we find listing-ready companies before they engage a bank, and we compress months of manual assessment into days using a proprietary, AI-augmented diligence stack. Then we execute, human-led, mandate to bell.</p>
-        <div class="about-stats">
-          <div><div class="stat-v">$213M+</div><div class="stat-k">Aggregate exposure · 2025</div></div>
-          <div><div class="stat-v">5</div><div class="stat-k">Global exchanges</div></div>
-          <div><div class="stat-v">0</div><div class="stat-k">Proprietary positions</div></div>
-          <div><div class="stat-v">1</div><div class="stat-k">Mandate per client</div></div>
-        </div>
-      </div>
+    <p class="about-intro">Taking growing companies public on the world's major exchanges — NYSE, NASDAQ, LSE, HKEX, and JSE — from anywhere in the world. One firm, every step.</p>
+    <div class="about-stats">
+      <div><div class="stat-v">$213M+</div><div class="stat-k">Aggregate exposure · 2025</div></div>
+      <div><div class="stat-v">5</div><div class="stat-k">Global exchanges</div></div>
+      <div><div class="stat-v">0</div><div class="stat-k">Proprietary positions</div></div>
+      <div><div class="stat-v">1</div><div class="stat-k">Mandate per client</div></div>
     </div>
   </div>
 </section>
@@ -540,75 +487,35 @@
 <section id="what" class="tight">
   <div class="wrap">
     <div class="sec-head">
-      <div class="sec-label" data-n="02"><span>02 · What We Do</span></div>
-      <h2 class="statement">Three lines of business. One continuous relationship from first meeting to listing day.</h2>
+      <div class="sec-label" data-n="03"><span>03 · What We Do</span></div>
+      <h2 class="statement">Four lines of business.</h2>
     </div>
     <div class="what">
       <div class="what-col">
         <div class="what-n">01</div>
-        <h3 class="what-h">Taking Companies Public</h3>
-        <p class="what-b">From the moment we identify a company as listing-ready through to the day it trades, we run the full process. Origination, structuring, documentation, investor access, execution. One firm. Every step.</p>
+        <h3 class="what-h">IPOs Pre/Post</h3>
         <div class="what-avail">NYSE · NASDAQ · LSE · HKEX · JSE</div>
       </div>
       <div class="what-col">
         <div class="what-n">02</div>
-        <h3 class="what-h">Pre-IPO Market Access</h3>
-        <p class="what-b">Before a company lists, its shares can be worth significantly more than most people ever get to participate in. VHP creates structured, compliant access to pre-IPO positions in companies within our active listing pipeline.</p>
-        <div class="what-avail">Qualified &amp; institutional participants only</div>
+        <h3 class="what-h">Capital Raisings</h3>
+        <div class="what-avail">Equity · Debt · Hybrid instruments</div>
       </div>
       <div class="what-col">
         <div class="what-n">03</div>
-        <h3 class="what-h">Capital Structuring &amp; Advisory</h3>
-        <p class="what-b">We help companies raise capital, restructure, and prepare for public markets on their own terms. Capital markets, investment banking, energy and infrastructure, biotech and financial services.</p>
-        <div class="what-avail">Mandate-based engagements</div>
+        <h3 class="what-h">M&amp;A</h3>
+        <div class="what-avail">Buy-side · Sell-side · Restructuring</div>
+      </div>
+      <div class="what-col">
+        <div class="what-n">04</div>
+        <h3 class="what-h">Infrastructure Projects</h3>
+        <div class="what-avail">Project finance · Capital structuring</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ PROCESS ═══ -->
-<section id="process">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-label" data-n="03"><span>03 · Process</span></div>
-      <h2 class="statement">Five steps.<br>Mandate to bell.</h2>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-n">01</div>
-        <div class="step-h">We find you first</div>
-        <div class="step-b">We identify companies approaching IPO readiness before they engage an advisor, using market signals, financial screening, and AI-augmented assessment. That sequencing is the edge.</div>
-        <div class="step-t">Origination</div>
-      </div>
-      <div class="step">
-        <div class="step-n">02</div>
-        <div class="step-h">We assess fast</div>
-        <div class="step-b">What traditionally takes months of manual work, we compress into days. Listing readiness is established from the first meeting, not the fifth.</div>
-        <div class="step-t">Diligence</div>
-      </div>
-      <div class="step">
-        <div class="step-n">03</div>
-        <div class="step-h">We structure the deal</div>
-        <div class="step-b">Capital structure, exchange selection, investor positioning, all built for the specific market you're listing on, not a generic template.</div>
-        <div class="step-t">Structuring</div>
-      </div>
-      <div class="step">
-        <div class="step-n">04</div>
-        <div class="step-h">We reach the right investors</div>
-        <div class="step-b">AI-matched outreach to institutional investors across the UK, US, and Asia. The same investor access that used to be reserved for billion-dollar mandates.</div>
-        <div class="step-t">Distribution</div>
-      </div>
-      <div class="step">
-        <div class="step-n">05</div>
-        <div class="step-h">We close it</div>
-        <div class="step-b">Human-led execution from mandate to listing day. We don't hand off. We see it through.</div>
-        <div class="step-t">Execution</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ EXCHANGES ═══ -->
+<!-- ═══ ACTIVE PARTNERSHIPS ═══ -->
 <section id="exchanges">
   <div class="wrap">
     <div class="sec-head">
@@ -635,17 +542,8 @@
       <h2 class="statement">Private shares.<br>Before the listing.</h2>
     </div>
     <div class="preipo-lede">
-      <div class="big">The value was always there. Most people couldn't access it.</div>
-      <div>
-        <p>Companies like SpaceX, Klarna, and Anthropic were valued in the hundreds of billions long before they ever listed publicly. That value creation was always there. Most people just couldn't access it.</p>
-        <p><span style="color:var(--fg)">VHP changes that.</span> We give qualified investors structured access to pre-IPO positions in companies we are actively taking to market. Every opportunity is tied directly to our IPO pipeline and properly documented.</p>
-      </div>
-    </div>
-    <div class="preipo-cos">
-      <div class="pre-co"><div class="co-name">SpaceX</div><div class="co-desc">Aerospace · Launch &amp; satellite communications</div><div class="co-st">Reference · Not on platform</div></div>
-      <div class="pre-co"><div class="co-name">Klarna</div><div class="co-desc">Fintech · Consumer credit and payments</div><div class="co-st">Reference · Not on platform</div></div>
-      <div class="pre-co"><div class="co-name">Anthropic</div><div class="co-desc">Artificial intelligence · Frontier research</div><div class="co-st">Reference · Not on platform</div></div>
-      <div class="pre-co active"><div class="co-name">Undisclosed</div><div class="co-desc">Fintech · 40m+ users across Nigeria, Egypt, Pakistan</div><div class="co-st"><b>· Currently available</b></div></div>
+      <div class="big">The value was always there.</div>
+      <p>Structured access to pre-IPO positions in companies within our active listing pipeline. Qualified and institutional participants only.</p>
     </div>
     <div class="preipo-feat">
       <div class="feat-left">
@@ -660,63 +558,7 @@
           <div class="feat-stat"><div class="feat-sv">3</div><div class="feat-sk">Countries</div></div>
           <div class="feat-stat"><div class="feat-sv">Fintech</div><div class="feat-sk">Sector</div></div>
         </div>
-        <p class="feat-disc">Pre-IPO access is available to qualified and institutional participants under applicable regulatory frameworks. Reference companies are illustrative of pre-IPO value creation and are not offered through the platform.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ ADVISORY ═══ -->
-<section class="tight">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-label" data-n="06"><span>06 · Advisory Services</span></div>
-      <h2 class="statement">Four practices. Built to bring a company to a public listing on its own terms.</h2>
-    </div>
-    <div class="adv">
-      <div class="adv-cell">
-        <div class="adv-n">01</div>
-        <h3 class="adv-h">Capital Markets &amp; Pre-IPO</h3>
-        <ul class="adv-list">
-          <li data-n="·">Capital structure advisory</li>
-          <li data-n="·">Pre-listing readiness</li>
-          <li data-n="·">Cross-border listing coordination</li>
-          <li data-n="·">Investor positioning and documentation</li>
-          <li data-n="·">Pre-IPO secondary market access</li>
-        </ul>
-      </div>
-      <div class="adv-cell">
-        <div class="adv-n">02</div>
-        <h3 class="adv-h">Investment Banking</h3>
-        <ul class="adv-list">
-          <li data-n="·">Mergers and acquisitions</li>
-          <li data-n="·">Corporate restructurings</li>
-          <li data-n="·">Divestitures</li>
-          <li data-n="·">Valuation and transaction modelling</li>
-          <li data-n="·">Capital raising for growth companies</li>
-        </ul>
-      </div>
-      <div class="adv-cell">
-        <div class="adv-n">03</div>
-        <h3 class="adv-h">Energy &amp; Infrastructure</h3>
-        <ul class="adv-list">
-          <li data-n="·">Power and energy transition</li>
-          <li data-n="·">Mining and strategic resources</li>
-          <li data-n="·">Infrastructure platform structuring</li>
-          <li data-n="·">Project-linked capital advisory</li>
-          <li data-n="·">Real assets and structured infrastructure</li>
-        </ul>
-      </div>
-      <div class="adv-cell">
-        <div class="adv-n">04</div>
-        <h3 class="adv-h">Biotech &amp; Financial Services</h3>
-        <ul class="adv-list">
-          <li data-n="·">Biotech pre-IPO positioning</li>
-          <li data-n="·">Life sciences capital structuring</li>
-          <li data-n="·">Fintech listing coordination</li>
-          <li data-n="·">AI-integrated company advisory</li>
-          <li data-n="·">Strategic growth advisory</li>
-        </ul>
+        <p class="feat-disc">Pre-IPO access is available to qualified and institutional participants under applicable regulatory frameworks.</p>
       </div>
     </div>
   </div>
@@ -726,14 +568,14 @@
 <section id="track">
   <div class="wrap">
     <div class="sec-head">
-      <div class="sec-label" data-n="07"><span>07 · Track Record</span></div>
-      <h2 class="statement">2025 in numbers, and a representative sample of what they covered.</h2>
+      <div class="sec-label" data-n="06"><span>06 · Track Record</span></div>
+      <h2 class="statement">2025 in numbers.</h2>
     </div>
     <div class="track-top">
       <div class="track-big">$213M<span class="dim">+</span></div>
       <div class="track-right">
         <div class="meta-lbl">Aggregate transaction exposure · 2025</div>
-        Covering cross-border listings, capital raising, and infrastructure restructuring across our active mandate book.
+        Cross-border listings, capital raising, and infrastructure restructuring across our active mandate book.
       </div>
     </div>
     <div class="deals">
@@ -767,25 +609,8 @@
   </div>
 </section>
 
-<!-- ═══ WHY VHP ═══ -->
-<section class="tight">
-  <div class="wrap">
-    <div class="sec-head">
-      <div class="sec-label" data-n="08"><span>08 · Why VHP</span></div>
-      <h2 class="statement">Five things make the firm.</h2>
-    </div>
-    <div class="why">
-      <div class="why-cell"><div class="why-n">01</div><div class="why-h">We get in first</div><p class="why-b">We identify companies before they engage an investment bank. That isn't how the industry usually works. It's our edge.</p></div>
-      <div class="why-cell"><div class="why-n">02</div><div class="why-h">We move faster</div><p class="why-b">AI compresses months of manual assessment into days. You get answers in the first meeting, not the fifth.</p></div>
-      <div class="why-cell"><div class="why-n">03</div><div class="why-h">We're independent</div><p class="why-b">No proprietary book. No competing mandates. Our only objective is your listing.</p></div>
-      <div class="why-cell"><div class="why-n">04</div><div class="why-h">We go global</div><p class="why-b">NYSE, NASDAQ, LSE, HKEX, JSE. Not aspirational. Operational.</p></div>
-      <div class="why-cell"><div class="why-n">05</div><div class="why-h">Full journey</div><p class="why-b">From pre-IPO access through to listing day, in one firm. We don't hand off.</p></div>
-    </div>
-  </div>
-</section>
-
 <!-- ═══ CONTACT ═══ -->
-<section id="contact" class="cta-section" style="padding:180px 0;border-bottom:1px solid var(--rule);">
+<section id="contact" class="cta-section">
   <div class="wrap cta-grid">
     <h2 class="cta-stmt">Let's talk about taking your company public.</h2>
     <div class="cta-right">
@@ -814,10 +639,10 @@
       <div class="foot-col">
         <h4>Practice</h4>
         <ul>
-          <li><a href="#what">Taking Companies Public</a></li>
-          <li><a href="#preipo">Pre-IPO Market Access</a></li>
-          <li><a href="#what">Capital Structuring</a></li>
-          <li><a href="#process">Process</a></li>
+          <li><a href="#what">IPOs Pre/Post</a></li>
+          <li><a href="#what">Capital Raisings</a></li>
+          <li><a href="#what">M&amp;A</a></li>
+          <li><a href="#what">Infrastructure Projects</a></li>
           <li><a href="/insights/">Insights</a></li>
         </ul>
       </div>
@@ -862,26 +687,16 @@
 
   /* ── Scroll animations ── */
   (function(){
-    // Elements that animate as one unit
-    const singles='.hero-tags,.hero-h,.hero-sub,.exstrip,.sec-head,.preipo-lede,.preipo-feat,.track-top,.sectors,.tagline .t,.cta-stmt,.cta-right';
-    // Grid children that stagger: [selector, delay-per-item-ms]
+    const singles='.hero-tags,.hero-h,.exstrip,.sec-head,.preipo-lede,.preipo-feat,.track-top,.sectors,.tagline .t,.cta-stmt,.cta-right,.about-intro,.about-stats,.ins-preview,.ins-more';
     const groups=[
-      ['.hero-meta > div',  90],
-      ['.about-grid > div', 110],
-      ['.about-stats > div',70],
-      ['.what-col',         90],
-      ['.step',             65],
-      ['.ex',               65],
-      ['.pre-co',           75],
-      ['.adv-cell',         90],
-      ['.deal',             70],
-      ['.why-cell',         70],
+      ['.hero-meta > div', 90],
+      ['.what-col',        80],
+      ['.ex',              65],
+      ['.deal',            70],
     ];
 
-    // Mark singles
     document.querySelectorAll(singles).forEach(el=>el.dataset.anim='');
 
-    // Mark staggered children with per-item delay
     groups.forEach(([sel,gap])=>{
       document.querySelectorAll(sel).forEach((el,i)=>{
         el.dataset.anim='';
@@ -889,14 +704,12 @@
       });
     });
 
-    // Hero sequence: stagger the above-fold items nicely
-    const heroOrder=['.hero-tags','.hero-h','.hero-sub','.exstrip'];
+    const heroOrder=['.hero-tags','.hero-h','.exstrip'];
     heroOrder.forEach((sel,i)=>{
       const el=document.querySelector(sel+'[data-anim]');
       if(el) el.style.setProperty('--ad', i*130+'ms');
     });
 
-    // Show elements already in (or near) the viewport
     function reveal(){
       document.querySelectorAll('[data-anim]:not(.in)').forEach(el=>{
         const r=el.getBoundingClientRect();
@@ -904,7 +717,6 @@
       });
     }
 
-    // IntersectionObserver for smooth scroll-triggered reveals
     const io=new IntersectionObserver(entries=>{
       entries.forEach(e=>{
         if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
@@ -913,7 +725,6 @@
 
     document.querySelectorAll('[data-anim]').forEach(el=>io.observe(el));
 
-    // Reveal in-viewport elements on load, then again on scroll
     setTimeout(reveal,50);
     window.addEventListener('scroll',reveal,{passive:true});
   })();
