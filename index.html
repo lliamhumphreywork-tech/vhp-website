@@ -172,21 +172,18 @@
   .what-avail{padding-top:20px;border-top:1px solid var(--rule-soft);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--label);}
 
   /* ─── INSIGHTS (main page preview) ─── */
-  section.ins-section{background:#ffffff;border-bottom:1px solid rgba(0,0,0,0.13);}
-  section.ins-section .sec-label{color:rgba(0,0,0,0.45);}
-  section.ins-section .sec-label::before{color:rgba(0,0,0,0.05);}
-  section.ins-section .statement{color:#000000;}
-  .ins-preview{border-top:1px solid rgba(0,0,0,0.13);}
-  .ins-card{display:grid;grid-template-columns:120px 1fr auto;gap:40px;align-items:center;padding:48px 0;border-bottom:1px solid rgba(0,0,0,0.13);transition:opacity .2s;}
-  .ins-card:hover{opacity:0.6;}
-  .ins-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(0,0,0,0.45);}
-  .ins-title{font-size:clamp(18px,2vw,26px);font-weight:700;color:#000000;letter-spacing:-0.01em;line-height:1.15;}
-  .ins-sub{font-size:13px;color:rgba(0,0,0,0.65);margin-top:8px;max-width:60ch;}
-  .ins-arr{width:22px;height:1px;background:#000000;position:relative;flex-shrink:0;}
-  .ins-arr::after{content:"";position:absolute;right:0;top:-3px;width:6px;height:6px;border-right:1px solid #000000;border-top:1px solid #000000;transform:rotate(45deg);}
-  .ins-more{padding-top:28px;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(0,0,0,0.45);}
-  .ins-more a{color:rgba(0,0,0,0.65);transition:color .2s;}
-  .ins-more a:hover{color:#000000;}
+  section.ins-section{background:#111111;}
+  .ins-preview{border-top:1px solid var(--rule);}
+  .ins-card{display:grid;grid-template-columns:120px 1fr auto;gap:40px;align-items:center;padding:48px 0;border-bottom:1px solid var(--rule);transition:opacity .2s;}
+  .ins-card:hover{opacity:0.7;}
+  .ins-tag{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--label);}
+  .ins-title{font-size:clamp(18px,2vw,26px);font-weight:700;color:var(--fg);letter-spacing:-0.01em;line-height:1.15;}
+  .ins-sub{font-size:13px;color:var(--body);margin-top:8px;max-width:60ch;}
+  .ins-arr{width:22px;height:1px;background:var(--fg);position:relative;flex-shrink:0;}
+  .ins-arr::after{content:"";position:absolute;right:0;top:-3px;width:6px;height:6px;border-right:1px solid var(--fg);border-top:1px solid var(--fg);transform:rotate(45deg);}
+  .ins-more{padding-top:28px;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--label);}
+  .ins-more a{color:var(--body);transition:color .2s;}
+  .ins-more a:hover{color:var(--fg);}
 
   /* ─── EXCHANGES ─── */
   .exgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--rule);}
