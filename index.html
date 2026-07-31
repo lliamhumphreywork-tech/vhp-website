@@ -3,17 +3,20 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Von Hartmann &amp; Partners — Investment Banking</title>
-<meta name="description" content="Von Hartmann & Partners is an independent investment bank taking small and mid-sized companies public on NYSE, NASDAQ, LSE, HKEX and JSE. Headquartered in Sandton, Johannesburg."/>
+<title>Von Hartmann &amp; Partners — Independent Investment Banking</title>
+<meta name="description" content="Von Hartmann & Partners is an independent cross-border investment bank focused on US capital markets and strategic transactions. Primary access to NYSE and Nasdaq. Headquartered in Johannesburg."/>
 <meta name="robots" content="index, follow"/>
 <link rel="canonical" href="https://vonhartmannpartners.co.za/"/>
-<meta property="og:title" content="Von Hartmann & Partners — Investment Banking"/>
-<meta property="og:description" content="Taking small and mid-sized companies public on the world's major exchanges. One firm, every step, from origination to listing day."/>
+<meta property="og:title" content="Von Hartmann & Partners — Independent Investment Banking"/>
+<meta property="og:description" content="An independent cross-border investment bank. US capital markets. Global execution."/>
 <meta property="og:url" content="https://vonhartmannpartners.co.za/"/>
 <meta property="og:type" content="website"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="Von Hartmann & Partners"/>
-<meta name="twitter:description" content="Independent investment banking. Taking companies public on NYSE, NASDAQ, LSE, HKEX and JSE."/>
+<meta name="twitter:description" content="Independent investment banking. US capital markets. Global execution."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
 <style>
   :root{
     --bg:#080808;
@@ -26,11 +29,13 @@
     --ghost:rgba(255,255,255,0.04);
     --px:clamp(32px,5.5vw,88px);
     --max:1440px;
+    --serif:'Instrument Serif',Georgia,'Times New Roman',serif;
+    --sans:'Inter',Helvetica,Arial,sans-serif;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   html,body{background:var(--bg);color:var(--body);}
   body{
-    font-family:Helvetica,"Helvetica Neue",Arial,sans-serif;
+    font-family:var(--sans);
     font-size:15px;line-height:1.55;
     -webkit-font-smoothing:antialiased;
   }
@@ -41,40 +46,19 @@
   hr{height:1px;background:var(--rule);border:none;width:100%;}
 
   /* ─── NAV ─── */
-  .nav{
-    position:sticky;top:0;z-index:50;
-    background:var(--bg);
-    border-bottom:1px solid var(--rule);
-  }
-  .nav-inner{
-    display:grid;grid-template-columns:auto 1fr auto;
-    align-items:center;gap:56px;height:68px;
-  }
+  .nav{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--rule);}
+  .nav-inner{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:56px;height:68px;}
   .brand{color:var(--fg);font-weight:600;font-size:13px;letter-spacing:0.06em;white-space:nowrap;}
   .brand span{color:var(--label);font-weight:400;}
   .nav-links{display:flex;gap:32px;justify-content:flex-end;flex-wrap:nowrap;}
-  .nav-links a{
-    font-size:11px;letter-spacing:0.16em;text-transform:uppercase;
-    color:var(--body);transition:color .2s;font-weight:500;white-space:nowrap;
-  }
+  .nav-links a{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--body);transition:color .2s;font-weight:500;white-space:nowrap;}
   .nav-links a:hover{color:var(--fg);}
-  .nav-meta{
-    font-size:11px;letter-spacing:0.16em;text-transform:uppercase;
-    color:var(--label);display:flex;gap:28px;align-items:center;
-  }
+  .nav-meta{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--label);display:flex;gap:28px;align-items:center;}
   .nav-dot{width:5px;height:5px;background:var(--fg);border-radius:50%;display:inline-block;margin-right:7px;vertical-align:middle;}
 
   /* ─── TICKER ─── */
-  .ticker{
-    border-bottom:1px solid var(--rule);overflow:hidden;height:34px;
-    display:flex;align-items:center;
-  }
-  .ticker-track{
-    display:flex;gap:56px;white-space:nowrap;
-    animation:marquee 90s linear infinite;
-    font-size:10px;letter-spacing:0.16em;text-transform:uppercase;
-    color:var(--label);font-variant-numeric:tabular-nums;
-  }
+  .ticker{border-bottom:1px solid var(--rule);overflow:hidden;height:34px;display:flex;align-items:center;}
+  .ticker-track{display:flex;gap:56px;white-space:nowrap;animation:marquee 90s linear infinite;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--label);font-variant-numeric:tabular-nums;}
   .ticker-track span{display:inline-flex;gap:20px;align-items:center;}
   .ticker-track b{color:var(--body);font-weight:500;}
   .up{color:#fff;}.dn{color:var(--label);}
@@ -83,95 +67,65 @@
   /* ─── SECTION CHROME ─── */
   section{padding:144px 0;border-bottom:1px solid var(--rule);position:relative;}
   section.tight{padding:112px 0;}
-
-  .sec-head{
-    display:grid;grid-template-columns:200px 1fr;gap:48px;
-    align-items:baseline;margin-bottom:80px;
-  }
-  .sec-label{
-    font-size:11px;letter-spacing:0.18em;text-transform:uppercase;
-    color:var(--label);font-weight:500;padding-top:6px;
-    position:relative;
-  }
-  .sec-label::before{
-    content:attr(data-n);
-    position:absolute;
-    left:-8px;top:-0.6em;
-    font-size:clamp(80px,10vw,160px);
-    font-weight:800;letter-spacing:-0.04em;
-    color:var(--ghost);
-    pointer-events:none;line-height:1;
-    z-index:0;
-  }
+  .sec-head{display:grid;grid-template-columns:200px 1fr;gap:48px;align-items:baseline;margin-bottom:80px;}
+  .sec-label{font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--label);font-weight:500;padding-top:6px;position:relative;}
+  .sec-label::before{content:attr(data-n);position:absolute;left:-8px;top:-0.6em;font-size:clamp(80px,10vw,160px);font-weight:800;letter-spacing:-0.04em;color:var(--ghost);pointer-events:none;line-height:1;z-index:0;}
   .sec-label span{position:relative;z-index:1;}
-
   .statement{
-    font-size:clamp(32px,4.5vw,68px);
-    font-weight:700;line-height:1.02;
-    letter-spacing:-0.025em;color:var(--fg);
-    max-width:20ch;
+    font-family:var(--serif);
+    font-size:clamp(34px,4.5vw,68px);
+    font-weight:400;line-height:1.1;
+    letter-spacing:-0.01em;color:var(--fg);
+    max-width:22ch;
   }
-  .statement .dim{color:var(--muted);}
-  .statement.xl{font-size:clamp(48px,7vw,110px);letter-spacing:-0.035em;}
 
   /* ─── HERO ─── */
   .hero{padding:100px 0 144px;border-bottom:1px solid var(--rule);}
-  .hero-tags{
-    display:flex;gap:72px;flex-wrap:wrap;
-    font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--label);
-    margin-bottom:80px;
-  }
+  .hero-tags{display:flex;gap:72px;flex-wrap:wrap;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--label);margin-bottom:80px;}
   .hero-tags>div{display:flex;flex-direction:column;gap:10px;}
   .hero-tags b{color:var(--fg);font-weight:500;font-size:12px;letter-spacing:0.16em;}
   .hero-h{
-    font-size:clamp(56px,8.5vw,136px);
-    font-weight:700;line-height:0.95;letter-spacing:-0.035em;
-    color:var(--fg);max-width:16ch;
+    font-family:var(--serif);
+    font-size:clamp(52px,8vw,128px);
+    font-weight:400;line-height:1.0;letter-spacing:-0.01em;
+    color:var(--fg);max-width:18ch;
   }
   .hero-h .dim{color:var(--muted);}
-  .hero-meta{
-    display:grid;grid-template-columns:repeat(3,1fr);
-    border-top:1px solid var(--rule);margin-top:112px;
-  }
-  .hero-meta>div{
-    padding:26px 28px 26px 0;border-right:1px solid var(--rule);
-  }
+  .hero-sub-text{margin-top:40px;font-size:clamp(15px,1.4vw,19px);line-height:1.7;font-weight:300;color:var(--body);max-width:52ch;}
+  .hero-meta{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule);margin-top:96px;}
+  .hero-meta>div{padding:26px 28px 26px 0;border-right:1px solid var(--rule);}
   .hero-meta>div:last-child{border-right:none;padding-right:0;}
   .hero-meta>div:not(:first-child){padding-left:28px;}
   .meta-lbl{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--label);margin-bottom:14px;}
-  .meta-v{color:var(--fg);font-size:20px;font-weight:400;letter-spacing:-0.005em;line-height:1.3;}
-  .exstrip{
-    margin-top:56px;border-top:1px solid var(--rule);padding-top:28px;
-    display:flex;gap:56px;flex-wrap:wrap;align-items:baseline;
-  }
+  .meta-v{color:var(--fg);font-size:18px;font-weight:400;letter-spacing:-0.005em;line-height:1.4;}
+  .exstrip{margin-top:56px;border-top:1px solid var(--rule);padding-top:28px;display:flex;gap:56px;flex-wrap:wrap;align-items:baseline;}
   .exstrip .meta-lbl{color:var(--label);}
   .exstrip b{color:var(--fg);font-size:13px;font-weight:600;letter-spacing:0.18em;}
+  .exstrip .ex-primary{color:var(--fg);}
+  .exstrip .ex-global{color:var(--body);font-weight:400;}
+  .exstrip .ex-sep{color:var(--label);font-size:11px;letter-spacing:0.12em;}
 
   /* ─── ABOUT ─── */
-  .about-intro{font-size:clamp(16px,1.5vw,20px);line-height:1.65;color:var(--body);max-width:56ch;margin-bottom:72px;}
-  .about-stats{
-    display:grid;grid-template-columns:repeat(4,1fr);
-    border-top:1px solid var(--rule);padding-top:40px;
-  }
+  .about-body{margin-bottom:72px;}
+  .about-body p{font-size:clamp(15px,1.4vw,18px);line-height:1.8;color:var(--body);max-width:76ch;}
+  .about-body p+p{margin-top:24px;}
+  .about-stats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--rule);padding-top:40px;}
   .about-stats>div{padding-right:28px;border-right:1px solid var(--rule);}
   .about-stats>div:not(:first-child){padding-left:28px;}
   .about-stats>div:last-child{border-right:none;padding-right:0;}
   .stat-v{font-size:clamp(40px,5vw,72px);font-weight:700;letter-spacing:-0.03em;color:var(--fg);line-height:1;}
   .stat-k{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--label);margin-top:10px;}
 
-  /* ─── WHAT WE DO ─── */
+  /* ─── PRACTICE ─── */
   .what{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--rule);}
-  .what-col{
-    padding:56px 36px 56px 0;border-right:1px solid var(--rule);
-    display:flex;flex-direction:column;gap:24px;
-  }
+  .what-col{padding:56px 36px 56px 0;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:24px;}
   .what-col:not(:first-child){padding-left:36px;}
   .what-col:last-child{border-right:none;padding-right:0;}
   .what-n{font-size:10px;letter-spacing:0.18em;color:var(--label);}
-  .what-h{font-size:clamp(18px,1.8vw,26px);font-weight:700;color:var(--fg);letter-spacing:-0.01em;line-height:1.1;}
-  .what-avail{padding-top:20px;border-top:1px solid var(--rule-soft);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--label);}
+  .what-h{font-family:var(--serif);font-size:clamp(19px,1.8vw,26px);font-weight:400;color:var(--fg);letter-spacing:-0.005em;line-height:1.2;}
+  .what-avail{padding-top:20px;border-top:1px solid var(--rule-soft);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--label);line-height:1.9;}
 
-  /* ─── INSIGHTS (main page preview) ─── */
+  /* ─── INSIGHTS ─── */
   section.ins-section{background:#111111;}
   .ins-preview{border-top:1px solid var(--rule);}
   .ins-card{display:grid;grid-template-columns:120px 1fr auto;gap:40px;align-items:center;padding:48px 0;border-bottom:1px solid var(--rule);transition:opacity .2s;}
@@ -185,12 +139,10 @@
   .ins-more a{color:var(--body);transition:color .2s;}
   .ins-more a:hover{color:var(--fg);}
 
-  /* ─── EXCHANGES ─── */
-  .exgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--rule);}
-  .ex{
-    padding:48px 36px 48px 0;
-    display:flex;flex-direction:column;gap:16px;min-height:220px;
-  }
+  /* ─── EXCHANGE GRID ─── */
+  .ex-tier-head{font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--label);font-weight:500;padding:20px 0;border-top:1px solid var(--rule);}
+  .exgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;}
+  .ex{padding:48px 36px 48px 0;display:flex;flex-direction:column;gap:16px;min-height:220px;}
   .ex:nth-child(3n+2),.ex:nth-child(3n){padding-left:36px;}
   .ex-code{font-size:clamp(32px,4vw,52px);font-weight:700;letter-spacing:0.02em;color:var(--fg);line-height:1;}
   .ex-code.dim{color:var(--label);}
@@ -200,34 +152,21 @@
   .ex-st{margin-top:auto;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--fg);}
   .ex-st.pend{color:var(--label);}
   .ex-st.legal{color:rgba(255,255,255,0.55);}
-  .ex-full{
-    grid-column:1/-1;min-height:auto;flex-direction:row;align-items:center;
-    padding:28px 0;gap:56px;border-top:1px solid var(--rule);opacity:0.45;
-  }
+  .ex-st.global{color:var(--body);}
+  .ex-full{min-height:auto;flex-direction:row;align-items:center;padding:28px 0;gap:56px;border-top:1px solid var(--rule);opacity:0.45;}
   .ex-full .ex-code{font-size:clamp(16px,2vw,22px);letter-spacing:0.06em;}
   .ex-full .ex-st{margin-top:0;}
 
   /* ─── PRE-IPO ─── */
-  .preipo-lede{
-    padding-bottom:72px;border-bottom:1px solid var(--rule);
-  }
-  .preipo-lede .big{
-    font-size:clamp(32px,4.5vw,68px);font-weight:700;line-height:1.0;
-    letter-spacing:-0.025em;color:var(--fg);max-width:20ch;margin-bottom:20px;
-  }
-  .preipo-lede p{font-size:16px;line-height:1.65;color:var(--body);max-width:48ch;}
-  .preipo-feat{
-    margin-top:80px;border:1px solid var(--rule);padding:56px;
-    display:grid;grid-template-columns:1fr 2fr;gap:72px;align-items:start;
-  }
+  .preipo-lede{padding-bottom:72px;border-bottom:1px solid var(--rule);}
+  .preipo-lede .big{font-family:var(--serif);font-size:clamp(32px,4.5vw,68px);font-weight:400;line-height:1.1;letter-spacing:-0.01em;color:var(--fg);max-width:22ch;margin-bottom:24px;}
+  .preipo-lede p{font-size:16px;line-height:1.7;color:var(--body);max-width:52ch;}
+  .preipo-feat{margin-top:80px;border:1px solid var(--rule);padding:56px;display:grid;grid-template-columns:1fr 2fr;gap:72px;align-items:start;}
   .feat-left .tag{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--label);margin-bottom:20px;}
   .feat-left .name{font-size:clamp(48px,6vw,80px);font-weight:800;line-height:1;letter-spacing:-0.04em;color:var(--fg);}
   .feat-left .what{font-size:13px;color:var(--label);margin-top:12px;}
   .feat-right p{font-size:16px;line-height:1.65;color:var(--body);}
-  .feat-stats{
-    display:grid;grid-template-columns:repeat(3,1fr);
-    margin-top:36px;border-top:1px solid var(--rule);padding-top:28px;
-  }
+  .feat-stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:36px;border-top:1px solid var(--rule);padding-top:28px;}
   .feat-stat{display:flex;flex-direction:column;gap:10px;border-right:1px solid var(--rule);}
   .feat-stat:not(:first-child){padding-left:28px;}
   .feat-stat:last-child{border-right:none;}
@@ -235,33 +174,22 @@
   .feat-sk{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--label);}
   .feat-disc{margin-top:28px;padding-top:20px;border-top:1px solid var(--rule-soft);font-size:12px;color:var(--label);line-height:1.55;}
 
-  /* ─── TRACK RECORD ─── */
-  .track-top{
-    display:grid;grid-template-columns:1fr 1fr;gap:48px;
-    align-items:end;padding-bottom:72px;border-bottom:1px solid var(--rule);
-  }
-  .track-big{
-    font-size:clamp(72px,10vw,160px);font-weight:800;
-    line-height:0.92;letter-spacing:-0.04em;color:var(--fg);
-  }
+  /* ─── TRANSACTIONS ─── */
+  .track-top{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;padding-bottom:72px;border-bottom:1px solid var(--rule);}
+  .track-big{font-size:clamp(72px,10vw,160px);font-weight:800;line-height:0.92;letter-spacing:-0.04em;color:var(--fg);}
   .track-big .dim{color:var(--muted);}
   .track-right{font-size:16px;line-height:1.55;color:var(--body);max-width:40ch;}
   .track-right .meta-lbl{margin-bottom:14px;}
   .deals{margin-top:72px;}
-  .deal{
-    display:grid;grid-template-columns:72px 2fr 3fr 1.2fr;gap:28px;
-    padding:36px 0;border-top:1px solid var(--rule);align-items:baseline;
-  }
+  .deal{display:grid;grid-template-columns:72px 2fr 3fr 1.2fr;gap:28px;padding:36px 0;border-top:1px solid var(--rule);align-items:baseline;}
   .deal:last-child{border-bottom:1px solid var(--rule);}
   .d-y{font-size:10px;letter-spacing:0.16em;color:var(--label);font-variant-numeric:tabular-nums;}
   .d-typ{font-size:clamp(16px,1.8vw,22px);font-weight:700;color:var(--fg);letter-spacing:-0.005em;}
   .d-typ small{display:block;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--label);font-weight:400;margin-top:6px;}
   .d-desc{font-size:13px;line-height:1.55;color:var(--body);}
-  .d-role{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--label);text-align:right;}
-  .sectors{
-    margin-top:56px;padding:28px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
-    display:flex;gap:40px;flex-wrap:wrap;align-items:baseline;
-  }
+  .d-role{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--label);text-align:right;line-height:1.8;}
+  .d-role b{display:block;color:var(--body);margin-bottom:4px;}
+  .sectors{margin-top:56px;padding:28px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);display:flex;gap:40px;flex-wrap:wrap;align-items:baseline;}
   .sectors b{color:var(--body);font-size:13px;font-weight:500;}
   .sectors .sep{color:var(--label);}
 
@@ -279,19 +207,15 @@
   .cta-section{border-bottom:1px solid var(--rule);padding:100px 0 180px;}
   .cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;}
   .cta-stmt{
-    font-size:clamp(40px,5.5vw,88px);font-weight:700;
-    line-height:0.98;letter-spacing:-0.03em;color:var(--fg);max-width:14ch;
+    font-family:var(--serif);
+    font-size:clamp(36px,5vw,80px);font-weight:400;
+    line-height:1.1;letter-spacing:-0.01em;color:var(--fg);max-width:16ch;
   }
   .cta-right{display:flex;flex-direction:column;gap:0;width:100%;}
   .cta-row{display:flex;flex-direction:column;gap:7px;padding:22px 0;border-top:1px solid var(--rule);}
   .cta-row:last-of-type{border-bottom:1px solid var(--rule);}
   .cta-row a,.cta-row .v{color:var(--fg);font-size:clamp(16px,2vw,22px);letter-spacing:-0.005em;}
-  .cta-btn{
-    display:inline-flex;align-items:center;gap:14px;color:var(--fg);
-    font-size:11px;letter-spacing:0.18em;text-transform:uppercase;
-    padding:20px 26px;border:1px solid var(--rule);
-    transition:background .2s,border-color .2s;margin-top:24px;
-  }
+  .cta-btn{display:inline-flex;align-items:center;gap:14px;color:var(--fg);font-size:11px;letter-spacing:0.18em;text-transform:uppercase;padding:20px 26px;border:1px solid var(--rule);transition:background .2s,border-color .2s;margin-top:24px;}
   .cta-btn:hover{background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.32);}
   .arr{width:22px;height:1px;background:var(--fg);position:relative;flex-shrink:0;}
   .arr::after{content:"";position:absolute;right:0;top:-3px;width:6px;height:6px;border-right:1px solid var(--fg);border-top:1px solid var(--fg);transform:rotate(45deg);}
@@ -299,10 +223,12 @@
   /* ─── TAGLINE ─── */
   .tagline{padding:112px 0;text-align:center;border-bottom:1px solid var(--rule);}
   .tagline .t{
-    font-size:clamp(24px,3vw,48px);letter-spacing:0.06em;
-    font-weight:700;text-transform:uppercase;color:var(--fg);
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:clamp(26px,3.2vw,52px);
+    font-weight:400;color:var(--fg);letter-spacing:0.01em;
   }
-  .tagline .t span{color:var(--label);}
+  .tagline .t span{color:var(--muted);}
 
   /* ─── FOOTER ─── */
   footer{padding:52px 0 36px;}
@@ -314,17 +240,12 @@
   .foot-col ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
   .foot-col a{font-size:13px;color:var(--body);}
   .foot-col a:hover{color:var(--fg);}
-  .foot-bottom{
-    border-top:1px solid var(--rule);padding-top:28px;
-    display:flex;justify-content:space-between;align-items:baseline;
-    color:var(--label);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
-    flex-wrap:wrap;gap:20px;
-  }
+  .foot-bottom{border-top:1px solid var(--rule);padding-top:28px;display:flex;justify-content:space-between;align-items:baseline;color:var(--label);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;flex-wrap:wrap;gap:20px;}
   .foot-bottom .right{display:flex;gap:36px;flex-wrap:wrap;}
 
   /* ─── RESPONSIVE ─── */
   @media(max-width:1080px){
-    .hero-meta,.cta-grid,.track-top{grid-template-columns:1fr;gap:40px;}
+    .hero-meta,.cta-grid,.track-top,.ir-body{grid-template-columns:1fr;gap:40px;}
     .what{grid-template-columns:1fr 1fr;}
     .what-col:nth-child(2n){border-right:none;padding-right:0;}
     .what-col:nth-child(2n+1){padding-left:0;}
@@ -353,16 +274,13 @@
     .nav-meta{display:none;}
     .nav-links a:nth-child(n+4){display:none;}
   }
-  @media(max-width:1200px){
-    .nav-meta{display:none;}
-  }
+  @media(max-width:1200px){.nav-meta{display:none;}}
 
   /* ─── SCROLL ANIMATIONS ─── */
   html.js-anim [data-anim]{opacity:0;transform:translateY(22px);}
   html.js-anim [data-anim].in{
     opacity:1;transform:none;
-    transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1),
-               transform 0.85s cubic-bezier(0.16,1,0.3,1);
+    transition:opacity 0.85s cubic-bezier(0.16,1,0.3,1),transform 0.85s cubic-bezier(0.16,1,0.3,1);
     transition-delay:var(--ad,0ms);
   }
   @media(prefers-reduced-motion:reduce){
@@ -380,10 +298,10 @@
     <nav class="nav-links">
       <a href="/insights/">Insights</a>
       <a href="#about">About</a>
-      <a href="#what">What We Do</a>
-      <a href="#exchanges">Active Partnerships</a>
+      <a href="#what">Practice</a>
+      <a href="#exchanges">Capital Markets</a>
       <a href="#preipo">Pre-IPO</a>
-      <a href="#track">Track Record</a>
+      <a href="#track">Transactions</a>
       <a href="#ir">Investor Relations</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -426,18 +344,22 @@
       <div><b>Sandton</b><span>Johannesburg · South Africa</span></div>
     </div>
 
-    <h1 class="hero-h">
-      We take small and mid-sized companies <span class="dim">public.</span>
-    </h1>
+    <h1 class="hero-h">US Capital Markets.<br><span class="dim">Global Execution.</span></h1>
+
+    <p class="hero-sub-text">We advise companies and shareholders navigating cross-border capital markets, with a primary focus on access to NYSE and Nasdaq.</p>
 
     <div class="hero-meta">
       <div>
         <div class="meta-lbl">Mandate</div>
-        <div class="meta-v">Full-process IPO execution, origination to listing day.</div>
+        <div class="meta-v">End-to-end advisory across the public markets lifecycle — from strategic preparation and capital formation through listing and post-IPO execution.</div>
       </div>
       <div>
-        <div class="meta-lbl">Coverage</div>
-        <div class="meta-v">NYSE · NASDAQ · LSE · HKEX · JSE</div>
+        <div class="meta-lbl">Market Focus</div>
+        <div class="meta-v">
+          US Capital Markets<br>
+          <span style="font-size:13px;color:var(--label);font-weight:400;">NYSE · Nasdaq · Primary</span><br>
+          <span style="font-size:13px;color:var(--label);font-weight:400;margin-top:4px;display:block;">LSE · HKEX · JSE · Global</span>
+        </div>
       </div>
       <div>
         <div class="meta-lbl">Position</div>
@@ -446,8 +368,14 @@
     </div>
 
     <div class="exstrip">
-      <span class="meta-lbl">Exchanges</span>
-      <b>NYSE</b><b>NASDAQ</b><b>LSE</b><b>HKEX</b><b>JSE</b>
+      <span class="meta-lbl">Primary</span>
+      <b class="ex-primary">NYSE</b>
+      <b class="ex-primary">Nasdaq</b>
+      <span class="ex-sep">·</span>
+      <span class="meta-lbl">Global</span>
+      <b class="ex-global">LSE</b>
+      <b class="ex-global">HKEX</b>
+      <b class="ex-global">JSE</b>
       <span class="meta-lbl" style="margin-left:auto;">Deutsche Börse (in progress)</span>
     </div>
   </div>
@@ -479,9 +407,13 @@
   <div class="wrap">
     <div class="sec-head">
       <div class="sec-label" data-n="02"><span>02 · About</span></div>
-      <h2 class="statement">Independent investment banking, headquartered in Sandton.</h2>
+      <h2 class="statement">An independent cross-border investment bank.</h2>
     </div>
-    <p class="about-intro">Taking growing companies public on the world's major exchanges: NYSE, NASDAQ, LSE, HKEX, and JSE. From anywhere in the world. One firm, every step.</p>
+    <div class="about-body">
+      <p>Von Hartmann &amp; Partners is an independent investment banking firm focused on cross-border capital markets and strategic transactions.</p>
+      <p>We advise companies, shareholders and investors navigating the path to public and private markets, with a primary focus on US capital markets and access to NYSE and Nasdaq.</p>
+      <p>Headquartered in Johannesburg and connected across international investment banking, legal and institutional capital markets networks, we help emerging and growth-market companies access global sources of capital.</p>
+    </div>
     <div class="about-stats">
       <div><div class="stat-v">$213M+</div><div class="stat-k">Aggregate exposure · 2025</div></div>
       <div><div class="stat-v">5</div><div class="stat-k">Global exchanges</div></div>
@@ -491,54 +423,61 @@
   </div>
 </section>
 
-<!-- ═══ WHAT WE DO ═══ -->
+<!-- ═══ PRACTICE ═══ -->
 <section id="what" class="tight">
   <div class="wrap">
     <div class="sec-head">
-      <div class="sec-label" data-n="03"><span>03 · What We Do</span></div>
-      <h2 class="statement">Four lines of business.</h2>
+      <div class="sec-label" data-n="03"><span>03 · Our Practice</span></div>
+      <h2 class="statement">Our practice.</h2>
     </div>
     <div class="what">
       <div class="what-col">
         <div class="what-n">01</div>
-        <h3 class="what-h">IPOs Pre/Post</h3>
-        <div class="what-avail">NYSE · NASDAQ · LSE · HKEX · JSE</div>
+        <h3 class="what-h">Public Markets</h3>
+        <div class="what-avail">US IPOs · Cross-border listings<br>Pre-IPO strategy · Post-listing advisory</div>
       </div>
       <div class="what-col">
         <div class="what-n">02</div>
-        <h3 class="what-h">Capital Raisings</h3>
-        <div class="what-avail">Equity · Debt · Hybrid instruments</div>
+        <h3 class="what-h">Capital Solutions</h3>
+        <div class="what-avail">Equity · Debt · Hybrid capital<br>Structured financing</div>
       </div>
       <div class="what-col">
         <div class="what-n">03</div>
-        <h3 class="what-h">M&amp;A</h3>
-        <div class="what-avail">Buy-side · Sell-side · Restructuring</div>
+        <h3 class="what-h">Strategic Advisory</h3>
+        <div class="what-avail">M&amp;A · Buy-side · Sell-side<br>Corporate strategy · Restructuring</div>
       </div>
       <div class="what-col">
         <div class="what-n">04</div>
-        <h3 class="what-h">Infrastructure Projects</h3>
-        <div class="what-avail">Project finance · Capital structuring</div>
+        <h3 class="what-h">Infrastructure &amp; Project Finance</h3>
+        <div class="what-avail">Project finance · Infrastructure capital<br>Natural resources · Capital structuring</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ ACTIVE PARTNERSHIPS ═══ -->
+<!-- ═══ US CAPITAL MARKETS NETWORK ═══ -->
 <section id="exchanges">
   <div class="wrap">
     <div class="sec-head">
-      <div class="sec-label" data-n="04"><span>04 · Active Partnerships</span></div>
-      <h2 class="statement">US-anchored. Active across five global exchanges. One more in progress.</h2>
+      <div class="sec-label" data-n="04"><span>04 · US Capital Markets Network</span></div>
+      <h2 class="statement">US-focused. Globally connected.</h2>
     </div>
+
+    <div class="ex-tier-head">Primary · US Capital Markets</div>
     <div class="exgrid">
-      <div class="ex"><div class="ex-code">NYSE</div><div class="ex-name">New York Stock Exchange</div><div class="ex-reg">United States · New York</div><div class="ex-st">Active · Primary Market</div></div>
-      <div class="ex"><div class="ex-code">NASDAQ</div><div class="ex-name">Nasdaq Stock Market</div><div class="ex-reg">United States · New York</div><div class="ex-st">Active · Primary Market</div></div>
-      <div class="ex"><div class="ex-code">LEGAL</div><div class="ex-name">Legal Counsel</div><div class="ex-reg">United States · New York</div><div class="ex-detail">35+ investment banks<br>20+ funds represented</div><div class="ex-st legal">Legal Partnership</div></div>
-      <div class="ex"><div class="ex-code">LSE</div><div class="ex-name">London Stock Exchange</div><div class="ex-reg">United Kingdom · London</div><div class="ex-st">Active</div></div>
-      <div class="ex"><div class="ex-code">HKEX</div><div class="ex-name">Hong Kong Exchanges &amp; Clearing</div><div class="ex-reg">Asia-Pacific · Hong Kong</div><div class="ex-st">Active</div></div>
-      <div class="ex"><div class="ex-code">JSE</div><div class="ex-name">Johannesburg Stock Exchange</div><div class="ex-reg">South Africa · Sandton</div><div class="ex-st">Home Exchange</div></div>
-      <div class="ex ex-full"><div class="ex-code dim">FRA</div><div class="ex-name">Deutsche Börse · Frankfurt</div><div class="ex-reg">European Union · Frankfurt</div><div class="ex-st pend">In Progress · Expected 2026</div></div>
+      <div class="ex"><div class="ex-code">NYSE</div><div class="ex-name">New York Stock Exchange</div><div class="ex-reg">United States · New York</div><div class="ex-st">Primary Market</div></div>
+      <div class="ex"><div class="ex-code">Nasdaq</div><div class="ex-name">Nasdaq Stock Market</div><div class="ex-reg">United States · New York</div><div class="ex-st">Primary Market</div></div>
+      <div class="ex"><div class="ex-code">LEGAL</div><div class="ex-name">Legal Counsel</div><div class="ex-reg">United States · New York</div><div class="ex-detail">35+ investment banks<br>20+ funds represented</div><div class="ex-st legal">US Legal Infrastructure</div></div>
     </div>
+
+    <div class="ex-tier-head">Global Market Access</div>
+    <div class="exgrid">
+      <div class="ex"><div class="ex-code">LSE</div><div class="ex-name">London Stock Exchange</div><div class="ex-reg">United Kingdom · London</div><div class="ex-st global">Global Access</div></div>
+      <div class="ex"><div class="ex-code">HKEX</div><div class="ex-name">Hong Kong Exchanges &amp; Clearing</div><div class="ex-reg">Asia-Pacific · Hong Kong</div><div class="ex-st global">Global Access</div></div>
+      <div class="ex"><div class="ex-code">JSE</div><div class="ex-name">Johannesburg Stock Exchange</div><div class="ex-reg">South Africa · Sandton</div><div class="ex-st global">Home Exchange</div></div>
+    </div>
+
+    <div class="ex ex-full"><div class="ex-code dim">FRA</div><div class="ex-name">Deutsche Börse · Frankfurt</div><div class="ex-reg">European Union · Frankfurt</div><div class="ex-st pend">In Progress · Expected 2026</div></div>
   </div>
 </section>
 
@@ -546,12 +485,12 @@
 <section id="preipo">
   <div class="wrap">
     <div class="sec-head">
-      <div class="sec-label" data-n="05"><span>05 · Pre-IPO Platform</span></div>
-      <h2 class="statement">Private shares.<br>Before the listing.</h2>
+      <div class="sec-label" data-n="05"><span>05 · Pre-IPO &amp; Private Markets</span></div>
+      <h2 class="statement">Access before the public markets.</h2>
     </div>
     <div class="preipo-lede">
-      <div class="big">The value was always there.</div>
-      <p>Structured access to pre-IPO positions in companies within our active listing pipeline. Qualified and institutional participants only.</p>
+      <div class="big">Pre-IPO &amp; Private Markets</div>
+      <p>Select opportunities in private companies within our broader capital-markets ecosystem, available to qualified and institutional investors subject to applicable regulatory requirements.</p>
     </div>
     <div class="preipo-feat">
       <div class="feat-left">
@@ -572,12 +511,12 @@
   </div>
 </section>
 
-<!-- ═══ TRACK RECORD ═══ -->
+<!-- ═══ SELECTED TRANSACTIONS ═══ -->
 <section id="track">
   <div class="wrap">
     <div class="sec-head">
-      <div class="sec-label" data-n="06"><span>06 · Track Record</span></div>
-      <h2 class="statement">2025 in numbers.</h2>
+      <div class="sec-label" data-n="06"><span>06 · Selected Transactions</span></div>
+      <h2 class="statement">Selected transactions &amp; mandates.</h2>
     </div>
     <div class="track-top">
       <div class="track-big">$213M<span class="dim">+</span></div>
@@ -591,19 +530,19 @@
         <span class="d-y">2025</span>
         <span class="d-typ">Nasdaq listing<small>African Fintech</small></span>
         <span class="d-desc">Capital markets origination and cross-border execution for a leading African fintech onto Nasdaq, structured for US institutional distribution.</span>
-        <span class="d-role">Lead advisor</span>
+        <span class="d-role"><b>Lead Advisor</b>Active Mandate</span>
       </div>
       <div class="deal">
         <span class="d-y">2025</span>
         <span class="d-typ">NYSE / JSE dual-listing<small>Major Mining Company</small></span>
         <span class="d-desc">Capital raising and listing structure advisory for a major mining group on a coordinated NYSE / JSE dual-listing.</span>
-        <span class="d-role">Capital advisor</span>
+        <span class="d-role"><b>Capital Advisor</b>Active Mandate</span>
       </div>
       <div class="deal">
         <span class="d-y">2025</span>
         <span class="d-typ">Infrastructure recapitalisation<small>Southern Africa Platform</small></span>
         <span class="d-desc">Strategic advisory on the capital restructuring of a Southern African infrastructure platform across debt, equity and project-linked instruments.</span>
-        <span class="d-role">Strategic advisor</span>
+        <span class="d-role"><b>Strategic Advisor</b>Active Mandate</span>
       </div>
     </div>
     <div class="sectors">
@@ -657,7 +596,7 @@
 <!-- ═══ CONTACT ═══ -->
 <section id="contact" class="cta-section">
   <div class="wrap cta-grid">
-    <h2 class="cta-stmt">Let's talk about taking your company public.</h2>
+    <h2 class="cta-stmt">Let's discuss your capital markets strategy.</h2>
     <div class="cta-right">
       <div class="cta-row"><div class="meta-lbl">General Enquiries</div><a href="mailto:info@vonhartmannpartners.co.za">info@vonhartmannpartners.co.za</a></div>
       <div class="cta-row"><div class="meta-lbl">Telephone</div><a href="tel:+27697613246">+27 69 761 3246</a></div>
@@ -670,7 +609,7 @@
 
 <!-- ═══ TAGLINE ═══ -->
 <div class="tagline">
-  <div class="wrap"><p class="t">Institutional Intelligence. <span>Precision Execution.</span></p></div>
+  <div class="wrap"><p class="t">US Capital Markets. <span>Global Execution.</span></p></div>
 </div>
 
 <!-- ═══ FOOTER ═══ -->
@@ -679,23 +618,23 @@
     <div class="foot-grid">
       <div>
         <div class="foot-brand">Von Hartmann <span>&amp; Partners</span></div>
-        <p class="foot-tagline">Independent investment banking. Taking small and mid-sized companies public on the world's major exchanges, from Sandton, Johannesburg.</p>
+        <p class="foot-tagline">An independent cross-border investment bank with a primary focus on US capital markets and access to NYSE and Nasdaq. Headquartered in Johannesburg.</p>
       </div>
       <div class="foot-col">
         <h4>Practice</h4>
         <ul>
-          <li><a href="#what">IPOs Pre/Post</a></li>
-          <li><a href="#what">Capital Raisings</a></li>
-          <li><a href="#what">M&amp;A</a></li>
-          <li><a href="#what">Infrastructure Projects</a></li>
+          <li><a href="#what">Public Markets</a></li>
+          <li><a href="#what">Capital Solutions</a></li>
+          <li><a href="#what">Strategic Advisory</a></li>
+          <li><a href="#what">Infrastructure &amp; Project Finance</a></li>
           <li><a href="/insights/">Insights</a></li>
           <li><a href="#ir">Investor Relations</a></li>
         </ul>
       </div>
       <div class="foot-col">
-        <h4>Active Partnerships</h4>
+        <h4>Markets</h4>
         <ul>
-          <li><a href="#exchanges">NYSE · NASDAQ</a></li>
+          <li><a href="#exchanges">NYSE · Nasdaq</a></li>
           <li><a href="#exchanges">LSE</a></li>
           <li><a href="#exchanges">HKEX</a></li>
           <li><a href="#exchanges">JSE</a></li>
@@ -724,16 +663,14 @@
 </footer>
 
 <script>
-  /* ── Clock ── */
   function tick(){
     const t=new Intl.DateTimeFormat('en-ZA',{timeZone:'Africa/Johannesburg',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date());
     const el=document.getElementById('clk');if(el)el.textContent='Sandton '+t;
   }
   tick();setInterval(tick,60000);
 
-  /* ── Scroll animations ── */
   (function(){
-    const singles='.hero-tags,.hero-h,.exstrip,.sec-head,.preipo-lede,.preipo-feat,.track-top,.sectors,.tagline .t,.cta-stmt,.cta-right,.about-intro,.about-stats,.ins-preview,.ins-more,.ir-body,.ir-contact,.ir-disc';
+    const singles='.hero-tags,.hero-h,.hero-sub-text,.exstrip,.sec-head,.preipo-lede,.preipo-feat,.track-top,.sectors,.tagline .t,.cta-stmt,.cta-right,.about-body,.about-stats,.ins-preview,.ins-more,.ir-body,.ir-contact,.ir-disc';
     const groups=[
       ['.hero-meta > div', 90],
       ['.what-col',        80],
@@ -743,7 +680,6 @@
     ];
 
     document.querySelectorAll(singles).forEach(el=>el.dataset.anim='');
-
     groups.forEach(([sel,gap])=>{
       document.querySelectorAll(sel).forEach((el,i)=>{
         el.dataset.anim='';
@@ -751,7 +687,7 @@
       });
     });
 
-    const heroOrder=['.hero-tags','.hero-h','.exstrip'];
+    const heroOrder=['.hero-tags','.hero-h','.hero-sub-text','.exstrip'];
     heroOrder.forEach((sel,i)=>{
       const el=document.querySelector(sel+'[data-anim]');
       if(el) el.style.setProperty('--ad', i*130+'ms');
@@ -771,7 +707,6 @@
     },{threshold:0.08,rootMargin:'0px 0px -48px 0px'});
 
     document.querySelectorAll('[data-anim]').forEach(el=>io.observe(el));
-
     setTimeout(reveal,50);
     window.addEventListener('scroll',reveal,{passive:true});
   })();
