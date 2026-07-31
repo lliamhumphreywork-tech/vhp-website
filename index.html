@@ -265,6 +265,16 @@
   .sectors b{color:var(--body);font-size:13px;font-weight:500;}
   .sectors .sep{color:var(--label);}
 
+  /* ─── INVESTOR RELATIONS ─── */
+  .ir-body{display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:start;padding-bottom:72px;border-bottom:1px solid var(--rule);}
+  .ir-lede{font-size:clamp(16px,1.5vw,20px);line-height:1.7;color:var(--body);}
+  .ir-prop{display:grid;grid-template-columns:repeat(3,1fr);margin-top:72px;border-top:1px solid var(--rule);}
+  .ir-prop>div{padding:28px 28px 28px 0;border-right:1px solid var(--rule);}
+  .ir-prop>div:not(:first-child){padding-left:28px;}
+  .ir-prop>div:last-child{border-right:none;padding-right:0;}
+  .ir-contact{margin-top:72px;padding:28px 0;border-top:1px solid var(--rule);display:flex;gap:56px;align-items:baseline;flex-wrap:wrap;}
+  .ir-disc{margin-top:28px;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--label);line-height:1.7;}
+
   /* ─── CONTACT ─── */
   .cta-section{border-bottom:1px solid var(--rule);padding:100px 0 180px;}
   .cta-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:end;}
@@ -374,6 +384,7 @@
       <a href="#exchanges">Active Partnerships</a>
       <a href="#preipo">Pre-IPO</a>
       <a href="#track">Track Record</a>
+      <a href="#ir">Investor Relations</a>
       <a href="#contact">Contact</a>
     </nav>
     <div class="nav-meta">
@@ -606,6 +617,43 @@
   </div>
 </section>
 
+<!-- ═══ INVESTOR RELATIONS ═══ -->
+<section id="ir">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-label" data-n="07"><span>07 · Investor Relations</span></div>
+      <h2 class="statement">Building our pre-listing investor base.</h2>
+    </div>
+    <div class="ir-body">
+      <div>
+        <p class="ir-lede">Von Hartmann &amp; Partners is building toward a NEO Exchange Canada listing following the closure of its first two mandates. We are developing our pre-listing investor base among institutional investors, family offices, and qualified investors seeking exposure to an emerging market investment banking firm at the pre-listing stage.</p>
+      </div>
+      <div>
+        <p class="ir-lede">Investor enquiries are handled directly and in confidence. Access to materials is available to qualified participants on request.</p>
+        <div class="ir-contact">
+          <span class="meta-lbl">Investor Enquiries</span>
+          <a href="mailto:londizwi@vonhartmannpartners.co.za" style="color:var(--fg);font-size:clamp(13px,1.4vw,18px);letter-spacing:-0.005em;">londizwi@vonhartmannpartners.co.za</a>
+        </div>
+      </div>
+    </div>
+    <div class="ir-prop">
+      <div>
+        <div class="meta-lbl">Origination</div>
+        <div class="meta-v" style="font-size:clamp(14px,1.4vw,18px);margin-top:12px;line-height:1.4;">Proprietary deal flow in markets the bulge brackets do not access.</div>
+      </div>
+      <div>
+        <div class="meta-lbl">Infrastructure</div>
+        <div class="meta-v" style="font-size:clamp(14px,1.4vw,18px);margin-top:12px;line-height:1.4;">Institutional-grade execution at boutique scale.</div>
+      </div>
+      <div>
+        <div class="meta-lbl">Timing</div>
+        <div class="meta-v" style="font-size:clamp(14px,1.4vw,18px);margin-top:12px;line-height:1.4;">The right pipeline for the right market at the right time.</div>
+      </div>
+    </div>
+    <p class="ir-disc">Strictly Private &amp; Confidential · Not for distribution · © Von Hartmann &amp; Partners 2026</p>
+  </div>
+</section>
+
 <!-- ═══ CONTACT ═══ -->
 <section id="contact" class="cta-section">
   <div class="wrap cta-grid">
@@ -641,6 +689,7 @@
           <li><a href="#what">M&amp;A</a></li>
           <li><a href="#what">Infrastructure Projects</a></li>
           <li><a href="/insights/">Insights</a></li>
+          <li><a href="#ir">Investor Relations</a></li>
         </ul>
       </div>
       <div class="foot-col">
@@ -684,10 +733,11 @@
 
   /* ── Scroll animations ── */
   (function(){
-    const singles='.hero-tags,.hero-h,.exstrip,.sec-head,.preipo-lede,.preipo-feat,.track-top,.sectors,.tagline .t,.cta-stmt,.cta-right,.about-intro,.about-stats,.ins-preview,.ins-more';
+    const singles='.hero-tags,.hero-h,.exstrip,.sec-head,.preipo-lede,.preipo-feat,.track-top,.sectors,.tagline .t,.cta-stmt,.cta-right,.about-intro,.about-stats,.ins-preview,.ins-more,.ir-body,.ir-contact,.ir-disc';
     const groups=[
       ['.hero-meta > div', 90],
       ['.what-col',        80],
+      ['.ir-prop > div',   90],
       ['.ex',              65],
       ['.deal',            70],
     ];
