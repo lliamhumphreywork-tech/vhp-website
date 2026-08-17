@@ -128,6 +128,7 @@
   .b-potential{background:rgba(150,150,150,0.1);color:#aaa;}
   .b-meeting{background:rgba(100,180,255,0.12);color:#7ec8ff;}
   .b-advisory{background:rgba(255,120,80,0.12);color:#ff9472;}
+  .b-origination{background:rgba(0,210,180,0.12);color:#00d2b4;}
   .p-fee{background:rgba(155,100,255,0.18);color:#c4a3ff;}
   .p-exec{background:rgba(255,140,0,0.18);color:#ffb347;}
   .p-nda{background:rgba(59,207,142,0.18);color:#5ece9a;}
@@ -395,6 +396,7 @@
       <div class="field">
         <label>Mandate Type</label>
         <select id="f-type">
+          <option>Active Origination</option>
           <option>Partnership</option>
           <option>Capital Raise</option>
           <option>Listing</option>
@@ -594,7 +596,7 @@ function updateStats(){
 }
 
 // ── Badge helpers ──
-const typeClass = {Partnership:'b-partnership','Capital Raise':'b-capital',Listing:'b-listing',Potential:'b-potential',Meeting:'b-meeting',Advisory:'b-advisory'};
+const typeClass = {'Active Origination':'b-origination',Partnership:'b-partnership','Capital Raise':'b-capital',Listing:'b-listing',Potential:'b-potential',Meeting:'b-meeting',Advisory:'b-advisory'};
 const stageClass = {'Fee Confirmation':'p-fee','Execution Stage':'p-exec','NDA Signed':'p-nda','Intro Convo':'p-intro','Potential AM':'p-potential','NDA + Discussion':'p-ndadisc',Closed:'p-closed'};
 const prioClass = {High:'pr-high',Medium:'pr-med',Low:'pr-low'};
 const healthClass = {Closed:'dh-closed','On Track':'dh-track',"Haven't begun":'dh-not','At Risk':'dh-risk'};
