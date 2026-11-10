@@ -134,6 +134,15 @@
   .arr{width:20px;height:1px;background:var(--fg);position:relative;flex-shrink:0;}
   .arr::after{content:"";position:absolute;right:0;top:-3px;width:6px;height:6px;border-right:1px solid var(--fg);border-top:1px solid var(--fg);transform:rotate(45deg);}
 
+  /* CEO STATEMENT */
+  .ceo-body{max-width:68ch;}
+  .ceo-opening{font-family:var(--serif);font-size:clamp(22px,2.4vw,32px);font-weight:400;line-height:1.35;letter-spacing:-0.01em;color:var(--fg);margin-bottom:48px;}
+  .ceo-para{font-size:clamp(14px,1.3vw,16px);line-height:1.85;color:var(--body);}
+  .ceo-para+.ceo-para{margin-top:28px;}
+  .ceo-sig{margin-top:52px;padding-top:32px;border-top:1px solid var(--rule);}
+  .ceo-sig-name{font-size:14px;font-weight:500;color:var(--fg);letter-spacing:-0.005em;}
+  .ceo-sig-title{margin-top:6px;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--label);}
+
   /* FOOTER */
   footer{padding:48px 0 32px;}
   .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;padding-bottom:64px;}
@@ -189,6 +198,7 @@
       <a href="#what">Practice</a>
       <a href="#pipeline">Pipeline</a>
       <a href="#partners">Partners</a>
+      <a href="#ceo">CEO Letter</a>
       <a href="#contact">Contact</a>
     </nav>
     <div class="nav-meta">
@@ -385,6 +395,27 @@
   </div>
 </section>
 
+<!-- CEO STATEMENT -->
+<section id="ceo">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-label" data-n="07"><span>07 · 2026</span></div>
+      <h2 class="statement">A word from the CEO.</h2>
+    </div>
+    <div class="ceo-body">
+      <p class="ceo-opening">Von Hartmann &amp; Partners was built on a conviction: that capable companies in emerging markets are underserved by the institutions that could take them to global capital markets, and that transactions are better built under legal oversight than around it.</p>
+      <p class="ceo-para">This year we built the foundations for that conviction. We completed advisory engagements for clients on capital raising and financing structure. We developed working relationships with law firms in New York, London, Hong Kong and Johannesburg, and with the exchange teams that matter to our clients. We wrote down how we work, including our standards for diligence, disclosure and language, so that the firm runs on order rather than memory.</p>
+      <p class="ceo-para">We also learned. Origination takes longer than a calendar year, and a conversation is not a completed transaction. We would rather say that plainly than dress it up. We have not yet closed a listing, and in 2027 we will measure ourselves by transactions that complete well.</p>
+      <p class="ceo-para">Our priorities for 2027 are to convert the relationships we have built into signed work, to broaden our range of mandates across capital raising, M&amp;A advisory and infrastructure finance, and to hold the same standard on a small matter as on a large one.</p>
+      <p class="ceo-para">To our clients, partners and team, thank you. The work in the background is yours as much as ours, and the firm exists because of it.</p>
+      <div class="ceo-sig">
+        <div class="ceo-sig-name">Londizwi Mdunge</div>
+        <div class="ceo-sig-title">Chief Executive Officer, Von Hartmann &amp; Partners</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- CONTACT -->
 <section id="contact" class="cta-section">
   <div class="wrap cta-grid">
@@ -456,12 +487,13 @@
   tick();setInterval(tick,60000);
 
   (function(){
-    const singles='.hero-tags,.hero-h,.hero-sub,.exstrip,.sec-head,.about-body,.cta-stmt,.cta-right';
+    const singles='.hero-tags,.hero-h,.hero-sub,.exstrip,.sec-head,.about-body,.ceo-opening,.ceo-sig,.cta-stmt,.cta-right';
     const groups=[
       ['.what-col',     80],
       ['.pipeline-row', 90],
       ['.partner-row',  55],
       ['.ex',           60],
+      ['.ceo-para',     60],
     ];
     document.querySelectorAll(singles).forEach(el=>el.dataset.anim='');
     groups.forEach(([sel,gap])=>{
